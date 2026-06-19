@@ -21,11 +21,66 @@ export const api = {
     return res.json();
   },
 
-  async getLyrics(song) {
-    const res = await fetch(
-      `${BASE_URL}/lyrics?song=${encodeURIComponent(song)}`,
-    );
+  async getLyrics(track, artist = "") {
+    const params = new URLSearchParams({ track, artist });
+    const res = await fetch(`${BASE_URL}/lyrics?${params}`);
     if (!res.ok) throw new Error(`lyrics failed: ${res.status}`);
+    return res.json();
+  },
+
+  spotifyLoginUrl() {
+    return `${BASE_URL}/spotify/login`;
+  },
+
+  async getCurrentTrack(sessionId) {
+    const res = await fetch(
+      `${BASE_URL}/spotify/current-track?session_id=${sessionId}`,
+    );
+    if (!res.ok) throw new Error(`current-track failed: ${res.status}`);
+    return res.json();
+  },
+
+  async spotifyPlay(sessionId) {
+    const res = await fetch(
+      `${BASE_URL}/spotify/play?session_id=${sessionId}`,
+      {
+        method: "PUT",
+      },
+    );
+    if (!res.ok) throw new Error(`play failed: ${res.status}`);
+    return res.json();
+  },
+
+  async spotifyPause(sessionId) {
+    const res = await fetch(
+      `${BASE_URL}/spotify/pause?session_id=${sessionId}`,
+      {
+        method: "PUT",
+      },
+    );
+    if (!res.ok) throw new Error(`pause failed: ${res.status}`);
+    return res.json();
+  },
+
+  async spotifyNext(sessionId) {
+    const res = await fetch(
+      `${BASE_URL}/spotify/next?session_id=${sessionId}`,
+      {
+        method: "POST",
+      },
+    );
+    if (!res.ok) throw new Error(`next failed: ${res.status}`);
+    return res.json();
+  },
+
+  async spotifyPrevious(sessionId) {
+    const res = await fetch(
+      `${BASE_URL}/spotify/previous?session_id=${sessionId}`,
+      {
+        method: "POST",
+      },
+    );
+    if (!res.ok) throw new Error(`previous failed: ${res.status}`);
     return res.json();
   },
 };
