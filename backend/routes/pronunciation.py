@@ -12,8 +12,7 @@ from backend.core.providers.ai_factory import get_ai_provider
 
 router = APIRouter(prefix="/api/pronunciation", tags=["pronunciation"])
 
-with open(os.path.join(os.path.dirname(__file__), "..", "prompts", "pronunciation_system.txt"), "r", encoding="utf-8") as f:
-    SYSTEM_PROMPT = f.read().strip()
+_ai_cache = {}
 
 class PronunciationSchema(BaseModel):
     summary: str
@@ -21,7 +20,6 @@ class PronunciationSchema(BaseModel):
     weaknesses: List[str]
     suggestions: List[str]
     next_goal: str
-    insight: str
 
 class WordAnalysis(BaseModel):
     word: str
@@ -124,27 +122,47 @@ async def summarize_user_history(recent_memory: List[str]) -> List[str]:
         return recent_memory
         
     try:
-        provider = get_ai_provider()
+        from backend.core.services.ai_service import get_ai_service
+        ai_service = get_ai_service()
         prompt = f"Aşağıdaki geçmiş telaffuz analizlerini tek bir kısa paragrafta özetle:\n\n{json.dumps(recent_memory, ensure_ascii=False)}"
-        summary = await provider.generate_text(
+        res = await ai_service.get_pronunciation_feedback(
             system_prompt="Sen bir özetleme asistanısın.",
-            user_prompt=prompt,
-            temperature=0.3
+            user_prompt=prompt
         )
-        return [summary]
+        return [res.get("feedback", "")]
     except Exception:
         return recent_memory[:5]
 
+import hashlib
+
 async def generate_ai_feedback(tech_data: Dict[str, Any], context: Dict[str, Any], language: str = "tr") -> Dict[str, Any]:
+    cache_key = hashlib.md5(f"{tech_data.get('transcript', '')}_{tech_data.get('expected', '')}".encode()).hexdigest()
+    if cache_key in _ai_cache:
+        cached_time, cached_data = _ai_cache[cache_key]
+        if time.time() - cached_time < 600:
+            return cached_data
+
+    score = tech_data.get("overall_score", 0)
+    strictness_directive = ""
+    if score < 50:
+        strictness_directive = "DİKKAT: Kullanıcının genel skoru çok düşük (50'nin altında). Kesinlikle övücü veya 'harika' gibi kelimeler kullanma. Tamamen ciddi ve eksik odaklı ol."
+    elif score < 70:
+        strictness_directive = "DİKKAT: Kullanıcının skoru orta seviyenin altında. Fazla iyimser olma, gelişmesi gereken yerlere net şekilde odaklan."
+    elif score >= 90:
+        strictness_directive = "DİKKAT: Kullanıcının skoru çok yüksek. Ufak tefek hatalar varsa abartma, hakkını ver."
+
     compressed_history = await summarize_user_history(context['recent_ai_comments'])
     
     user_prompt = f"""
+{strictness_directive}
+
 [KULLANICI VERİLERİ]
 - Toplam Seans: {context['total_sessions']}
 - Geçmiş Hedefleri: {json.dumps(context['past_goals'], ensure_ascii=False)}
 - Son Yorumların Özeti: {json.dumps(compressed_history, ensure_ascii=False)}
 
 [BU KAYIT İÇİN TEKNİK ANALİZ VERİSİ]
+- Overall Score: {score}
 - Transcript (Kullanıcının okuduğu): {tech_data['transcript']}
 - Expected (Okuması gereken): {tech_data['expected']}
 - Accuracy: %{tech_data['accuracy']}
@@ -158,23 +176,32 @@ async def generate_ai_feedback(tech_data: Dict[str, Any], context: Dict[str, Any
 """
 
     try:
-        provider = get_ai_provider()
-        data = await provider.generate_json(
-            system_prompt=SYSTEM_PROMPT,
+        from backend.core.services.ai_service import get_ai_service
+        ai_service = get_ai_service()
+        
+        prompt_path = os.path.join(os.path.dirname(__file__), "..", "prompts", "coach", "system.txt")
+        if os.path.exists(prompt_path):
+            with open(prompt_path, "r", encoding="utf-8") as f:
+                sys_prompt = f.read().strip()
+        else:
+            sys_prompt = "Sen bir telaffuz koçusun."
+            
+        data = await ai_service.get_pronunciation_feedback(
+            system_prompt=sys_prompt,
             user_prompt=user_prompt,
-            schema=PronunciationSchema,
-            temperature=0.4
+            schema=PronunciationSchema
         )
+        _ai_cache[cache_key] = (time.time(), data)
         return data
     except Exception as e:
-        print(f"[ERROR] LLM Generation Failed: {e}")
+        import logging
+        logging.error(f"[ERROR] LLM Generation Failed: {e}")
         return {
-            "summary": "Kişiselleştirilmiş analiz şu anda oluşturulamadı.",
+            "summary": "",
             "strengths": [],
             "weaknesses": [],
             "suggestions": [],
-            "next_goal": "",
-            "insight": ""
+            "next_goal": ""
         }
 
 def get_level_for_xp(xp: int) -> str:
@@ -206,10 +233,11 @@ async def analyze_pronunciation(
         shutil.copyfileobj(audio.file, buffer)
         
     try:
-        provider = get_ai_provider()
+        from backend.core.providers.ai_factory import get_stt_provider
+        provider = get_stt_provider()
         transcript = await provider.transcribe_audio(temp_audio)
     except Exception as e:
-        print("Gemini STT failed:", e)
+        logger.error(f"STT failed: {e}")
         transcript = expected_text
     finally:
         if os.path.exists(temp_audio):

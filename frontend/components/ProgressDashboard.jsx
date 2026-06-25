@@ -1,13 +1,13 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, memo } from "react";
 import { api } from "../lib/api";
 import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, Area, AreaChart } from 'recharts';
 import { Target, TrendingUp, Mic, Star, Award, Zap, Award as AwardIcon, Loader2, ArrowLeft } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "./ui/Card";
 import { Button } from "./ui/Button";
 
-export default function ProgressDashboard({ onClose }) {
+export default memo(function ProgressDashboard({ onClose }) {
   const [stats, setStats] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -17,7 +17,7 @@ export default function ProgressDashboard({ onClose }) {
         const data = await api.getProgressStats();
         setStats(data);
       } catch (err) {
-        console.error("Failed to load stats", err);
+        // Failed silently for UI handling
       } finally {
         setLoading(false);
       }
@@ -248,4 +248,4 @@ export default function ProgressDashboard({ onClose }) {
       </CardContent>
     </Card>
   );
-}
+});

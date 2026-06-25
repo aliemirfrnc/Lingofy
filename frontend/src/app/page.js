@@ -1,14 +1,17 @@
 "use client";
 import { useCallback, useEffect, useRef, useState, useMemo } from "react";
-import Chat from "../../components/Chat";
+import dynamic from "next/dynamic";
+
 import DynamicBackground from "../../components/DynamicBackground";
 import LandingPage from "../../components/LandingPage";
 import LyricsPlayer from "../../components/LyricsPlayer";
 import NowPlaying from "../../components/NowPlaying";
-import PlaylistView from "../../components/PlaylistView";
-import ProgressDashboard from "../../components/ProgressDashboard";
 import Sidebar from "../../components/Sidebar";
-import WordPanel from "../../components/WordPanel";
+
+const Chat = dynamic(() => import("../../components/Chat"));
+const PlaylistView = dynamic(() => import("../../components/PlaylistView"));
+const ProgressDashboard = dynamic(() => import("../../components/ProgressDashboard"));
+const WordPanel = dynamic(() => import("../../components/WordPanel"));
 import { api } from "../../lib/api";
 
 export default function Home() {
@@ -38,6 +41,18 @@ export default function Home() {
 
   // Topbar Dropdown
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === "Escape" && isDropdownOpen) {
+        setIsDropdownOpen(false);
+      }
+    };
+    if (isDropdownOpen) {
+      document.addEventListener("keydown", handleKeyDown);
+    }
+    return () => document.removeEventListener("keydown", handleKeyDown);
+  }, [isDropdownOpen]);
 
   // LyricsPlayer callbacks
   const trackChangeCallbackRef = useRef(null);
@@ -184,6 +199,8 @@ export default function Home() {
             <div className="relative">
               <button 
                 onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+                aria-label="Kullanıcı menüsü"
+                aria-expanded={isDropdownOpen}
                 className="flex items-center gap-3 hover:bg-white/10 p-1.5 pr-4 rounded-full transition-colors border border-transparent hover:border-white/5"
               >
                 <div className="relative">

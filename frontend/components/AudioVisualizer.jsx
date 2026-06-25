@@ -57,10 +57,16 @@ export default function AudioVisualizer({ isRecording, color = "rgba(29, 185, 84
       ctx.shadowColor = color;
       ctx.shadowBlur = 10;
 
-      animationRef.current = requestAnimationFrame(drawWaveform);
+      if (isRecording) {
+        animationRef.current = requestAnimationFrame(drawWaveform);
+      }
     };
 
-    drawWaveform();
+    if (isRecording) {
+      drawWaveform();
+    } else {
+      drawWaveform(); // Draw flat line once
+    }
 
     return () => {
       if (animationRef.current) {

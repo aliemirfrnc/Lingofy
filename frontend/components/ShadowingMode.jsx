@@ -70,7 +70,7 @@ export default function ShadowingMode({ lyrics, onClose }) {
             <p className="text-lg text-white/20 blur-[1px] select-none m-0 font-medium truncate px-4">{lines[currentLineIndex - 1]}</p>
           )}
           
-          <div className="bg-white/5 p-8 md:p-12 rounded-3xl border border-white/10 shadow-2xl backdrop-blur-md relative overflow-hidden group">
+          <div className="glass-panel p-8 md:p-12 relative overflow-hidden group">
             <div className="absolute inset-0 bg-gradient-to-r from-theme-500/10 to-purple-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
             <p className="text-3xl md:text-5xl font-black text-white leading-tight drop-shadow-lg relative z-10 m-0 tracking-tight">
               {lines[currentLineIndex]}

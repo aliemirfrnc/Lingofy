@@ -32,18 +32,33 @@ export default function Chat() {
     scrollToBottom();
 
     try {
-      const data = await api.chat(userMessage);
-      if (!data || !data.response) {
-        throw new Error("Sunucudan geçerli bir yanıt alınamadı.");
+      const res = await api.streamChat(userMessage);
+
+      setMessages((prev) => [...prev, { type: "assistant", text: "" }]);
+      setLoading(false);
+
+      const reader = res.body.getReader();
+      const decoder = new TextDecoder("utf-8");
+
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        
+        const chunk = decoder.decode(value, { stream: true });
+        if (chunk) {
+          setMessages((prev) => {
+            const newMsgs = [...prev];
+            const lastIdx = newMsgs.length - 1;
+            if (newMsgs[lastIdx].type === "assistant") {
+              newMsgs[lastIdx] = { ...newMsgs[lastIdx], text: newMsgs[lastIdx].text + chunk };
+            }
+            return newMsgs;
+          });
+          scrollToBottom();
+        }
       }
-      setMessages((prev) => [
-        ...prev,
-        { type: "assistant", text: data.response },
-      ]);
-      scrollToBottom();
     } catch (err) {
       setError(err.message || "Mesaj gönderilemedi.");
-    } finally {
       setLoading(false);
     }
   }

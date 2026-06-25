@@ -30,7 +30,7 @@ export default memo(function Sidebar({
   }, []);
 
   return (
-    <aside className="w-60 flex-shrink-0 h-screen bg-black/40 backdrop-blur-2xl border-r border-white/5 flex flex-col overflow-hidden transition-all">
+    <aside className="w-60 flex-shrink-0 h-screen bg-surface backdrop-blur-xl border-r border-border shadow-[4px_0_24px_rgba(0,0,0,0.2)] flex flex-col overflow-hidden transition-all">
       {/* Logo */}
       <div className="pt-6 pb-2 px-5 shrink-0">
         <span className="text-xl font-extrabold tracking-tight text-theme">
@@ -41,32 +41,35 @@ export default memo(function Sidebar({
       {/* Nav */}
       <nav className="p-3 flex flex-col gap-1 shrink-0">
         <button
-          className={`flex items-center gap-3 px-3 py-2.5 rounded-xl text-[13px] font-semibold transition-all duration-200
+          className={`flex items-center gap-3 px-3 py-2.5 rounded-xl text-[13px] font-semibold transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-theme
             ${view === "home" ? "bg-white/10 text-white" : "text-white/55 hover:text-white hover:bg-white/5"}`}
           onClick={() => {
             setView("home");
             onHomeClick?.();
           }}
+          aria-current={view === "home" ? "page" : undefined}
         >
           <Home size={18} />
           Ana Sayfa
         </button>
         <button
-          className={`flex items-center gap-3 px-3 py-2.5 rounded-xl text-[13px] font-semibold transition-all duration-200
+          className={`flex items-center gap-3 px-3 py-2.5 rounded-xl text-[13px] font-semibold transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-theme
             ${view === "library" ? "bg-white/10 text-white" : "text-white/55 hover:text-white hover:bg-white/5"}`}
           onClick={() => setView("library")}
+          aria-current={view === "library" ? "page" : undefined}
         >
           <Library size={18} />
           Kütüphane
         </button>
 
         <button
-          className={`flex items-center gap-3 px-3 py-2.5 rounded-xl text-[13px] font-semibold transition-all duration-200
+          className={`flex items-center gap-3 px-3 py-2.5 rounded-xl text-[13px] font-semibold transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-theme
             ${view === "progress" ? "bg-white/10 text-white" : "text-white/55 hover:text-white hover:bg-white/5"}`}
           onClick={() => {
             setView("progress");
             onProgressClick?.();
           }}
+          aria-current={view === "progress" ? "page" : undefined}
         >
           <TrendingUp size={18} />
           Telaffuz Gelişimi
@@ -117,11 +120,13 @@ export default memo(function Sidebar({
             <button
               key={pl.id}
               onClick={() => onPlaylistSelect?.(pl)}
-              className={`flex items-center gap-3 w-full p-2 rounded-xl text-left transition-all duration-200 border-l-[3px]
+              className={`flex items-center gap-3 w-full p-2 rounded-xl text-left transition-all duration-200 border-l-[3px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-theme
                 ${isActive 
                   ? "bg-theme-100/10 border-theme text-white" 
                   : "border-transparent text-white/70 hover:bg-white/5 hover:text-white"
                 }`}
+              aria-selected={isActive}
+              aria-label={`${pl.name} listesini aç`}
             >
               <div className="w-9 h-9 rounded-lg bg-white/10 flex items-center justify-center shrink-0 overflow-hidden shadow-sm">
                 {pl.image ? (

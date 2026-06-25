@@ -1,38 +1,15 @@
 export default function ErrorBanner({ message, onRetry }) {
   return (
-    <div style={wrapStyle}>
-      <p style={textStyle}>{message}</p>
+    <div className="bg-red-500/10 border border-red-500/20 rounded-xl p-3 text-center mb-5">
+      <p className="text-red-400 text-sm m-0 mb-2">{message}</p>
       {onRetry && (
-        <button onClick={onRetry} style={retryBtnStyle}>
+        <button 
+          onClick={onRetry} 
+          className="px-4 py-1.5 rounded-lg border-none bg-red-500/20 hover:bg-red-500/30 text-red-400 text-sm font-medium cursor-pointer transition-colors"
+        >
           Tekrar dene
         </button>
       )}
     </div>
   );
 }
-
-const wrapStyle = {
-  background: "#fdeee7",
-  border: "0.5px solid #f0c4ad",
-  borderRadius: 10,
-  padding: "12px 16px",
-  textAlign: "center",
-  marginBottom: 20,
-};
-
-const textStyle = {
-  color: "#D85A30",
-  fontSize: 14,
-  margin: "0 0 8px",
-};
-
-const retryBtnStyle = {
-  padding: "6px 16px",
-  borderRadius: 8,
-  border: "none",
-  background: "#D85A30",
-  color: "#fff",
-  fontSize: 13,
-  fontWeight: 500,
-  cursor: "pointer",
-};

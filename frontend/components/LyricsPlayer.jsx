@@ -38,7 +38,11 @@ export default memo(function LyricsPlayer({
   const lastArtistRef = useRef(null);
   const lyricsRequestRef = useRef(0);
   const lyricsAbortRef = useRef(null);
+  
   const translatingLinesRef = useRef(new Set());
+  const translationQueueRef = useRef([]);
+  const activeTranslatingRef = useRef(0);
+  const translationAbortRef = useRef(null);
 
   const { r = 120, g = 80, b = 200 } = accentColor || {};
 
@@ -67,7 +71,12 @@ export default memo(function LyricsPlayer({
     lyricsAbortRef.current?.abort();
     const controller = new AbortController();
     lyricsAbortRef.current = controller;
+    
+    translationAbortRef.current?.abort();
+    translationAbortRef.current = new AbortController();
     translatingLinesRef.current.clear();
+    translationQueueRef.current = [];
+    activeTranslatingRef.current = 0;
 
     lastTrackRef.current = track;
     lastArtistRef.current = artist;
@@ -103,6 +112,7 @@ export default memo(function LyricsPlayer({
   useEffect(
     () => () => {
       lyricsAbortRef.current?.abort();
+      translationAbortRef.current?.abort();
       if (idleTimerRef.current) clearTimeout(idleTimerRef.current);
     },
     [],
@@ -154,33 +164,48 @@ export default memo(function LyricsPlayer({
     }
   }, [activeLineIndex, autoFollow]);
 
-  const translateLine = useCallback((line) => {
-    if (!line || translatingLinesRef.current.has(line)) return;
-    const requestId = lyricsRequestRef.current;
-    translatingLinesRef.current.add(line);
-    api
-      .translateLine(line)
+  const processTranslationQueue = useCallback(() => {
+    if (activeTranslatingRef.current >= 3 || translationQueueRef.current.length === 0) return;
+    const task = translationQueueRef.current.shift();
+    if (!task) return;
+
+    activeTranslatingRef.current++;
+    api.translateLine(task.line, lastTrackRef.current, { signal: translationAbortRef.current?.signal })
       .then((data) => {
-        if (requestId !== lyricsRequestRef.current) return;
-        setTranslation((current) =>
-          current[line] === undefined
-            ? { ...current, [line]: data.translation }
-            : current,
-        );
+        setTranslation(curr => ({ ...curr, [task.line]: data.translation }));
       })
-      .catch(() => {
-        if (requestId !== lyricsRequestRef.current) return;
-        setTranslation((current) => ({ ...current, [line]: null }));
+      .catch((err) => {
+        if (err.name !== 'AbortError') {
+           setTranslation(curr => ({ ...curr, [task.line]: null }));
+        }
+      })
+      .finally(() => {
+        activeTranslatingRef.current--;
+        processTranslationQueue(); // Process next in queue
       });
+      
+    processTranslationQueue(); // Try to spawn up to 3 workers
   }, []);
 
+  const translateLineQueue = useCallback((line) => {
+    if (!line || translatingLinesRef.current.has(line)) return;
+    translatingLinesRef.current.add(line);
+    translationQueueRef.current.push({ line });
+    processTranslationQueue();
+  }, [processTranslationQueue]);
+
   useEffect(() => {
-    if (activeLineIndex === null) return;
-    const line = lyrics[activeLineIndex];
-    if (line) translateLine(line);
-    const nextLine = lyrics[activeLineIndex + 1];
-    if (nextLine) translateLine(nextLine);
-  }, [activeLineIndex, lyrics, translateLine]);
+    if (activeLineIndex === null || !lyrics.length) return;
+    // Prefetch logic: Active line + 5 previous + 5 next lines
+    const start = Math.max(0, activeLineIndex - 5);
+    const end = Math.min(lyrics.length - 1, activeLineIndex + 5);
+    for (let i = start; i <= end; i++) {
+      const line = lyrics[i];
+      if (line && translation[line] === undefined) {
+        translateLineQueue(line);
+      }
+    }
+  }, [activeLineIndex, lyrics, translateLineQueue, translation]);
 
   useEffect(() => {
     function handleScroll() {
@@ -206,7 +231,7 @@ export default memo(function LyricsPlayer({
     const requestId = lyricsRequestRef.current;
 
     api
-      .translateBatch(pending)
+      .translateBatch(pending, lastTrackRef.current)
       .then((data) => {
         if (requestId !== lyricsRequestRef.current) return;
         setTranslation((prev) => {
@@ -233,7 +258,7 @@ export default memo(function LyricsPlayer({
 
   if (loading) {
     return (
-      <div className="flex flex-col items-center justify-center h-full gap-3">
+      <div className="flex flex-col items-center justify-center h-full gap-3 relative z-10">
         <div className="flex flex-col gap-4 items-center w-full max-w-lg">
           {[...Array(6)].map((_, i) => (
             <div
@@ -253,7 +278,7 @@ export default memo(function LyricsPlayer({
 
   if (error && !lyrics.length) {
     return (
-      <div className="flex flex-col items-center justify-center h-full gap-3">
+      <div className="flex flex-col items-center justify-center h-full gap-3 relative z-10">
         <ErrorBanner
           message={error}
           onRetry={
@@ -271,14 +296,14 @@ export default memo(function LyricsPlayer({
 
   if (!lyrics.length) {
     return (
-      <div className="flex flex-col items-center justify-center h-full gap-3">
+      <div className="flex flex-col items-center justify-center h-full gap-3 relative z-10">
         <p className="text-white/30 text-[15px]">Spotify'da bir şarkı çal</p>
       </div>
     );
   }
 
   return (
-    <div className="relative h-full flex flex-col">
+    <div className="relative h-full flex flex-col z-10">
       {/* Senkron kontrol + tümünü çevir */}
       <div className="flex items-center justify-between px-6 py-4 shrink-0">
         {synced && (
@@ -325,34 +350,45 @@ export default memo(function LyricsPlayer({
 
       {/* Lyrics listesi */}
       <div ref={containerRef} className="flex-1 overflow-y-auto custom-scrollbar">
-        <div className="max-w-[640px] mx-auto px-8 text-center">
+        <div className="max-w-[640px] mx-auto px-8 text-center relative z-10">
           {/* Üst dolgu */}
           <div className="h-[35vh]" />
 
           {lyrics.map((line, i) => {
             const isActive = i === activeLineIndex;
             const dist = Math.abs((activeLineIndex ?? 0) - i);
-            const opacity = isActive ? 1 : Math.max(0.18, 0.65 - dist * 0.12);
-            const scale = isActive ? 1.05 : 1;
+            const lyricOpacity = isActive ? 1 : Math.max(0.25, 0.60 - dist * 0.1); // Pasifler max %60
+            const scale = isActive ? 1.05 : 0.98;
             const lineTranslation = translation[line];
 
             return (
-              <div key={i} className="mb-2">
+              <div key={i} className={`mb-6 transition-all duration-500 ${isActive ? 'my-8' : ''}`}>
                 <p
                   ref={(el) => (lineRefs.current[i] = el)}
                   onClick={() => {
                     pauseAutoFollow();
                     setSelectedLine(i);
                   }}
-                  className="m-0 py-1.5 font-semibold leading-relaxed tracking-tight transition-all duration-300 select-none cursor-pointer"
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      e.preventDefault();
+                      pauseAutoFollow();
+                      setSelectedLine(i);
+                    }
+                  }}
+                  tabIndex={0}
+                  role="button"
+                  aria-label={`Satırı seç: ${line}`}
+                  className={`m-0 py-1.5 leading-snug tracking-tight transition-all duration-500 select-none cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-theme focus-visible:rounded-lg ${isActive ? 'drop-shadow-2xl' : ''}`}
                   style={{
-                    opacity,
+                    opacity: lyricOpacity,
                     transform: `scale(${scale})`,
-                    color: isActive ? "#ffffff" : "rgba(255,255,255,0.85)",
+                    color: isActive ? "#ffffff" : "rgba(255,255,255,0.75)",
+                    fontWeight: isActive ? 900 : 700,
                     textShadow: isActive
-                      ? `0 0 40px rgba(var(--theme-r),var(--theme-g),var(--theme-b),0.6), 0 2px 8px rgba(0,0,0,0.8)`
-                      : "none",
-                    fontSize: isActive ? 22 : 17,
+                      ? `0 0 60px rgba(var(--theme-r),var(--theme-g),var(--theme-b),0.8), 0 4px 12px rgba(0,0,0,0.9)`
+                      : "0 2px 4px rgba(0,0,0,0.5)",
+                    fontSize: isActive ? 32 : 20,
                   }}
                 >
                   {line.split(/(\s+)/).map((token, ti) =>
@@ -367,7 +403,19 @@ export default memo(function LyricsPlayer({
                           setSelectedLine(i);
                           onWordClick?.(token, line);
                         }}
-                        className="cursor-pointer rounded-[3px] px-[1px] transition-colors hover:bg-white/10"
+                        onKeyDown={(e) => {
+                          if (e.key === 'Enter' || e.key === ' ') {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            pauseAutoFollow();
+                            setSelectedLine(i);
+                            onWordClick?.(token, line);
+                          }
+                        }}
+                        tabIndex={0}
+                        role="button"
+                        aria-label={`${token} kelimesini seç`}
+                        className="cursor-pointer rounded-md px-[2px] transition-colors hover:bg-white/20 hover:text-theme-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-theme"
                       >
                         {token}
                       </span>
@@ -376,17 +424,31 @@ export default memo(function LyricsPlayer({
                 </p>
 
                 {isActive && (
-                  <div className="mt-1.5 mb-2.5 min-h-[20px] flex items-center justify-center animate-fade-in">
+                  <div className="mt-4 mb-2 min-h-[30px] flex flex-col items-center justify-center gap-3 relative z-20 animate-slide-up" style={{opacity: 1}}>
                     {lineTranslation === null ? (
-                      <span className="text-[13px] text-white/20">
+                      <span className="text-[13px] text-white/30 bg-black/40 px-3 py-1 rounded-full">
                         Çeviri alınamadı
                       </span>
                     ) : lineTranslation ? (
-                      <span className="text-[14px] italic font-normal text-theme-100">
+                      <span 
+                        className="glass-panel text-center tracking-wide shadow-2xl"
+                        style={{
+                          backgroundColor: 'rgba(0,0,0,0.35)',
+                          border: '1px solid rgba(255,255,255,0.08)',
+                          padding: '12px 24px',
+                          borderRadius: '16px',
+                          color: '#E8E8E8',
+                          opacity: 1, // Asla görünmez olmayacak
+                          fontSize: '18px',
+                          fontWeight: '700'
+                        }}
+                      >
                         {lineTranslation}
                       </span>
                     ) : (
-                      <span className="text-[13px] text-white/20">•••</span>
+                      <span className="text-[13px] text-white/30 animate-pulse bg-white/5 px-3 py-1 rounded-full">
+                        Çeviri yükleniyor...
+                      </span>
                     )}
                     
                     <button
@@ -394,7 +456,7 @@ export default memo(function LyricsPlayer({
                         e.stopPropagation();
                         setCoachLine(line);
                       }}
-                      className="ml-4 bg-red-500/15 border border-red-500/30 text-red-400 rounded-full px-3 py-1 text-xs font-semibold cursor-pointer hover:scale-105 transition-transform flex items-center gap-1.5"
+                      className="mt-2 bg-gradient-to-r from-red-500/20 to-orange-500/20 border border-red-500/30 text-red-300 rounded-full px-4 py-1.5 text-[13px] font-bold cursor-pointer hover:scale-105 transition-transform flex items-center gap-2 shadow-glow"
                     >
                       🎤 Telaffuzunu Test Et
                     </button>
@@ -411,8 +473,8 @@ export default memo(function LyricsPlayer({
 
       {/* Tam çeviri paneli (overlay) */}
       {showFullTranslation && (
-        <div className="absolute inset-0 bg-black/60 backdrop-blur-md flex items-center justify-center z-10 animate-fade-in">
-          <div className="bg-[#121212]/95 border border-white/10 rounded-2xl w-[90%] max-w-[500px] max-h-[78vh] flex flex-col overflow-hidden shadow-2xl">
+        <div className="absolute inset-0 bg-black/60 backdrop-blur-xl flex items-center justify-center z-50 animate-fade-in">
+          <div className="glass-panel w-[90%] max-w-[500px] max-h-[78vh] flex flex-col overflow-hidden">
             <div className="flex justify-between items-center px-5 py-4 border-b border-white/5 shrink-0">
               <span className="text-white font-semibold">Tam çeviri</span>
               <button
@@ -447,7 +509,7 @@ export default memo(function LyricsPlayer({
       {/* Şimdiki satıra dön */}
       {synced && !autoFollow && (
         <button
-          className="absolute bottom-6 left-1/2 -translate-x-1/2 bg-theme border-none text-white rounded-full px-5 py-2.5 text-[13px] font-medium cursor-pointer shadow-glow z-[5] hover:scale-105 transition-transform flex items-center gap-2 animate-slide-up"
+          className="absolute bottom-6 left-1/2 -translate-x-1/2 bg-theme border-none text-white rounded-full px-5 py-2.5 text-[13px] font-medium cursor-pointer shadow-glow z-40 hover:scale-105 transition-transform flex items-center gap-2 animate-slide-up"
           onClick={resumeAutoFollow}
         >
           ↓ Şimdiki satıra dön

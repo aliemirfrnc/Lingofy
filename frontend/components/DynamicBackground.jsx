@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 
 const FALLBACK_COLOR = { r: 60, g: 60, b: 100 };
 
@@ -43,7 +43,13 @@ function saturate(color, factor = 1.4) {
 
 export default function DynamicBackground({ albumImage, onColorExtracted }) {
   const [color, setColor] = useState(FALLBACK_COLOR);
+  const [isBright, setIsBright] = useState(false);
   const [displayImage, setDisplayImage] = useState(null);
+  const onColorExtractedRef = useRef(onColorExtracted);
+
+  useEffect(() => {
+    onColorExtractedRef.current = onColorExtracted;
+  }, [onColorExtracted]);
 
   useEffect(() => {
     let cancelled = false;
@@ -51,7 +57,8 @@ export default function DynamicBackground({ albumImage, onColorExtracted }) {
       if (cancelled) return;
       setDisplayImage(null);
       setColor(FALLBACK_COLOR);
-      onColorExtracted?.(FALLBACK_COLOR);
+      setIsBright(false);
+      onColorExtractedRef.current?.(FALLBACK_COLOR);
     };
 
     const applyColorToDOM = (r, g, b) => {
@@ -75,10 +82,12 @@ export default function DynamicBackground({ albumImage, onColorExtracted }) {
       try {
         const raw = getAverageColor(img);
         const boosted = saturate(raw, 1.6);
+        const luminance = 0.2126 * boosted.r + 0.7152 * boosted.g + 0.0722 * boosted.b;
         setDisplayImage(albumImage);
         setColor(boosted);
+        setIsBright(luminance > 160);
         applyColorToDOM(boosted.r, boosted.g, boosted.b);
-        onColorExtracted?.(boosted);
+        onColorExtractedRef.current?.(boosted);
       } catch {
         applyFallback();
         applyColorToDOM(FALLBACK_COLOR.r, FALLBACK_COLOR.g, FALLBACK_COLOR.b);
@@ -95,7 +104,7 @@ export default function DynamicBackground({ albumImage, onColorExtracted }) {
       img.onload = null;
       img.onerror = null;
     };
-  }, [albumImage, onColorExtracted]);
+  }, [albumImage]);
 
   const { r, g, b } = color;
 
@@ -110,17 +119,18 @@ export default function DynamicBackground({ albumImage, onColorExtracted }) {
           <img
             src={displayImage}
             alt=""
-            className="absolute inset-0 w-full h-full object-cover opacity-[0.18] scale-[1.08] blur-[48px] saturate-[1.4] transition-all duration-1000 ease-in-out animate-fade-in"
+            className="absolute inset-0 w-full h-full object-cover opacity-[0.35] scale-[1.08] blur-[48px] saturate-[1.5] contrast-[1.2] brightness-[0.9] transition-all duration-1000 ease-in-out animate-fade-in"
             crossOrigin="anonymous"
           />
         )}
+        <div className={`absolute inset-0 transition-opacity duration-1000 ${isBright ? 'bg-black/85' : 'bg-black/60'} mix-blend-multiply`} />
         <div
           className="absolute inset-0 transition-colors duration-1000 ease-in-out"
           style={{
             background: `linear-gradient(
               160deg,
-              rgba(var(--theme-r),var(--theme-g),var(--theme-b),0.28) 0%,
-              rgba(var(--theme-r),var(--theme-g),var(--theme-b),0.10) 30%,
+              rgba(var(--theme-r),var(--theme-g),var(--theme-b),${isBright ? '0.2' : '0.35'}) 0%,
+              rgba(var(--theme-r),var(--theme-g),var(--theme-b),0.15) 30%,
               rgba(10,10,10,0.85) 65%,
               #0a0a0a 100%
             )`,

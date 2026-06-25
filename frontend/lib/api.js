@@ -30,14 +30,38 @@ async function handleResponse(res) {
 const lyricsCache = new Map();
 
 function fetchWithTimeout(url, options, timeout = 10000) {
-  return Promise.race([
-    fetch(url, options),
-    new Promise((_, reject) => {
-      const err = new Error("İstek zaman aşımına uğradı.");
-      err.name = "TimeoutError";
-      setTimeout(() => reject(err), timeout);
-    }),
-  ]);
+  const controller = new AbortController();
+  const id = setTimeout(() => controller.abort(), timeout);
+  
+  if (options.signal) {
+    options.signal.addEventListener('abort', () => {
+      clearTimeout(id);
+      controller.abort(options.signal.reason);
+    });
+  }
+
+  return fetch(url, { ...options, signal: controller.signal })
+    .then((response) => {
+      clearTimeout(id);
+      return response;
+    })
+    .catch((error) => {
+      clearTimeout(id);
+      if (error.name === "AbortError") {
+        if (options.signal && options.signal.aborted) {
+          throw error;
+        }
+        const err = new Error("İstek zaman aşımına uğradı.");
+        err.name = "TimeoutError";
+        err.status = 408;
+        throw err;
+      }
+      // If it's a TypeError (Network error like CORS or offline)
+      if (error.name === "TypeError") {
+        error.isNetworkError = true;
+      }
+      throw error;
+    });
 }
 
 async function request(path, options = {}) {
@@ -52,10 +76,12 @@ async function request(path, options = {}) {
   } catch (error) {
     if (error?.name === "AbortError") throw error;
     if (error?.name === "TimeoutError") throw error;
-    throw new Error(
-      "Sunucuya ulaşılamadı. Bağlantını ve API adresini kontrol et.",
-      { cause: error },
-    );
+    if (error?.isNetworkError) {
+      const err = new Error("Sunucuya ulaşılamadı (CORS veya Bağlantı Hatası).");
+      err.status = 0; // 0 indicates network error
+      throw err;
+    }
+    throw error;
   }
 }
 
@@ -75,7 +101,7 @@ async function refreshAccessToken() {
   return refreshPromise;
 }
 
-async function authFetch(path, options = {}, retried = false) {
+export async function authFetch(path, options = {}, retried = false) {
   const res = await request(path, options);
   
   if (res.status === 401 && !retried) {
@@ -160,6 +186,10 @@ export const api = {
       try {
         const res = await request(`/lyrics?${params}`, { ...options, timeout: 8000 });
         const data = await handleResponse(res);
+        if (lyricsCache.size >= 50) {
+          const firstKey = lyricsCache.keys().next().value;
+          lyricsCache.delete(firstKey);
+        }
         lyricsCache.set(key, data);
         return data;
       } catch (err) {
@@ -172,19 +202,50 @@ export const api = {
     return fetchAttempt();
   },
 
-  async translateLine(text) {
+  async translateLine(text, trackId = null, options = {}) {
     return authFetch("/translate-line", {
+      ...options,
       method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ text }),
+      headers: { "Content-Type": "application/json", ...(options.headers || {}) },
+      body: JSON.stringify({ text, track_id: trackId }),
     });
   },
 
-  async translateBatch(lines) {
-    return authFetch("/translate-batch", {
+  async updateSettings(settings) {
+    const res = await authFetch("/auth/settings", {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(settings),
+    });
+    return res;
+  },
+
+  async streamChat(message, retried = false) {
+    const res = await request("/chat", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ lines }),
+      body: JSON.stringify({ message }),
+    });
+    if (res.status === 401 && !retried) {
+      try {
+        await refreshAccessToken();
+      } catch {
+        throw new Error("Oturum süresi dolmuş, tekrar giriş yap.");
+      }
+      return this.streamChat(message, true);
+    }
+    if (!res.ok) {
+      throw new Error(`Sunucu hatası: ${res.status}`);
+    }
+    return res;
+  },
+
+  async translateBatch(lines, trackId = null, options = {}) {
+    return authFetch("/translate-batch", {
+      ...options,
+      method: "POST",
+      headers: { "Content-Type": "application/json", ...(options.headers || {}) },
+      body: JSON.stringify({ lines, track_id: trackId }),
     });
   },
 
@@ -199,7 +260,7 @@ export const api = {
   },
 
   async getWordInfo(word, contextLine = "") {
-    return authFetch("/word-info", {
+    return authFetch("/api/word-info", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ word, context_line: contextLine }),
@@ -264,15 +325,11 @@ export const api = {
     formData.append("audio", audioBlob, "recording.webm");
     formData.append("expected_text", expectedText);
 
-    // Using base fetch because authFetch assumes JSON body by default
-    // We also might not have auth headers strictly required for this mock, but let's include them
-    const res = await request("/api/pronunciation/analyze", {
+    return authFetch("/api/pronunciation/analyze", {
       method: "POST",
-      headers: authHeaders(), // don't set Content-Type so browser sets boundary
       body: formData,
-      timeout: 60000, // Gemini operations can take up to 30-40s including STT
+      timeout: 60000,
     });
-    return handleResponse(res);
   },
 
   async getProgressStats() {

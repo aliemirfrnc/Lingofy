@@ -78,20 +78,9 @@ export default function PronunciationCoach({ expectedText, onClose }) {
       }
 
       try {
-        console.log("================ API REQUEST START ================");
-        console.log("Expected Text:", expectedText);
-        console.log("Audio Blob Size:", audioBlob.size);
-        
         const data = await api.analyzePronunciation(audioBlob, expectedText);
-        
-        console.log("================ FRONTEND PARSED JSON ================");
-        console.log(data);
-        console.log("======================================================");
-        
         setResult(data);
       } catch (err) {
-        console.error("================ API REQUEST ERROR ================");
-        console.error(err);
         if (err.status === 403) {
           setError("Günlük telaffuz sınırınıza ulaştınız. Sınırsız koçluk için Lingofy Premium'a geçin!");
         } else {
@@ -129,7 +118,7 @@ export default function PronunciationCoach({ expectedText, onClose }) {
 
   return (
     <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/60 backdrop-blur-xl p-4 overflow-y-auto animate-fade-in">
-      <div className="w-full max-w-6xl my-auto bg-zinc-950/90 border border-white/10 rounded-3xl shadow-2xl flex flex-col overflow-hidden relative backdrop-blur-3xl animate-slide-up">
+      <div className="glass-panel w-full max-w-6xl my-auto flex flex-col overflow-hidden relative animate-slide-up rounded-3xl">
         
         {/* Glow Effects */}
         <div className="absolute -top-40 -right-40 w-96 h-96 bg-theme-600/20 blur-[100px] pointer-events-none rounded-full"></div>
@@ -302,75 +291,69 @@ export default function PronunciationCoach({ expectedText, onClose }) {
 
                 </div>
 
-                {/* Right Side: AI Coach Panel */}
-                <div className="w-full lg:w-[450px] shrink-0 bg-gradient-to-br from-theme-900/30 to-purple-900/20 border border-theme-500/30 rounded-2xl shadow-xl flex flex-col p-1 relative overflow-hidden">
-                  <div className="absolute inset-0 bg-noise opacity-[0.03]"></div>
-                  
-                  <div className="flex items-center gap-4 mb-4 sticky top-0 bg-black/40 backdrop-blur-md z-10 p-4 rounded-xl border border-white/5 mx-1 mt-1">
-                    <div className="w-12 h-12 bg-gradient-to-br from-theme-500 to-purple-600 rounded-xl flex items-center justify-center text-xl shadow-glow border border-white/20 shrink-0">
-                      ✨
-                    </div>
-                    <div>
-                      <h3 className="text-white font-bold m-0 text-base">Lingofy AI Coach</h3>
-                      <p className="text-theme-300 text-xs font-semibold m-0 mt-0.5">Akıllı & Kişisel Öğretmen</p>
-                    </div>
-                  </div>
-                  
-                  <div className="flex-1 space-y-6 p-5">
+                {/* Right Side: AI Coach Panel (Gizle eğer AI başarısız olursa) */}
+                {result.summary && (
+                  <div className="w-full lg:w-[450px] shrink-0 bg-gradient-to-br from-theme-900/30 to-purple-900/20 border border-theme-500/30 rounded-2xl shadow-xl flex flex-col p-1 relative overflow-hidden">
+                    <div className="absolute inset-0 bg-noise opacity-[0.03]"></div>
                     
-                    {/* Genel Değerlendirme (Summary) */}
-                    <div>
-                      <h4 className="text-[10px] font-black text-theme-400 uppercase tracking-widest mb-3 m-0">Genel Değerlendirme</h4>
-                      <div className="text-white/80 text-[14px] leading-relaxed bg-black/40 p-5 rounded-2xl border border-white/5 shadow-inner font-medium">
-                        {result.summary}
+                    <div className="flex items-center gap-4 mb-4 sticky top-0 bg-black/40 backdrop-blur-md z-10 p-4 rounded-xl border border-white/5 mx-1 mt-1">
+                      <div className="w-12 h-12 bg-gradient-to-br from-theme-500 to-purple-600 rounded-xl flex items-center justify-center text-xl shadow-glow border border-white/20 shrink-0">
+                        ✨
+                      </div>
+                      <div>
+                        <h3 className="text-white font-bold m-0 text-base">Lingofy AI Coach</h3>
+                        <p className="text-theme-300 text-xs font-semibold m-0 mt-0.5">Akıllı & Kişisel Öğretmen</p>
                       </div>
                     </div>
-
-                    {/* Güçlü Yönler & Geliştirilecek Alanlar (Strengths/Weaknesses) */}
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      <div className="bg-theme-500/10 border border-theme-500/20 p-4.5 rounded-2xl">
-                        <h4 className="text-[10px] font-black text-theme-400 uppercase tracking-widest mb-3 m-0">Güçlü Yönler</h4>
-                        <div className="text-theme-100">
-                          {renderList(result.strengths, "Belirgin güçlü yön yok.")}
-                        </div>
-                      </div>
-                      <div className="bg-red-500/10 border border-red-500/20 p-4.5 rounded-2xl">
-                        <h4 className="text-[10px] font-black text-red-400 uppercase tracking-widest mb-3 m-0">Geliştirilecek</h4>
-                        <div className="text-red-100">
-                          {renderList(result.weaknesses, "Geliştirilecek alan bulunmadı.")}
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Öneriler (Suggestions) */}
-                    <div>
-                      <h4 className="text-[10px] font-black text-blue-400 uppercase tracking-widest mb-3 m-0">Pratik Önerileri</h4>
-                      <div className="bg-black/40 p-5 rounded-2xl border border-white/5 shadow-inner text-blue-100">
-                        {renderList(result.suggestions, "Öneri bulunamadı.")}
-                      </div>
-                    </div>
-
-                    {/* Sonraki Hedef (Next Goal) & Motivasyon (Motivation) */}
-                    <div className="grid grid-cols-1 gap-4 mt-8">
-                      <div className="flex items-start gap-4 bg-yellow-500/10 border border-yellow-500/20 p-5 rounded-2xl">
-                        <div className="text-2xl shrink-0 mt-0.5">🎯</div>
-                        <div>
-                          <h4 className="text-[10px] font-black text-yellow-500 uppercase tracking-widest mb-1.5 m-0">Bir Sonraki Hedef</h4>
-                          <p className="text-[14px] font-bold text-yellow-100/90 leading-snug m-0">{result.next_goal}</p>
-                        </div>
-                      </div>
+                    
+                    <div className="flex-1 space-y-6 p-5">
                       
-                      <div className="flex items-start gap-4 bg-purple-500/10 border border-purple-500/20 p-5 rounded-2xl">
-                        <div className="text-2xl shrink-0 mt-0.5">💡</div>
-                        <div>
-                          <h4 className="text-[10px] font-black text-purple-400 uppercase tracking-widest mb-1.5 m-0">AI Insight</h4>
-                          <p className="text-[14px] font-semibold text-purple-100/90 leading-snug m-0">"{result.insight}"</p>
+                      {/* Genel Değerlendirme (Summary) */}
+                      <div>
+                        <h4 className="text-[10px] font-black text-theme-400 uppercase tracking-widest mb-3 m-0">Genel Değerlendirme</h4>
+                        <div className="text-white/80 text-[14px] leading-relaxed bg-black/40 p-5 rounded-2xl border border-white/5 shadow-inner font-medium">
+                          {result.summary}
                         </div>
                       </div>
-                    </div>
 
+                      {/* Güçlü Yönler & Geliştirilecek Alanlar (Strengths/Weaknesses) */}
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div className="bg-theme-500/10 border border-theme-500/20 p-4.5 rounded-2xl">
+                          <h4 className="text-[10px] font-black text-theme-400 uppercase tracking-widest mb-3 m-0">Güçlü Yönler</h4>
+                          <div className="text-theme-100">
+                            {renderList(result.strengths, "Belirgin güçlü yön yok.")}
+                          </div>
+                        </div>
+                        <div className="bg-red-500/10 border border-red-500/20 p-4.5 rounded-2xl">
+                          <h4 className="text-[10px] font-black text-red-400 uppercase tracking-widest mb-3 m-0">Geliştirilecek</h4>
+                          <div className="text-red-100">
+                            {renderList(result.weaknesses, "Geliştirilecek alan bulunmadı.")}
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Öneriler (Suggestions) */}
+                      <div>
+                        <h4 className="text-[10px] font-black text-blue-400 uppercase tracking-widest mb-3 m-0">Pratik Önerileri</h4>
+                        <div className="bg-black/40 p-5 rounded-2xl border border-white/5 shadow-inner text-blue-100">
+                          {renderList(result.suggestions, "Öneri bulunamadı.")}
+                        </div>
+                      </div>
+
+                      {/* Sonraki Hedef (Next Goal) & Motivasyon (Motivation) */}
+                      <div className="grid grid-cols-1 gap-4 mt-8">
+                        <div className="flex items-start gap-4 bg-yellow-500/10 border border-yellow-500/20 p-5 rounded-2xl">
+                          <div className="text-2xl shrink-0 mt-0.5">🎯</div>
+                          <div>
+                            <h4 className="text-[10px] font-black text-yellow-500 uppercase tracking-widest mb-1.5 m-0">Bir Sonraki Hedef</h4>
+                            <p className="text-[14px] font-bold text-yellow-100/90 leading-snug m-0">{result.next_goal}</p>
+                          </div>
+                        </div>
+                      </div>
+
+                    </div>
                   </div>
-                </div>
+                )}
               </div>
             </div>
           )}

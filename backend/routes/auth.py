@@ -56,10 +56,13 @@ def _extract_token(request: Request, authorization: str | None) -> str:
     raise HTTPException(status_code=401, detail="Giriş yapman gerekiyor.")
 
 def require_user_id(request: Request, authorization: str | None = Header(default=None)) -> int:
+    if hasattr(request.state, "user_id"):
+        return request.state.user_id
     token = _extract_token(request, authorization)
     user_id = decode_access_token(token)
     if not user_id:
         raise HTTPException(status_code=401, detail="Oturum süresi dolmuş, tekrar giriş yap.")
+    request.state.user_id = user_id
     return user_id
 
 @router.post("/register", response_model=AuthResponse)

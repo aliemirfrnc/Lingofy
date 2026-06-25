@@ -1,0 +1,718 @@
+2026-06-25 19:35:45,672 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-25 19:35:45,674 [INFO] backend.core.providers.groq_provider: [Groq] generate | Model: llama-3.3-70b-versatile | Latency: 1.88s | Tokens: 37 in, 470 out | Attempt: 1
+2026-06-25 19:35:45,674 [INFO] backend.core.services.ai_service: Groq Provider Health: OK
+2026-06-25 19:35:46,712 [INFO] httpx: HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-25 19:36:07,088 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-25 19:36:07,089 [INFO] backend.core.providers.groq_provider: [Groq] generate | Model: llama-3.3-70b-versatile | Latency: 1.14s | Tokens: 37 in, 470 out | Attempt: 1
+2026-06-25 19:36:07,090 [INFO] backend.core.services.ai_service: Groq Provider Health: OK
+2026-06-25 19:36:08,124 [INFO] httpx: HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-25 19:36:15,483 [INFO] backend.core.providers.openrouter_provider: [OpenRouter] generate | Model: deepseek/deepseek-chat-v3 | Latency: 8.39s | Tokens: 5 in, 297 out | Attempt: 1
+2026-06-25 19:36:15,484 [INFO] backend.core.services.ai_service: OpenRouter Provider Health: OK
+2026-06-25 19:36:37,216 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-25 19:36:37,219 [INFO] backend.core.providers.groq_provider: [Groq] generate | Model: llama-3.3-70b-versatile | Latency: 1.97s | Tokens: 37 in, 470 out | Attempt: 1
+2026-06-25 19:36:37,219 [INFO] backend.core.services.ai_service: Groq Provider Health: OK
+2026-06-25 19:37:06,103 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-25 19:37:06,104 [INFO] backend.core.providers.groq_provider: [Groq] generate | Model: llama-3.3-70b-versatile | Latency: 1.24s | Tokens: 37 in, 472 out | Attempt: 1
+2026-06-25 19:37:06,104 [INFO] backend.core.services.ai_service: Groq Provider Health: OK
+2026-06-25 19:37:07,600 [INFO] httpx: HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-25 19:37:17,258 [INFO] backend.core.providers.openrouter_provider: [OpenRouter] generate | Model: deepseek/deepseek-chat-v3 | Latency: 11.15s | Tokens: 5 in, 403 out | Attempt: 1
+2026-06-25 19:37:17,259 [INFO] backend.core.services.ai_service: OpenRouter Provider Health: OK
+2026-06-25 19:43:40,702 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-25 19:43:40,706 [INFO] backend.core.providers.groq_provider: [Groq] generate | Model: llama-3.3-70b-versatile | Latency: 1.78s | Tokens: 37 in, 457 out | Attempt: 1
+2026-06-25 19:43:40,706 [INFO] backend.core.services.ai_service: Groq Provider Health: OK
+2026-06-25 19:43:41,667 [INFO] httpx: HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-25 19:43:48,294 [INFO] backend.core.providers.openrouter_provider: [OpenRouter] generate | Model: deepseek/deepseek-chat-v3 | Latency: 7.59s | Tokens: 5 in, 276 out | Attempt: 1
+2026-06-25 19:43:48,294 [INFO] backend.core.services.ai_service: OpenRouter Provider Health: OK
+2026-06-25 19:44:17,677 [WARNING] backend.core.services.lrclib_service: LRCLIB GET ERROR on attempt 1: ReadTimeout(ReadTimeoutError("HTTPSConnectionPool(host='lrclib.net', port=443): Read timed out. (read timeout=15)"))
+2026-06-25 19:44:17,678 [WARNING] backend.core.services.lrclib_service: LRCLIB SEARCH ERROR on attempt 1: ReadTimeout(ReadTimeoutError("HTTPSConnectionPool(host='lrclib.net', port=443): Read timed out. (read timeout=15)"))
+2026-06-25 19:50:45,069 [WARNING] backend.core.services.lrclib_service: LRCLIB GET ERROR on attempt 1: ReadTimeout(ReadTimeoutError("HTTPSConnectionPool(host='lrclib.net', port=443): Read timed out. (read timeout=15)"))
+2026-06-25 19:50:45,550 [WARNING] backend.core.services.lrclib_service: LRCLIB GET ERROR on attempt 1: ReadTimeout(ReadTimeoutError("HTTPSConnectionPool(host='lrclib.net', port=443): Read timed out. (read timeout=15)"))
+2026-06-25 19:51:12,712 [WARNING] backend.core.services.lrclib_service: LRCLIB GET ERROR on attempt 2: ReadTimeout(ReadTimeoutError("HTTPSConnectionPool(host='lrclib.net', port=443): Read timed out. (read timeout=15)"))
+2026-06-25 19:52:06,262 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-25 19:52:06,264 [INFO] backend.core.providers.groq_provider: [Groq] generate | Model: llama-3.3-70b-versatile | Latency: 1.91s | Tokens: 37 in, 479 out | Attempt: 1
+2026-06-25 19:52:06,264 [INFO] backend.core.services.ai_service: Groq Provider Health: OK
+2026-06-25 19:52:07,558 [INFO] httpx: HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-25 19:52:15,993 [INFO] backend.core.providers.openrouter_provider: [OpenRouter] generate | Model: deepseek/deepseek-chat-v3 | Latency: 9.73s | Tokens: 5 in, 346 out | Attempt: 1
+2026-06-25 19:52:15,993 [INFO] backend.core.services.ai_service: OpenRouter Provider Health: OK
+2026-06-25 19:54:13,652 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-25 19:54:13,658 [INFO] backend.core.providers.groq_provider: [Groq] generate | Model: llama-3.3-70b-versatile | Latency: 0.31s | Tokens: 76 in, 14 out | Attempt: 1
+2026-06-25 19:54:13,659 [INFO] root: [Translation] Provider: Groq | Latency: 313ms | Cache: MISS | Fallback: False
+2026-06-25 19:54:13,670 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-25 19:54:13,673 [INFO] backend.core.providers.groq_provider: [Groq] generate | Model: llama-3.3-70b-versatile | Latency: 0.27s | Tokens: 75 in, 9 out | Attempt: 1
+2026-06-25 19:54:13,673 [INFO] root: [Translation] Provider: Groq | Latency: 271ms | Cache: MISS | Fallback: False
+2026-06-25 19:55:02,661 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-25 19:55:02,663 [INFO] backend.core.providers.groq_provider: [Groq] generate | Model: llama-3.3-70b-versatile | Latency: 1.19s | Tokens: 37 in, 443 out | Attempt: 1
+2026-06-25 19:55:02,663 [INFO] backend.core.services.ai_service: Groq Provider Health: OK
+2026-06-25 19:55:03,998 [INFO] httpx: HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-25 19:55:11,630 [INFO] backend.core.providers.openrouter_provider: [OpenRouter] generate | Model: deepseek/deepseek-chat-v3 | Latency: 8.97s | Tokens: 5 in, 316 out | Attempt: 1
+2026-06-25 19:55:11,631 [INFO] backend.core.services.ai_service: OpenRouter Provider Health: OK
+2026-06-25 19:55:12,748 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-25 19:55:12,751 [INFO] backend.core.providers.groq_provider: [Groq] generate | Model: llama-3.3-70b-versatile | Latency: 0.23s | Tokens: 75 in, 11 out | Attempt: 1
+2026-06-25 19:55:12,752 [INFO] root: [Translation] Provider: Groq | Latency: 226ms | Cache: MISS | Fallback: False
+2026-06-25 19:55:12,769 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-25 19:55:12,772 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-25 19:55:12,776 [INFO] backend.core.providers.groq_provider: [Groq] generate | Model: llama-3.3-70b-versatile | Latency: 0.25s | Tokens: 76 in, 12 out | Attempt: 1
+2026-06-25 19:55:12,777 [INFO] root: [Translation] Provider: Groq | Latency: 247ms | Cache: MISS | Fallback: False
+2026-06-25 19:55:12,802 [INFO] backend.core.providers.groq_provider: [Groq] generate | Model: llama-3.3-70b-versatile | Latency: 0.27s | Tokens: 76 in, 11 out | Attempt: 1
+2026-06-25 19:55:12,803 [INFO] root: [Translation] Provider: Groq | Latency: 272ms | Cache: MISS | Fallback: False
+2026-06-25 19:55:13,070 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-25 19:55:13,072 [INFO] backend.core.providers.groq_provider: [Groq] generate | Model: llama-3.3-70b-versatile | Latency: 0.24s | Tokens: 83 in, 19 out | Attempt: 1
+2026-06-25 19:55:13,072 [INFO] root: [Translation] Provider: Groq | Latency: 241ms | Cache: MISS | Fallback: False
+2026-06-25 19:55:13,090 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-25 19:55:13,092 [INFO] backend.core.providers.groq_provider: [Groq] generate | Model: llama-3.3-70b-versatile | Latency: 0.21s | Tokens: 80 in, 14 out | Attempt: 1
+2026-06-25 19:55:13,093 [INFO] root: [Translation] Provider: Groq | Latency: 208ms | Cache: MISS | Fallback: False
+2026-06-25 19:55:13,138 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-25 19:55:13,143 [INFO] backend.core.providers.groq_provider: [Groq] generate | Model: llama-3.3-70b-versatile | Latency: 0.26s | Tokens: 84 in, 18 out | Attempt: 1
+2026-06-25 19:55:13,143 [INFO] root: [Translation] Provider: Groq | Latency: 258ms | Cache: MISS | Fallback: False
+2026-06-25 19:55:13,334 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-25 19:55:13,336 [INFO] backend.core.providers.groq_provider: [Groq] generate | Model: llama-3.3-70b-versatile | Latency: 0.22s | Tokens: 76 in, 10 out | Attempt: 1
+2026-06-25 19:55:13,336 [INFO] root: [Translation] Provider: Groq | Latency: 222ms | Cache: MISS | Fallback: False
+2026-06-25 19:55:13,366 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-25 19:55:13,371 [INFO] backend.core.providers.groq_provider: [Groq] generate | Model: llama-3.3-70b-versatile | Latency: 0.21s | Tokens: 77 in, 10 out | Attempt: 1
+2026-06-25 19:55:13,372 [INFO] root: [Translation] Provider: Groq | Latency: 207ms | Cache: MISS | Fallback: False
+2026-06-25 19:55:13,408 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-25 19:55:13,410 [INFO] backend.core.providers.groq_provider: [Groq] generate | Model: llama-3.3-70b-versatile | Latency: 0.23s | Tokens: 75 in, 15 out | Attempt: 1
+2026-06-25 19:55:13,411 [INFO] root: [Translation] Provider: Groq | Latency: 231ms | Cache: MISS | Fallback: False
+2026-06-25 19:55:13,622 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-25 19:55:13,624 [INFO] backend.core.providers.groq_provider: [Groq] generate | Model: llama-3.3-70b-versatile | Latency: 0.23s | Tokens: 79 in, 18 out | Attempt: 1
+2026-06-25 19:55:13,625 [INFO] root: [Translation] Provider: Groq | Latency: 230ms | Cache: MISS | Fallback: False
+2026-06-25 19:55:13,639 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-25 19:55:13,642 [INFO] backend.core.providers.groq_provider: [Groq] generate | Model: llama-3.3-70b-versatile | Latency: 0.22s | Tokens: 75 in, 9 out | Attempt: 1
+2026-06-25 19:55:13,643 [INFO] root: [Translation] Provider: Groq | Latency: 216ms | Cache: MISS | Fallback: False
+2026-06-25 19:55:13,693 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: 505_With your hands around my 
+2026-06-25 19:55:13,698 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: 505_Or I did last time I check
+2026-06-25 19:55:13,707 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: 505_I'm not shy of a spark
+2026-06-25 19:55:13,881 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: 505_The knife twists at the th
+2026-06-25 19:55:13,900 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: 505_Frightened by the bite no 
+2026-06-25 19:55:13,902 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: 505_A middle of adventure, suc
+2026-06-25 19:55:13,997 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: 505_I'm going back to 505
+2026-06-25 19:55:14,045 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: 505_If it's a 7 hour flight
+2026-06-25 19:55:14,054 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: 505_Or a 45 minute drive
+2026-06-25 19:55:14,151 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: 505_In my imagination you're w
+2026-06-25 19:55:14,243 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: 505_With your hands between yo
+2026-06-25 19:55:17,977 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-25 19:55:17,978 [INFO] backend.core.providers.groq_provider: [Groq] generate | Model: llama-3.3-70b-versatile | Latency: 0.23s | Tokens: 77 in, 10 out | Attempt: 1
+2026-06-25 19:55:17,978 [INFO] root: [Translation] Provider: Groq | Latency: 234ms | Cache: MISS | Fallback: False
+2026-06-25 19:55:18,386 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: 505_But I crumble completely w
+2026-06-25 19:55:21,640 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-25 19:55:21,642 [INFO] backend.core.providers.groq_provider: [Groq] generate | Model: llama-3.3-70b-versatile | Latency: 0.29s | Tokens: 82 in, 20 out | Attempt: 1
+2026-06-25 19:55:21,642 [INFO] root: [Translation] Provider: Groq | Latency: 286ms | Cache: MISS | Fallback: False
+2026-06-25 19:55:21,744 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: 505_It seems like once again y
+2026-06-25 19:55:24,060 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: 505_I'm not shy of a spark
+2026-06-25 19:55:24,065 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: 505_Frightened by the bite no 
+2026-06-25 19:55:24,066 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: 505_The knife twists at the th
+2026-06-25 19:55:24,075 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: 505_A middle of adventure, suc
+2026-06-25 19:55:24,093 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: 505_I'm going back to 505
+2026-06-25 19:55:24,096 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: 505_If it's a 7 hour flight
+2026-06-25 19:55:24,117 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: 505_Or a 45 minute drive
+2026-06-25 19:55:24,139 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: 505_In my imagination you're w
+2026-06-25 19:55:24,170 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: 505_With your hands between yo
+2026-06-25 19:55:24,172 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: 505_But I crumble completely w
+2026-06-25 19:55:24,191 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: 505_It seems like once again y
+2026-06-25 19:55:25,032 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-25 19:55:25,036 [INFO] backend.core.providers.groq_provider: [Groq] generate | Model: llama-3.3-70b-versatile | Latency: 0.22s | Tokens: 80 in, 13 out | Attempt: 1
+2026-06-25 19:55:25,038 [INFO] root: [Translation] Provider: Groq | Latency: 225ms | Cache: MISS | Fallback: False
+2026-06-25 19:55:25,099 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: 505_I'm always just about to g
+2026-06-25 19:55:27,396 [INFO] httpx: HTTP Request: GET https://api.dictionaryapi.dev/api/v2/entries/en/minute "HTTP/1.1 200 OK"
+2026-06-25 19:55:27,490 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-25 19:55:27,491 [INFO] backend.core.providers.groq_provider: [Groq] generate_json | Model: llama-3.3-70b-versatile | Latency: 0.38s | Tokens: 253 in, 39 out | Attempt: 1
+2026-06-25 19:55:29,015 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-25 19:55:29,016 [INFO] backend.core.providers.groq_provider: [Groq] generate | Model: llama-3.3-70b-versatile | Latency: 0.29s | Tokens: 78 in, 10 out | Attempt: 1
+2026-06-25 19:55:29,016 [INFO] root: [Translation] Provider: Groq | Latency: 286ms | Cache: MISS | Fallback: False
+2026-06-25 19:55:32,243 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: 505_Take my hands off of your 
+2026-06-25 19:56:12,510 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-25 19:56:12,511 [INFO] backend.core.providers.groq_provider: [Groq] generate | Model: llama-3.3-70b-versatile | Latency: 0.22s | Tokens: 72 in, 5 out | Attempt: 1
+2026-06-25 19:56:12,511 [INFO] root: [Translation] Provider: Groq | Latency: 224ms | Cache: MISS | Fallback: False
+2026-06-25 19:56:12,549 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-25 19:56:12,553 [INFO] backend.core.providers.groq_provider: [Groq] generate | Model: llama-3.3-70b-versatile | Latency: 0.27s | Tokens: 83 in, 19 out | Attempt: 1
+2026-06-25 19:56:12,554 [INFO] root: [Translation] Provider: Groq | Latency: 268ms | Cache: MISS | Fallback: False
+2026-06-25 19:56:15,927 [INFO] httpx: HTTP Request: GET https://api.dictionaryapi.dev/api/v2/entries/en/smile "HTTP/1.1 200 OK"
+2026-06-25 19:56:16,076 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-25 19:56:16,077 [INFO] backend.core.providers.groq_provider: [Groq] generate_json | Model: llama-3.3-70b-versatile | Latency: 0.39s | Tokens: 250 in, 50 out | Attempt: 1
+2026-06-25 19:56:29,460 [INFO] httpx: HTTP Request: GET https://api.dictionaryapi.dev/api/v2/entries/en/magic "HTTP/1.1 200 OK"
+2026-06-25 19:56:29,487 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-25 19:56:29,493 [INFO] backend.core.providers.groq_provider: [Groq] generate | Model: llama-3.3-70b-versatile | Latency: 0.26s | Tokens: 74 in, 7 out | Attempt: 1
+2026-06-25 19:56:29,493 [INFO] root: [Translation] Provider: Groq | Latency: 262ms | Cache: MISS | Fallback: False
+2026-06-25 19:56:29,518 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-25 19:56:29,521 [INFO] backend.core.providers.groq_provider: [Groq] generate | Model: llama-3.3-70b-versatile | Latency: 0.29s | Tokens: 75 in, 7 out | Attempt: 1
+2026-06-25 19:56:29,522 [INFO] root: [Translation] Provider: Groq | Latency: 293ms | Cache: MISS | Fallback: False
+2026-06-25 19:56:29,561 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-25 19:56:29,567 [INFO] backend.core.providers.groq_provider: [Groq] generate | Model: llama-3.3-70b-versatile | Latency: 0.33s | Tokens: 81 in, 14 out | Attempt: 1
+2026-06-25 19:56:29,568 [INFO] root: [Translation] Provider: Groq | Latency: 335ms | Cache: MISS | Fallback: False
+2026-06-25 19:56:29,799 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-25 19:56:29,802 [INFO] backend.core.providers.groq_provider: [Groq] generate | Model: llama-3.3-70b-versatile | Latency: 0.20s | Tokens: 79 in, 11 out | Attempt: 1
+2026-06-25 19:56:29,802 [INFO] root: [Translation] Provider: Groq | Latency: 200ms | Cache: MISS | Fallback: False
+2026-06-25 19:56:29,827 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-25 19:56:29,830 [INFO] backend.core.providers.groq_provider: [Groq] generate | Model: llama-3.3-70b-versatile | Latency: 0.23s | Tokens: 78 in, 12 out | Attempt: 1
+2026-06-25 19:56:29,832 [INFO] root: [Translation] Provider: Groq | Latency: 233ms | Cache: MISS | Fallback: False
+2026-06-25 19:56:29,853 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-25 19:56:29,855 [INFO] backend.core.providers.groq_provider: [Groq] generate | Model: llama-3.3-70b-versatile | Latency: 0.22s | Tokens: 80 in, 13 out | Attempt: 1
+2026-06-25 19:56:29,856 [INFO] root: [Translation] Provider: Groq | Latency: 218ms | Cache: MISS | Fallback: False
+2026-06-25 19:56:29,908 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-25 19:56:29,911 [INFO] backend.core.providers.groq_provider: [Groq] generate_json | Model: llama-3.3-70b-versatile | Latency: 0.70s | Tokens: 253 in, 59 out | Attempt: 1
+2026-06-25 19:56:40,563 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-25 19:56:40,567 [INFO] backend.core.providers.groq_provider: [Groq] generate | Model: llama-3.3-70b-versatile | Latency: 0.20s | Tokens: 74 in, 7 out | Attempt: 1
+2026-06-25 19:56:40,569 [INFO] root: [Translation] Provider: Groq | Latency: 203ms | Cache: MISS | Fallback: False
+2026-06-25 19:56:41,569 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-25 19:56:41,572 [INFO] backend.core.providers.groq_provider: [Groq] generate | Model: llama-3.3-70b-versatile | Latency: 0.21s | Tokens: 73 in, 7 out | Attempt: 1
+2026-06-25 19:56:41,573 [INFO] root: [Translation] Provider: Groq | Latency: 208ms | Cache: MISS | Fallback: False
+2026-06-25 19:56:45,578 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-25 19:56:45,581 [INFO] backend.core.providers.groq_provider: [Groq] generate | Model: llama-3.3-70b-versatile | Latency: 0.22s | Tokens: 75 in, 9 out | Attempt: 1
+2026-06-25 19:56:45,582 [INFO] root: [Translation] Provider: Groq | Latency: 222ms | Cache: MISS | Fallback: False
+2026-06-25 19:56:48,539 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-25 19:56:48,542 [INFO] backend.core.providers.groq_provider: [Groq] generate | Model: llama-3.3-70b-versatile | Latency: 0.19s | Tokens: 76 in, 9 out | Attempt: 1
+2026-06-25 19:56:48,544 [INFO] root: [Translation] Provider: Groq | Latency: 188ms | Cache: MISS | Fallback: False
+2026-06-25 19:56:53,540 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-25 19:56:53,543 [INFO] backend.core.providers.groq_provider: [Groq] generate | Model: llama-3.3-70b-versatile | Latency: 0.17s | Tokens: 73 in, 11 out | Attempt: 1
+2026-06-25 19:56:53,544 [INFO] root: [Translation] Provider: Groq | Latency: 171ms | Cache: MISS | Fallback: False
+2026-06-25 19:56:56,548 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-25 19:56:56,552 [INFO] backend.core.providers.groq_provider: [Groq] generate | Model: llama-3.3-70b-versatile | Latency: 0.17s | Tokens: 75 in, 9 out | Attempt: 1
+2026-06-25 19:56:56,553 [INFO] root: [Translation] Provider: Groq | Latency: 166ms | Cache: MISS | Fallback: False
+2026-06-25 19:56:57,686 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-25 19:56:57,687 [INFO] backend.core.providers.groq_provider: [Groq] generate | Model: llama-3.3-70b-versatile | Latency: 0.20s | Tokens: 76 in, 17 out | Attempt: 1
+2026-06-25 19:56:57,687 [INFO] root: [Translation] Provider: Groq | Latency: 197ms | Cache: MISS | Fallback: False
+2026-06-25 19:56:58,022 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-25 19:56:58,023 [INFO] backend.core.providers.groq_provider: [Groq] generate | Model: llama-3.3-70b-versatile | Latency: 0.26s | Tokens: 80 in, 22 out | Attempt: 1
+2026-06-25 19:56:58,023 [INFO] root: [Translation] Provider: Groq | Latency: 263ms | Cache: MISS | Fallback: False
+2026-06-25 19:56:58,916 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-25 19:56:58,917 [INFO] backend.core.providers.groq_provider: [Groq] generate | Model: llama-3.3-70b-versatile | Latency: 0.19s | Tokens: 79 in, 13 out | Attempt: 1
+2026-06-25 19:56:58,918 [INFO] root: [Translation] Provider: Groq | Latency: 193ms | Cache: MISS | Fallback: False
+2026-06-25 19:56:59,941 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-25 19:56:59,942 [INFO] backend.core.providers.groq_provider: [Groq] generate | Model: llama-3.3-70b-versatile | Latency: 0.20s | Tokens: 78 in, 18 out | Attempt: 1
+2026-06-25 19:56:59,943 [INFO] root: [Translation] Provider: Groq | Latency: 202ms | Cache: MISS | Fallback: False
+2026-06-25 19:57:00,947 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-25 19:57:00,948 [INFO] backend.core.providers.groq_provider: [Groq] generate | Model: llama-3.3-70b-versatile | Latency: 0.22s | Tokens: 80 in, 13 out | Attempt: 1
+2026-06-25 19:57:00,948 [INFO] root: [Translation] Provider: Groq | Latency: 215ms | Cache: MISS | Fallback: False
+2026-06-25 19:57:02,938 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-25 19:57:02,939 [INFO] backend.core.providers.groq_provider: [Groq] generate | Model: llama-3.3-70b-versatile | Latency: 0.20s | Tokens: 79 in, 10 out | Attempt: 1
+2026-06-25 19:57:02,939 [INFO] root: [Translation] Provider: Groq | Latency: 205ms | Cache: MISS | Fallback: False
+2026-06-25 19:57:04,938 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-25 19:57:04,940 [INFO] backend.core.providers.groq_provider: [Groq] generate | Model: llama-3.3-70b-versatile | Latency: 0.20s | Tokens: 79 in, 16 out | Attempt: 1
+2026-06-25 19:57:04,940 [INFO] root: [Translation] Provider: Groq | Latency: 198ms | Cache: MISS | Fallback: False
+2026-06-25 19:57:06,913 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-25 19:57:06,914 [INFO] backend.core.providers.groq_provider: [Groq] generate | Model: llama-3.3-70b-versatile | Latency: 0.17s | Tokens: 78 in, 11 out | Attempt: 1
+2026-06-25 19:57:06,914 [INFO] root: [Translation] Provider: Groq | Latency: 172ms | Cache: MISS | Fallback: False
+2026-06-25 19:57:12,646 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: New Gold (feat. Tame Impala an
+2026-06-25 19:57:12,651 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: New Gold (feat. Tame Impala an
+2026-06-25 19:57:12,653 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: New Gold (feat. Tame Impala an
+2026-06-25 19:57:12,704 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: New Gold (feat. Tame Impala an
+2026-06-25 19:57:12,705 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: New Gold (feat. Tame Impala an
+2026-06-25 19:57:12,706 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: New Gold (feat. Tame Impala an
+2026-06-25 19:57:12,732 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: New Gold (feat. Tame Impala an
+2026-06-25 19:57:12,735 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: New Gold (feat. Tame Impala an
+2026-06-25 19:57:12,739 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: New Gold (feat. Tame Impala an
+2026-06-25 19:57:12,763 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: New Gold (feat. Tame Impala an
+2026-06-25 19:57:12,764 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: New Gold (feat. Tame Impala an
+2026-06-25 19:57:14,104 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-25 19:57:14,104 [INFO] backend.core.providers.groq_provider: [Groq] generate | Model: llama-3.3-70b-versatile | Latency: 0.37s | Tokens: 80 in, 15 out | Attempt: 1
+2026-06-25 19:57:14,105 [INFO] root: [Translation] Provider: Groq | Latency: 368ms | Cache: MISS | Fallback: False
+2026-06-25 19:57:14,740 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: New Gold (feat. Tame Impala an
+2026-06-25 19:57:16,730 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: New Gold (feat. Tame Impala an
+2026-06-25 19:57:18,736 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: New Gold (feat. Tame Impala an
+2026-06-25 19:57:18,940 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-25 19:57:18,941 [INFO] backend.core.providers.groq_provider: [Groq] generate | Model: llama-3.3-70b-versatile | Latency: 0.19s | Tokens: 73 in, 11 out | Attempt: 1
+2026-06-25 19:57:18,942 [INFO] root: [Translation] Provider: Groq | Latency: 194ms | Cache: MISS | Fallback: False
+2026-06-25 19:57:20,930 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-25 19:57:20,930 [INFO] backend.core.providers.groq_provider: [Groq] generate | Model: llama-3.3-70b-versatile | Latency: 0.19s | Tokens: 74 in, 8 out | Attempt: 1
+2026-06-25 19:57:20,930 [INFO] root: [Translation] Provider: Groq | Latency: 189ms | Cache: MISS | Fallback: False
+2026-06-25 19:57:22,910 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-25 19:57:22,911 [INFO] backend.core.providers.groq_provider: [Groq] generate | Model: llama-3.3-70b-versatile | Latency: 0.17s | Tokens: 75 in, 9 out | Attempt: 1
+2026-06-25 19:57:22,911 [INFO] root: [Translation] Provider: Groq | Latency: 174ms | Cache: MISS | Fallback: False
+2026-06-25 19:57:25,929 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-25 19:57:25,930 [INFO] backend.core.providers.groq_provider: [Groq] generate | Model: llama-3.3-70b-versatile | Latency: 0.17s | Tokens: 79 in, 9 out | Attempt: 1
+2026-06-25 19:57:25,930 [INFO] root: [Translation] Provider: Groq | Latency: 174ms | Cache: MISS | Fallback: False
+2026-06-25 19:57:29,934 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-25 19:57:29,934 [INFO] backend.core.providers.groq_provider: [Groq] generate | Model: llama-3.3-70b-versatile | Latency: 0.19s | Tokens: 76 in, 14 out | Attempt: 1
+2026-06-25 19:57:29,934 [INFO] root: [Translation] Provider: Groq | Latency: 191ms | Cache: MISS | Fallback: False
+2026-06-25 19:57:33,962 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-25 19:57:33,962 [INFO] backend.core.providers.groq_provider: [Groq] generate | Model: llama-3.3-70b-versatile | Latency: 0.21s | Tokens: 74 in, 13 out | Attempt: 1
+2026-06-25 19:57:33,963 [INFO] root: [Translation] Provider: Groq | Latency: 214ms | Cache: MISS | Fallback: False
+2026-06-25 19:57:34,924 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-25 19:57:34,925 [INFO] backend.core.providers.groq_provider: [Groq] generate | Model: llama-3.3-70b-versatile | Latency: 0.17s | Tokens: 74 in, 9 out | Attempt: 1
+2026-06-25 19:57:34,926 [INFO] root: [Translation] Provider: Groq | Latency: 173ms | Cache: MISS | Fallback: False
+2026-06-25 19:57:35,910 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-25 19:57:35,910 [INFO] backend.core.providers.groq_provider: [Groq] generate | Model: llama-3.3-70b-versatile | Latency: 0.18s | Tokens: 76 in, 12 out | Attempt: 1
+2026-06-25 19:57:35,911 [INFO] root: [Translation] Provider: Groq | Latency: 180ms | Cache: MISS | Fallback: False
+2026-06-25 19:57:36,942 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-25 19:57:36,943 [INFO] backend.core.providers.groq_provider: [Groq] generate | Model: llama-3.3-70b-versatile | Latency: 0.20s | Tokens: 71 in, 7 out | Attempt: 1
+2026-06-25 19:57:36,943 [INFO] root: [Translation] Provider: Groq | Latency: 198ms | Cache: MISS | Fallback: False
+2026-06-25 19:57:37,952 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-25 19:57:37,954 [INFO] backend.core.providers.groq_provider: [Groq] generate | Model: llama-3.3-70b-versatile | Latency: 0.22s | Tokens: 74 in, 12 out | Attempt: 1
+2026-06-25 19:57:37,956 [INFO] root: [Translation] Provider: Groq | Latency: 219ms | Cache: MISS | Fallback: False
+2026-06-25 19:57:38,912 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-25 19:57:38,913 [INFO] backend.core.providers.groq_provider: [Groq] generate | Model: llama-3.3-70b-versatile | Latency: 0.17s | Tokens: 76 in, 11 out | Attempt: 1
+2026-06-25 19:57:38,913 [INFO] root: [Translation] Provider: Groq | Latency: 172ms | Cache: MISS | Fallback: False
+2026-06-25 19:57:39,982 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-25 19:57:39,983 [INFO] backend.core.providers.groq_provider: [Groq] generate | Model: llama-3.3-70b-versatile | Latency: 0.25s | Tokens: 74 in, 18 out | Attempt: 1
+2026-06-25 19:57:39,983 [INFO] root: [Translation] Provider: Groq | Latency: 250ms | Cache: MISS | Fallback: False
+2026-06-25 19:57:40,913 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-25 19:57:40,914 [INFO] backend.core.providers.groq_provider: [Groq] generate | Model: llama-3.3-70b-versatile | Latency: 0.17s | Tokens: 77 in, 9 out | Attempt: 1
+2026-06-25 19:57:40,914 [INFO] root: [Translation] Provider: Groq | Latency: 174ms | Cache: MISS | Fallback: False
+2026-06-25 19:57:42,892 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-25 19:57:42,893 [INFO] backend.core.providers.groq_provider: [Groq] generate | Model: llama-3.3-70b-versatile | Latency: 0.15s | Tokens: 74 in, 6 out | Attempt: 1
+2026-06-25 19:57:42,893 [INFO] root: [Translation] Provider: Groq | Latency: 148ms | Cache: MISS | Fallback: False
+2026-06-25 19:57:43,910 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-25 19:57:43,911 [INFO] backend.core.providers.groq_provider: [Groq] generate | Model: llama-3.3-70b-versatile | Latency: 0.17s | Tokens: 73 in, 8 out | Attempt: 1
+2026-06-25 19:57:43,911 [INFO] root: [Translation] Provider: Groq | Latency: 168ms | Cache: MISS | Fallback: False
+2026-06-25 19:57:45,017 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-25 19:57:45,018 [INFO] backend.core.providers.groq_provider: [Groq] generate | Model: llama-3.3-70b-versatile | Latency: 0.29s | Tokens: 76 in, 10 out | Attempt: 1
+2026-06-25 19:57:45,018 [INFO] root: [Translation] Provider: Groq | Latency: 290ms | Cache: MISS | Fallback: False
+2026-06-25 19:57:45,893 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-25 19:57:45,894 [INFO] backend.core.providers.groq_provider: [Groq] generate | Model: llama-3.3-70b-versatile | Latency: 0.15s | Tokens: 74 in, 9 out | Attempt: 1
+2026-06-25 19:57:45,895 [INFO] root: [Translation] Provider: Groq | Latency: 154ms | Cache: MISS | Fallback: False
+2026-06-25 19:57:46,990 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-25 19:57:46,992 [INFO] backend.core.providers.groq_provider: [Groq] generate | Model: llama-3.3-70b-versatile | Latency: 0.23s | Tokens: 73 in, 8 out | Attempt: 1
+2026-06-25 19:57:46,992 [INFO] root: [Translation] Provider: Groq | Latency: 230ms | Cache: MISS | Fallback: False
+2026-06-25 19:57:47,911 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-25 19:57:47,914 [INFO] backend.core.providers.groq_provider: [Groq] generate | Model: llama-3.3-70b-versatile | Latency: 0.18s | Tokens: 79 in, 12 out | Attempt: 1
+2026-06-25 19:57:47,915 [INFO] root: [Translation] Provider: Groq | Latency: 184ms | Cache: MISS | Fallback: False
+2026-06-25 19:57:48,914 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-25 19:57:48,915 [INFO] backend.core.providers.groq_provider: [Groq] generate | Model: llama-3.3-70b-versatile | Latency: 0.18s | Tokens: 74 in, 8 out | Attempt: 1
+2026-06-25 19:57:48,915 [INFO] root: [Translation] Provider: Groq | Latency: 180ms | Cache: MISS | Fallback: False
+2026-06-25 19:57:49,906 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-25 19:57:49,907 [INFO] backend.core.providers.groq_provider: [Groq] generate | Model: llama-3.3-70b-versatile | Latency: 0.17s | Tokens: 75 in, 14 out | Attempt: 1
+2026-06-25 19:57:49,908 [INFO] root: [Translation] Provider: Groq | Latency: 166ms | Cache: MISS | Fallback: False
+2026-06-25 19:57:50,897 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-25 19:57:50,899 [INFO] backend.core.providers.groq_provider: [Groq] generate | Model: llama-3.3-70b-versatile | Latency: 0.16s | Tokens: 75 in, 11 out | Attempt: 1
+2026-06-25 19:57:50,899 [INFO] root: [Translation] Provider: Groq | Latency: 156ms | Cache: MISS | Fallback: False
+2026-06-25 19:57:52,941 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-25 19:57:52,944 [INFO] backend.core.providers.groq_provider: [Groq] generate | Model: llama-3.3-70b-versatile | Latency: 0.20s | Tokens: 74 in, 8 out | Attempt: 1
+2026-06-25 19:57:52,944 [INFO] root: [Translation] Provider: Groq | Latency: 199ms | Cache: MISS | Fallback: False
+2026-06-25 19:57:53,915 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-25 19:57:53,916 [INFO] backend.core.providers.groq_provider: [Groq] generate | Model: llama-3.3-70b-versatile | Latency: 0.18s | Tokens: 75 in, 8 out | Attempt: 1
+2026-06-25 19:57:53,916 [INFO] root: [Translation] Provider: Groq | Latency: 179ms | Cache: MISS | Fallback: False
+2026-06-25 19:57:55,958 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-25 19:57:55,959 [INFO] backend.core.providers.groq_provider: [Groq] generate | Model: llama-3.3-70b-versatile | Latency: 0.22s | Tokens: 76 in, 9 out | Attempt: 1
+2026-06-25 19:57:55,959 [INFO] root: [Translation] Provider: Groq | Latency: 219ms | Cache: MISS | Fallback: False
+2026-06-25 19:57:56,948 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-25 19:57:56,949 [INFO] backend.core.providers.groq_provider: [Groq] generate | Model: llama-3.3-70b-versatile | Latency: 0.21s | Tokens: 75 in, 11 out | Attempt: 1
+2026-06-25 19:57:56,949 [INFO] root: [Translation] Provider: Groq | Latency: 205ms | Cache: MISS | Fallback: False
+2026-06-25 19:58:11,829 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: New Gold (feat. Tame Impala an
+2026-06-25 19:58:12,524 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-25 19:58:12,525 [INFO] backend.core.providers.groq_provider: [Groq] generate | Model: llama-3.3-70b-versatile | Latency: 0.19s | Tokens: 73 in, 5 out | Attempt: 1
+2026-06-25 19:58:12,526 [INFO] root: [Translation] Provider: Groq | Latency: 188ms | Cache: MISS | Fallback: False
+2026-06-25 19:58:12,542 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-25 19:58:12,544 [INFO] backend.core.providers.groq_provider: [Groq] generate | Model: llama-3.3-70b-versatile | Latency: 0.20s | Tokens: 71 in, 4 out | Attempt: 1
+2026-06-25 19:58:12,544 [INFO] root: [Translation] Provider: Groq | Latency: 202ms | Cache: MISS | Fallback: False
+2026-06-25 19:58:12,559 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-25 19:58:12,560 [INFO] backend.core.providers.groq_provider: [Groq] generate | Model: llama-3.3-70b-versatile | Latency: 0.22s | Tokens: 72 in, 4 out | Attempt: 1
+2026-06-25 19:58:12,561 [INFO] root: [Translation] Provider: Groq | Latency: 217ms | Cache: MISS | Fallback: False
+2026-06-25 19:58:12,764 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-25 19:58:12,765 [INFO] backend.core.providers.groq_provider: [Groq] generate | Model: llama-3.3-70b-versatile | Latency: 0.19s | Tokens: 72 in, 5 out | Attempt: 1
+2026-06-25 19:58:12,765 [INFO] root: [Translation] Provider: Groq | Latency: 190ms | Cache: MISS | Fallback: False
+2026-06-25 19:58:12,954 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: New Gold (feat. Tame Impala an
+2026-06-25 19:58:12,955 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: New Gold (feat. Tame Impala an
+2026-06-25 19:58:12,956 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: New Gold (feat. Tame Impala an
+2026-06-25 19:58:12,961 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: New Gold (feat. Tame Impala an
+2026-06-25 19:58:12,992 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: New Gold (feat. Tame Impala an
+2026-06-25 19:58:12,993 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: New Gold (feat. Tame Impala an
+2026-06-25 19:58:12,997 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: New Gold (feat. Tame Impala an
+2026-06-25 19:58:13,049 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: New Gold (feat. Tame Impala an
+2026-06-25 19:58:13,051 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: New Gold (feat. Tame Impala an
+2026-06-25 19:58:13,054 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: New Gold (feat. Tame Impala an
+2026-06-25 19:58:13,246 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-25 19:58:13,247 [INFO] backend.core.providers.groq_provider: [Groq] generate | Model: llama-3.3-70b-versatile | Latency: 0.14s | Tokens: 70 in, 3 out | Attempt: 1
+2026-06-25 19:58:13,247 [INFO] root: [Translation] Provider: Groq | Latency: 144ms | Cache: MISS | Fallback: False
+2026-06-25 19:59:09,190 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: New Gold (feat. Tame Impala an
+2026-06-25 19:59:09,627 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-25 19:59:09,634 [INFO] backend.core.providers.groq_provider: [Groq] generate | Model: llama-3.3-70b-versatile | Latency: 0.48s | Tokens: 70 in, 4 out | Attempt: 1
+2026-06-25 19:59:09,636 [INFO] root: [Translation] Provider: Groq | Latency: 483ms | Cache: MISS | Fallback: False
+2026-06-25 19:59:09,709 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-25 19:59:09,716 [INFO] backend.core.providers.groq_provider: [Groq] generate | Model: llama-3.3-70b-versatile | Latency: 0.53s | Tokens: 83 in, 16 out | Attempt: 1
+2026-06-25 19:59:09,719 [INFO] root: [Translation] Provider: Groq | Latency: 530ms | Cache: MISS | Fallback: False
+2026-06-25 19:59:10,681 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-25 19:59:10,685 [INFO] backend.core.providers.groq_provider: [Groq] generate | Model: llama-3.3-70b-versatile | Latency: 0.20s | Tokens: 79 in, 11 out | Attempt: 1
+2026-06-25 19:59:10,687 [INFO] root: [Translation] Provider: Groq | Latency: 197ms | Cache: MISS | Fallback: False
+2026-06-25 19:59:12,114 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: New Gold (feat. Tame Impala an
+2026-06-25 19:59:13,562 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: New Gold (feat. Tame Impala an
+2026-06-25 19:59:13,576 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: New Gold (feat. Tame Impala an
+2026-06-25 19:59:23,301 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/audio/transcriptions "HTTP/1.1 200 OK"
+2026-06-25 19:59:23,315 [INFO] backend.core.providers.groq_whisper_provider: [Groq Whisper] transcribe_audio | Latency: 2.88s
+2026-06-25 19:59:24,578 [INFO] httpx: HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-25 19:59:25,811 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-25 19:59:25,814 [INFO] backend.core.providers.groq_provider: [Groq] generate | Model: llama-3.3-70b-versatile | Latency: 0.25s | Tokens: 78 in, 11 out | Attempt: 1
+2026-06-25 19:59:25,814 [INFO] root: [Translation] Provider: Groq | Latency: 254ms | Cache: MISS | Fallback: False
+2026-06-25 19:59:29,964 [INFO] backend.core.providers.openrouter_provider: [OpenRouter] generate | Model: deepseek/deepseek-chat-v3 | Latency: 6.62s | Tokens: 1164 in, 233 out | Attempt: 1
+2026-06-25 19:59:30,593 [INFO] httpx: HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-25 19:59:30,849 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-25 19:59:30,851 [INFO] backend.core.providers.groq_provider: [Groq] generate | Model: llama-3.3-70b-versatile | Latency: 0.33s | Tokens: 86 in, 23 out | Attempt: 1
+2026-06-25 19:59:30,852 [INFO] root: [Translation] Provider: Groq | Latency: 328ms | Cache: MISS | Fallback: False
+2026-06-25 19:59:33,804 [INFO] backend.core.providers.openrouter_provider: [OpenRouter] generate_json | Model: deepseek/deepseek-chat-v3 | Latency: 3.80s | Tokens: 1733 in, 228 out | Attempt: 1
+2026-06-25 19:59:34,764 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-25 19:59:34,767 [INFO] backend.core.providers.groq_provider: [Groq] generate | Model: llama-3.3-70b-versatile | Latency: 0.23s | Tokens: 84 in, 17 out | Attempt: 1
+2026-06-25 19:59:34,767 [INFO] root: [Translation] Provider: Groq | Latency: 229ms | Cache: MISS | Fallback: False
+2026-06-25 19:59:51,914 [INFO] httpx: HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-25 19:59:55,035 [INFO] httpx: HTTP Request: GET https://api.dictionaryapi.dev/api/v2/entries/en/disappear "HTTP/1.1 200 OK"
+2026-06-25 19:59:55,214 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-25 19:59:55,216 [INFO] backend.core.providers.groq_provider: [Groq] generate_json | Model: llama-3.3-70b-versatile | Latency: 0.40s | Tokens: 262 in, 52 out | Attempt: 1
+2026-06-25 20:00:05,469 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: 505_I'm going back to 505
+2026-06-25 20:00:05,474 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: 505_Or a 45 minute drive
+2026-06-25 20:00:05,741 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-25 20:00:05,742 [INFO] backend.core.providers.groq_provider: [Groq] generate | Model: llama-3.3-70b-versatile | Latency: 0.26s | Tokens: 77 in, 12 out | Attempt: 1
+2026-06-25 20:00:05,742 [INFO] root: [Translation] Provider: Groq | Latency: 265ms | Cache: MISS | Fallback: False
+2026-06-25 20:00:05,759 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-25 20:00:05,762 [INFO] backend.core.providers.groq_provider: [Groq] generate | Model: llama-3.3-70b-versatile | Latency: 0.28s | Tokens: 72 in, 5 out | Attempt: 1
+2026-06-25 20:00:05,762 [INFO] root: [Translation] Provider: Groq | Latency: 278ms | Cache: MISS | Fallback: False
+2026-06-25 20:00:05,796 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: 505_With your hands between yo
+2026-06-25 20:00:05,805 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-25 20:00:05,807 [INFO] backend.core.providers.groq_provider: [Groq] generate | Model: llama-3.3-70b-versatile | Latency: 0.30s | Tokens: 76 in, 14 out | Attempt: 1
+2026-06-25 20:00:05,808 [INFO] root: [Translation] Provider: Groq | Latency: 298ms | Cache: MISS | Fallback: False
+2026-06-25 20:00:11,810 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-25 20:00:11,814 [INFO] backend.core.providers.groq_provider: [Groq] generate | Model: llama-3.3-70b-versatile | Latency: 0.35s | Tokens: 74 in, 10 out | Attempt: 1
+2026-06-25 20:00:11,819 [INFO] root: [Translation] Provider: Groq | Latency: 353ms | Cache: MISS | Fallback: False
+2026-06-25 20:00:13,773 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-25 20:00:13,781 [INFO] backend.core.providers.groq_provider: [Groq] generate | Model: llama-3.3-70b-versatile | Latency: 0.30s | Tokens: 76 in, 8 out | Attempt: 1
+2026-06-25 20:00:13,788 [INFO] root: [Translation] Provider: Groq | Latency: 305ms | Cache: MISS | Fallback: False
+2026-06-25 20:00:14,058 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: 505_I'm going back to 505
+2026-06-25 20:00:14,066 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: 505_If it's a 7 hours flight
+2026-06-25 20:00:14,074 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: 505_Or a 45 minute drive
+2026-06-25 20:00:14,204 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: 505_In my imagination
+2026-06-25 20:00:14,237 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: 505_You're waiting lying on yo
+2026-06-25 20:00:14,238 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: 505_With your hands between yo
+2026-06-25 20:00:14,261 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: 505_Stop and wait a sec
+2026-06-25 20:00:18,679 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-25 20:00:18,680 [INFO] backend.core.providers.groq_provider: [Groq] generate | Model: llama-3.3-70b-versatile | Latency: 0.21s | Tokens: 76 in, 13 out | Attempt: 1
+2026-06-25 20:00:18,681 [INFO] root: [Translation] Provider: Groq | Latency: 207ms | Cache: MISS | Fallback: False
+2026-06-25 20:00:22,811 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-25 20:00:22,812 [INFO] backend.core.providers.groq_provider: [Groq] generate | Model: llama-3.3-70b-versatile | Latency: 0.34s | Tokens: 74 in, 11 out | Attempt: 1
+2026-06-25 20:00:22,813 [INFO] root: [Translation] Provider: Groq | Latency: 341ms | Cache: MISS | Fallback: False
+2026-06-25 20:00:25,458 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: 505_With your hands around my 
+2026-06-25 20:00:34,466 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: 505_Or I did last time I check
+2026-06-25 20:00:38,473 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: 505_I'm not shy of a spark
+2026-06-25 20:00:41,460 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: 505_The knife twists at the th
+2026-06-25 20:00:45,459 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: 505_Frightened by the bite no 
+2026-06-25 20:00:49,460 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: 505_A middle of adventure, suc
+2026-06-25 20:01:02,473 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: 505_If it's a 7 hour flight
+2026-06-25 20:01:11,986 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: 505_When you look at me like t
+2026-06-25 20:01:12,844 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: 505_My darling what did you ex
+2026-06-25 20:01:12,849 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: 505_I probably still adore you
+2026-06-25 20:01:12,856 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: 505_With your hands around my 
+2026-06-25 20:01:12,868 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: 505_Or I did last time I check
+2026-06-25 20:01:12,920 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: 505_I'm not shy of a spark
+2026-06-25 20:01:12,925 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: 505_Frightened by the bite no 
+2026-06-25 20:01:12,929 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: 505_The knife twists at the th
+2026-06-25 20:01:12,969 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: 505_A middle of adventure, suc
+2026-06-25 20:01:12,973 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: 505_If it's a 7 hour flight
+2026-06-25 20:01:13,460 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: 505_In my imagination you're w
+2026-06-25 20:01:29,470 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: 505_But I crumble completely w
+2026-06-25 20:01:34,286 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: 505_It seems like once again y
+2026-06-25 20:01:36,494 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: 505_I'm always just about to g
+2026-06-25 20:01:48,229 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: 505_Take my hands off of your 
+2026-06-25 20:01:58,379 [INFO] httpx: HTTP Request: GET https://api.dictionaryapi.dev/api/v2/entries/en/thighs "HTTP/1.1 200 OK"
+2026-06-25 20:01:58,597 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-25 20:01:58,602 [INFO] backend.core.providers.groq_provider: [Groq] generate_json | Model: llama-3.3-70b-versatile | Latency: 0.61s | Tokens: 253 in, 57 out | Attempt: 1
+2026-06-25 20:02:12,011 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: 505_In my imagination you're w
+2026-06-25 20:02:12,953 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: 505_But I crumble completely w
+2026-06-25 20:02:12,959 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: 505_It seems like once again y
+2026-06-25 20:02:12,972 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: 505_I'm always just about to g
+2026-06-25 20:02:12,981 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: 505_Take my hands off of your 
+2026-06-25 20:02:24,247 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: 505_If it's a 7 hour flight or
+2026-06-25 20:02:43,250 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: 505_And a smile
+2026-06-25 20:03:13,073 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: 505_If it's a 7 hour flight or
+2026-06-25 20:03:13,074 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: 505_And a smile
+2026-06-25 20:04:46,747 [WARNING] backend.core.services.lrclib_service: LRCLIB SEARCH ERROR on attempt 1: ReadTimeout(ReadTimeoutError("HTTPSConnectionPool(host='lrclib.net', port=443): Read timed out. (read timeout=15)"))
+2026-06-25 20:04:47,324 [WARNING] backend.core.services.lrclib_service: LRCLIB SEARCH ERROR on attempt 1: ReadTimeout(ReadTimeoutError("HTTPSConnectionPool(host='lrclib.net', port=443): Read timed out. (read timeout=15)"))
+2026-06-25 20:05:16,694 [WARNING] backend.core.services.lrclib_service: LRCLIB GET ERROR on attempt 1: ReadTimeout(ReadTimeoutError("HTTPSConnectionPool(host='lrclib.net', port=443): Read timed out. (read timeout=15)"))
+2026-06-25 20:07:46,125 [WARNING] backend.core.services.lrclib_service: LRCLIB SEARCH ERROR on attempt 1: ReadTimeout(ReadTimeoutError("HTTPSConnectionPool(host='lrclib.net', port=443): Read timed out. (read timeout=15)"))
+2026-06-25 20:08:13,374 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-25 20:08:13,380 [INFO] backend.core.providers.groq_provider: [Groq] generate | Model: llama-3.3-70b-versatile | Latency: 0.50s | Tokens: 79 in, 16 out | Attempt: 1
+2026-06-25 20:08:13,381 [INFO] root: [Translation] Provider: Groq | Latency: 499ms | Cache: MISS | Fallback: False
+2026-06-25 20:08:13,414 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-25 20:08:13,416 [INFO] backend.core.providers.groq_provider: [Groq] generate | Model: llama-3.3-70b-versatile | Latency: 0.53s | Tokens: 80 in, 20 out | Attempt: 1
+2026-06-25 20:08:13,417 [INFO] root: [Translation] Provider: Groq | Latency: 532ms | Cache: MISS | Fallback: False
+2026-06-25 20:08:13,440 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-25 20:08:13,443 [INFO] backend.core.providers.groq_provider: [Groq] generate | Model: llama-3.3-70b-versatile | Latency: 0.64s | Tokens: 80 in, 13 out | Attempt: 1
+2026-06-25 20:08:13,443 [INFO] root: [Translation] Provider: Groq | Latency: 648ms | Cache: MISS | Fallback: False
+2026-06-25 20:08:13,674 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-25 20:08:13,675 [INFO] backend.core.providers.groq_provider: [Groq] generate | Model: llama-3.3-70b-versatile | Latency: 0.20s | Tokens: 78 in, 12 out | Attempt: 1
+2026-06-25 20:08:13,676 [INFO] root: [Translation] Provider: Groq | Latency: 196ms | Cache: MISS | Fallback: False
+2026-06-25 20:08:13,690 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-25 20:08:13,691 [INFO] backend.core.providers.groq_provider: [Groq] generate | Model: llama-3.3-70b-versatile | Latency: 0.22s | Tokens: 79 in, 12 out | Attempt: 1
+2026-06-25 20:08:13,692 [INFO] root: [Translation] Provider: Groq | Latency: 221ms | Cache: MISS | Fallback: False
+2026-06-25 20:08:13,710 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-25 20:08:13,712 [INFO] backend.core.providers.groq_provider: [Groq] generate | Model: llama-3.3-70b-versatile | Latency: 0.24s | Tokens: 78 in, 16 out | Attempt: 1
+2026-06-25 20:08:13,713 [INFO] root: [Translation] Provider: Groq | Latency: 239ms | Cache: MISS | Fallback: False
+2026-06-25 20:08:13,905 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-25 20:08:13,906 [INFO] backend.core.providers.groq_provider: [Groq] generate | Model: llama-3.3-70b-versatile | Latency: 0.17s | Tokens: 78 in, 8 out | Attempt: 1
+2026-06-25 20:08:13,906 [INFO] root: [Translation] Provider: Groq | Latency: 169ms | Cache: MISS | Fallback: False
+2026-06-25 20:08:13,937 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-25 20:08:13,937 [INFO] backend.core.providers.groq_provider: [Groq] generate | Model: llama-3.3-70b-versatile | Latency: 0.18s | Tokens: 75 in, 9 out | Attempt: 1
+2026-06-25 20:08:13,938 [INFO] root: [Translation] Provider: Groq | Latency: 184ms | Cache: MISS | Fallback: False
+2026-06-25 20:08:13,944 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-25 20:08:13,944 [INFO] backend.core.providers.groq_provider: [Groq] generate | Model: llama-3.3-70b-versatile | Latency: 0.20s | Tokens: 80 in, 14 out | Attempt: 1
+2026-06-25 20:08:13,945 [INFO] root: [Translation] Provider: Groq | Latency: 201ms | Cache: MISS | Fallback: False
+2026-06-25 20:08:21,524 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-25 20:08:21,525 [INFO] backend.core.providers.groq_provider: [Groq] generate | Model: llama-3.3-70b-versatile | Latency: 0.28s | Tokens: 76 in, 12 out | Attempt: 1
+2026-06-25 20:08:21,526 [INFO] root: [Translation] Provider: Groq | Latency: 283ms | Cache: MISS | Fallback: False
+2026-06-25 20:08:25,457 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-25 20:08:25,459 [INFO] backend.core.providers.groq_provider: [Groq] generate | Model: llama-3.3-70b-versatile | Latency: 0.21s | Tokens: 78 in, 14 out | Attempt: 1
+2026-06-25 20:08:25,460 [INFO] root: [Translation] Provider: Groq | Latency: 214ms | Cache: MISS | Fallback: False
+2026-06-25 20:08:30,505 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-25 20:08:30,508 [INFO] backend.core.providers.groq_provider: [Groq] generate | Model: llama-3.3-70b-versatile | Latency: 0.27s | Tokens: 80 in, 14 out | Attempt: 1
+2026-06-25 20:08:30,509 [INFO] root: [Translation] Provider: Groq | Latency: 266ms | Cache: MISS | Fallback: False
+2026-06-25 20:08:35,522 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-25 20:08:35,525 [INFO] backend.core.providers.groq_provider: [Groq] generate | Model: llama-3.3-70b-versatile | Latency: 0.27s | Tokens: 77 in, 20 out | Attempt: 1
+2026-06-25 20:08:35,526 [INFO] root: [Translation] Provider: Groq | Latency: 275ms | Cache: MISS | Fallback: False
+2026-06-25 20:08:39,437 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-25 20:08:39,441 [INFO] backend.core.providers.groq_provider: [Groq] generate | Model: llama-3.3-70b-versatile | Latency: 0.20s | Tokens: 78 in, 14 out | Attempt: 1
+2026-06-25 20:08:39,442 [INFO] root: [Translation] Provider: Groq | Latency: 199ms | Cache: MISS | Fallback: False
+2026-06-25 20:08:44,467 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-25 20:08:44,471 [INFO] backend.core.providers.groq_provider: [Groq] generate | Model: llama-3.3-70b-versatile | Latency: 0.23s | Tokens: 75 in, 13 out | Attempt: 1
+2026-06-25 20:08:44,471 [INFO] root: [Translation] Provider: Groq | Latency: 227ms | Cache: MISS | Fallback: False
+2026-06-25 20:08:49,434 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-25 20:08:49,440 [INFO] backend.core.providers.groq_provider: [Groq] generate | Model: llama-3.3-70b-versatile | Latency: 0.20s | Tokens: 79 in, 11 out | Attempt: 1
+2026-06-25 20:08:49,441 [INFO] root: [Translation] Provider: Groq | Latency: 202ms | Cache: MISS | Fallback: False
+2026-06-25 20:08:54,433 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-25 20:08:54,436 [INFO] backend.core.providers.groq_provider: [Groq] generate | Model: llama-3.3-70b-versatile | Latency: 0.19s | Tokens: 80 in, 12 out | Attempt: 1
+2026-06-25 20:08:54,437 [INFO] root: [Translation] Provider: Groq | Latency: 192ms | Cache: MISS | Fallback: False
+2026-06-25 20:08:58,468 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-25 20:08:58,471 [INFO] backend.core.providers.groq_provider: [Groq] generate | Model: llama-3.3-70b-versatile | Latency: 0.23s | Tokens: 77 in, 9 out | Attempt: 1
+2026-06-25 20:08:58,472 [INFO] root: [Translation] Provider: Groq | Latency: 232ms | Cache: MISS | Fallback: False
+2026-06-25 20:09:32,509 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-25 20:09:32,514 [INFO] backend.core.providers.groq_provider: [Groq] generate | Model: llama-3.3-70b-versatile | Latency: 0.26s | Tokens: 77 in, 10 out | Attempt: 1
+2026-06-25 20:09:32,515 [INFO] root: [Translation] Provider: Groq | Latency: 263ms | Cache: MISS | Fallback: False
+2026-06-25 20:09:35,436 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-25 20:09:35,441 [INFO] backend.core.providers.groq_provider: [Groq] generate | Model: llama-3.3-70b-versatile | Latency: 0.20s | Tokens: 78 in, 10 out | Attempt: 1
+2026-06-25 20:09:35,443 [INFO] root: [Translation] Provider: Groq | Latency: 198ms | Cache: MISS | Fallback: False
+2026-06-25 20:09:40,608 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-25 20:09:40,611 [INFO] backend.core.providers.groq_provider: [Groq] generate | Model: llama-3.3-70b-versatile | Latency: 0.37s | Tokens: 80 in, 13 out | Attempt: 1
+2026-06-25 20:09:40,612 [INFO] root: [Translation] Provider: Groq | Latency: 369ms | Cache: MISS | Fallback: False
+2026-06-25 20:12:06,070 [WARNING] backend.core.services.lrclib_service: LRCLIB GET ERROR on attempt 1: ReadTimeout(ReadTimeoutError("HTTPSConnectionPool(host='lrclib.net', port=443): Read timed out. (read timeout=15)"))
+2026-06-25 20:12:30,611 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-25 20:12:30,616 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-25 20:12:30,620 [INFO] backend.core.providers.groq_provider: [Groq] generate | Model: llama-3.3-70b-versatile | Latency: 0.36s | Tokens: 84 in, 19 out | Attempt: 1
+2026-06-25 20:12:30,621 [INFO] root: [Translation] Provider: Groq | Latency: 359ms | Cache: MISS | Fallback: False
+2026-06-25 20:12:30,648 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-25 20:12:30,651 [INFO] backend.core.providers.groq_provider: [Groq] generate | Model: llama-3.3-70b-versatile | Latency: 0.40s | Tokens: 80 in, 18 out | Attempt: 1
+2026-06-25 20:12:30,654 [INFO] root: [Translation] Provider: Groq | Latency: 402ms | Cache: MISS | Fallback: False
+2026-06-25 20:12:30,731 [INFO] backend.core.providers.groq_provider: [Groq] generate | Model: llama-3.3-70b-versatile | Latency: 0.48s | Tokens: 79 in, 14 out | Attempt: 1
+2026-06-25 20:12:30,760 [INFO] root: [Translation] Provider: Groq | Latency: 504ms | Cache: MISS | Fallback: False
+2026-06-25 20:12:31,033 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-25 20:12:31,035 [INFO] backend.core.providers.groq_provider: [Groq] generate | Model: llama-3.3-70b-versatile | Latency: 0.16s | Tokens: 74 in, 9 out | Attempt: 1
+2026-06-25 20:12:31,036 [INFO] root: [Translation] Provider: Groq | Latency: 160ms | Cache: MISS | Fallback: False
+2026-06-25 20:12:31,059 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-25 20:12:31,073 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-25 20:12:31,080 [INFO] backend.core.providers.groq_provider: [Groq] generate | Model: llama-3.3-70b-versatile | Latency: 0.20s | Tokens: 73 in, 5 out | Attempt: 1
+2026-06-25 20:12:31,086 [INFO] root: [Translation] Provider: Groq | Latency: 207ms | Cache: MISS | Fallback: False
+2026-06-25 20:12:31,112 [INFO] backend.core.providers.groq_provider: [Groq] generate | Model: llama-3.3-70b-versatile | Latency: 0.22s | Tokens: 76 in, 6 out | Attempt: 1
+2026-06-25 20:12:31,113 [INFO] root: [Translation] Provider: Groq | Latency: 225ms | Cache: MISS | Fallback: False
+2026-06-25 20:12:32,455 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-25 20:12:32,461 [INFO] backend.core.providers.groq_provider: [Groq] generate | Model: llama-3.3-70b-versatile | Latency: 0.21s | Tokens: 78 in, 12 out | Attempt: 1
+2026-06-25 20:12:32,465 [INFO] root: [Translation] Provider: Groq | Latency: 216ms | Cache: MISS | Fallback: False
+2026-06-25 20:12:35,444 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-25 20:12:35,448 [INFO] backend.core.providers.groq_provider: [Groq] generate | Model: llama-3.3-70b-versatile | Latency: 0.19s | Tokens: 83 in, 14 out | Attempt: 1
+2026-06-25 20:12:35,453 [INFO] root: [Translation] Provider: Groq | Latency: 195ms | Cache: MISS | Fallback: False
+2026-06-25 20:12:40,495 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-25 20:12:40,497 [INFO] backend.core.providers.groq_provider: [Groq] generate | Model: llama-3.3-70b-versatile | Latency: 0.25s | Tokens: 83 in, 26 out | Attempt: 1
+2026-06-25 20:12:40,497 [INFO] root: [Translation] Provider: Groq | Latency: 248ms | Cache: MISS | Fallback: False
+2026-06-25 20:12:43,436 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-25 20:12:43,439 [INFO] backend.core.providers.groq_provider: [Groq] generate | Model: llama-3.3-70b-versatile | Latency: 0.18s | Tokens: 74 in, 9 out | Attempt: 1
+2026-06-25 20:12:43,440 [INFO] root: [Translation] Provider: Groq | Latency: 183ms | Cache: MISS | Fallback: False
+2026-06-25 20:12:47,517 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-25 20:12:47,522 [INFO] backend.core.providers.groq_provider: [Groq] generate | Model: llama-3.3-70b-versatile | Latency: 0.27s | Tokens: 76 in, 12 out | Attempt: 1
+2026-06-25 20:12:47,522 [INFO] root: [Translation] Provider: Groq | Latency: 267ms | Cache: MISS | Fallback: False
+2026-06-25 20:12:53,528 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-25 20:12:53,533 [INFO] backend.core.providers.groq_provider: [Groq] generate | Model: llama-3.3-70b-versatile | Latency: 0.28s | Tokens: 84 in, 25 out | Attempt: 1
+2026-06-25 20:12:53,533 [INFO] root: [Translation] Provider: Groq | Latency: 284ms | Cache: MISS | Fallback: False
+2026-06-25 20:12:56,448 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-25 20:12:56,451 [INFO] backend.core.providers.groq_provider: [Groq] generate | Model: llama-3.3-70b-versatile | Latency: 0.20s | Tokens: 77 in, 17 out | Attempt: 1
+2026-06-25 20:12:56,451 [INFO] root: [Translation] Provider: Groq | Latency: 204ms | Cache: MISS | Fallback: False
+2026-06-25 20:13:01,495 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-25 20:13:01,521 [INFO] backend.core.providers.groq_provider: [Groq] generate | Model: llama-3.3-70b-versatile | Latency: 0.28s | Tokens: 79 in, 14 out | Attempt: 1
+2026-06-25 20:13:01,530 [INFO] root: [Translation] Provider: Groq | Latency: 284ms | Cache: MISS | Fallback: False
+2026-06-25 20:13:04,421 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-25 20:13:04,422 [INFO] backend.core.providers.groq_provider: [Groq] generate | Model: llama-3.3-70b-versatile | Latency: 0.16s | Tokens: 76 in, 15 out | Attempt: 1
+2026-06-25 20:13:04,424 [INFO] root: [Translation] Provider: Groq | Latency: 165ms | Cache: MISS | Fallback: False
+2026-06-25 20:13:08,495 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-25 20:13:08,497 [INFO] backend.core.providers.groq_provider: [Groq] generate | Model: llama-3.3-70b-versatile | Latency: 0.23s | Tokens: 79 in, 13 out | Attempt: 1
+2026-06-25 20:13:08,498 [INFO] root: [Translation] Provider: Groq | Latency: 235ms | Cache: MISS | Fallback: False
+2026-06-25 20:13:11,493 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-25 20:13:11,499 [INFO] backend.core.providers.groq_provider: [Groq] generate | Model: llama-3.3-70b-versatile | Latency: 0.20s | Tokens: 79 in, 10 out | Attempt: 1
+2026-06-25 20:13:11,513 [INFO] root: [Translation] Provider: Groq | Latency: 216ms | Cache: MISS | Fallback: False
+2026-06-25 20:13:17,620 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-25 20:13:17,623 [INFO] backend.core.providers.groq_provider: [Groq] generate | Model: llama-3.3-70b-versatile | Latency: 0.33s | Tokens: 82 in, 18 out | Attempt: 1
+2026-06-25 20:13:17,624 [INFO] root: [Translation] Provider: Groq | Latency: 329ms | Cache: MISS | Fallback: False
+2026-06-25 20:13:22,408 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-25 20:13:22,411 [INFO] backend.core.providers.groq_provider: [Groq] generate | Model: llama-3.3-70b-versatile | Latency: 0.17s | Tokens: 73 in, 7 out | Attempt: 1
+2026-06-25 20:13:22,414 [INFO] root: [Translation] Provider: Groq | Latency: 169ms | Cache: MISS | Fallback: False
+2026-06-25 20:13:27,451 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-25 20:13:27,453 [INFO] backend.core.providers.groq_provider: [Groq] generate | Model: llama-3.3-70b-versatile | Latency: 0.21s | Tokens: 75 in, 15 out | Attempt: 1
+2026-06-25 20:13:27,454 [INFO] root: [Translation] Provider: Groq | Latency: 213ms | Cache: MISS | Fallback: False
+2026-06-25 20:13:43,448 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-25 20:13:43,450 [INFO] backend.core.providers.groq_provider: [Groq] generate | Model: llama-3.3-70b-versatile | Latency: 0.21s | Tokens: 72 in, 7 out | Attempt: 1
+2026-06-25 20:13:43,450 [INFO] root: [Translation] Provider: Groq | Latency: 207ms | Cache: MISS | Fallback: False
+2026-06-25 20:14:00,509 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-25 20:14:00,511 [INFO] backend.core.providers.groq_provider: [Groq] generate | Model: llama-3.3-70b-versatile | Latency: 0.27s | Tokens: 77 in, 13 out | Attempt: 1
+2026-06-25 20:14:00,511 [INFO] root: [Translation] Provider: Groq | Latency: 266ms | Cache: MISS | Fallback: False
+2026-06-25 20:14:03,428 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-25 20:14:03,431 [INFO] backend.core.providers.groq_provider: [Groq] generate | Model: llama-3.3-70b-versatile | Latency: 0.19s | Tokens: 76 in, 13 out | Attempt: 1
+2026-06-25 20:14:03,433 [INFO] root: [Translation] Provider: Groq | Latency: 193ms | Cache: MISS | Fallback: False
+2026-06-25 20:14:10,357 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-25 20:14:10,361 [INFO] backend.core.providers.groq_provider: [Groq] generate | Model: llama-3.3-70b-versatile | Latency: 0.26s | Tokens: 80 in, 13 out | Attempt: 1
+2026-06-25 20:14:10,362 [INFO] root: [Translation] Provider: Groq | Latency: 263ms | Cache: MISS | Fallback: False
+2026-06-25 20:14:15,539 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-25 20:14:15,552 [INFO] backend.core.providers.groq_provider: [Groq] generate | Model: llama-3.3-70b-versatile | Latency: 0.27s | Tokens: 75 in, 11 out | Attempt: 1
+2026-06-25 20:14:15,567 [INFO] root: [Translation] Provider: Groq | Latency: 289ms | Cache: MISS | Fallback: False
+2026-06-25 20:14:20,469 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-25 20:14:20,473 [INFO] backend.core.providers.groq_provider: [Groq] generate | Model: llama-3.3-70b-versatile | Latency: 0.20s | Tokens: 76 in, 13 out | Attempt: 1
+2026-06-25 20:14:20,476 [INFO] root: [Translation] Provider: Groq | Latency: 200ms | Cache: MISS | Fallback: False
+2026-06-25 20:14:38,537 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-25 20:14:38,539 [INFO] backend.core.providers.groq_provider: [Groq] generate | Model: llama-3.3-70b-versatile | Latency: 0.31s | Tokens: 78 in, 16 out | Attempt: 1
+2026-06-25 20:14:38,541 [INFO] root: [Translation] Provider: Groq | Latency: 311ms | Cache: MISS | Fallback: False
+2026-06-25 20:14:40,449 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-25 20:14:40,452 [INFO] backend.core.providers.groq_provider: [Groq] generate | Model: llama-3.3-70b-versatile | Latency: 0.21s | Tokens: 78 in, 12 out | Attempt: 1
+2026-06-25 20:14:40,452 [INFO] root: [Translation] Provider: Groq | Latency: 210ms | Cache: MISS | Fallback: False
+2026-06-25 20:14:45,461 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-25 20:14:45,464 [INFO] backend.core.providers.groq_provider: [Groq] generate | Model: llama-3.3-70b-versatile | Latency: 0.23s | Tokens: 81 in, 17 out | Attempt: 1
+2026-06-25 20:14:45,465 [INFO] root: [Translation] Provider: Groq | Latency: 227ms | Cache: MISS | Fallback: False
+2026-06-25 20:14:48,427 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-25 20:14:48,429 [INFO] backend.core.providers.groq_provider: [Groq] generate | Model: llama-3.3-70b-versatile | Latency: 0.19s | Tokens: 75 in, 11 out | Attempt: 1
+2026-06-25 20:14:48,430 [INFO] root: [Translation] Provider: Groq | Latency: 185ms | Cache: MISS | Fallback: False
+2026-06-25 20:15:25,988 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: Dark Necessities_Track record 
+2026-06-25 20:15:25,997 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: Dark Necessities_Moving in and
+2026-06-25 20:15:26,028 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: Dark Necessities_Honey, where 
+2026-06-25 20:15:26,056 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: Dark Necessities_Everything mu
+2026-06-25 20:15:26,086 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: Dark Necessities_A-what do you
+2026-06-25 20:15:26,110 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: Dark Necessities_Yeah, you don
+2026-06-25 20:15:26,117 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: Dark Necessities_Dark necessit
+2026-06-25 20:15:26,141 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: Dark Necessities_Tell the worl
+2026-06-25 20:15:47,780 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-25 20:15:47,791 [INFO] backend.core.providers.groq_provider: [Groq] generate | Model: llama-3.3-70b-versatile | Latency: 0.34s | Tokens: 78 in, 14 out | Attempt: 1
+2026-06-25 20:15:47,802 [INFO] root: [Translation] Provider: Groq | Latency: 346ms | Cache: MISS | Fallback: False
+2026-06-25 20:15:47,928 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-25 20:15:47,942 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-25 20:15:47,963 [INFO] backend.core.providers.groq_provider: [Groq] generate | Model: llama-3.3-70b-versatile | Latency: 0.58s | Tokens: 80 in, 15 out | Attempt: 1
+2026-06-25 20:15:47,970 [INFO] root: [Translation] Provider: Groq | Latency: 585ms | Cache: MISS | Fallback: False
+2026-06-25 20:15:48,043 [INFO] backend.core.providers.groq_provider: [Groq] generate | Model: llama-3.3-70b-versatile | Latency: 0.60s | Tokens: 80 in, 17 out | Attempt: 1
+2026-06-25 20:15:48,043 [INFO] root: [Translation] Provider: Groq | Latency: 596ms | Cache: MISS | Fallback: False
+2026-06-25 20:15:48,142 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: Your Woman_It comes as no surp
+2026-06-25 20:15:48,172 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: Your Woman_So cut the crap and
+2026-06-25 20:15:48,194 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: Your Woman_Now, I know your he
+2026-06-25 20:15:48,221 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: Your Woman_So cut the crap and
+2026-06-25 20:15:48,225 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: Your Woman_You don't even know
+2026-06-25 20:15:48,255 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: Your Woman_Now, I know your he
+2026-06-25 20:15:48,282 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: Your Woman_You don't even know
+2026-06-25 20:15:48,333 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-25 20:15:48,336 [INFO] backend.core.providers.groq_provider: [Groq] generate | Model: llama-3.3-70b-versatile | Latency: 0.43s | Tokens: 80 in, 15 out | Attempt: 1
+2026-06-25 20:15:48,340 [INFO] root: [Translation] Provider: Groq | Latency: 750ms | Cache: MISS | Fallback: False
+2026-06-25 20:15:48,390 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-25 20:15:48,402 [INFO] backend.core.providers.groq_provider: [Groq] generate | Model: llama-3.3-70b-versatile | Latency: 0.31s | Tokens: 80 in, 17 out | Attempt: 1
+2026-06-25 20:15:48,404 [INFO] root: [Translation] Provider: Groq | Latency: 813ms | Cache: MISS | Fallback: False
+2026-06-25 20:15:52,306 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: Your Woman_Just use me up and 
+2026-06-25 20:15:52,308 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: Your Woman_So much for all you
+2026-06-25 20:15:52,313 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: Your Woman_Boy, you can't play
+2026-06-25 20:15:52,345 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: Your Woman_So much for all you
+2026-06-25 20:15:52,459 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: Your Woman_Well, I guess what 
+2026-06-25 20:15:52,483 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: Your Woman_I could never be th
+2026-06-25 20:15:52,639 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-25 20:15:52,652 [INFO] backend.core.providers.groq_provider: [Groq] generate_json | Model: llama-3.3-70b-versatile | Latency: 0.38s | Tokens: 258 in, 48 out | Attempt: 1
+2026-06-25 20:15:52,804 [INFO] httpx: HTTP Request: GET https://api.dictionaryapi.dev/api/v2/entries/en/you're "HTTP/1.1 404 Not Found"
+2026-06-25 20:15:56,554 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: Your Woman_Just use me up and 
+2026-06-25 20:16:01,329 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: Your Woman_Boy, you can't play
+2026-06-25 20:16:06,290 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: Your Woman_Well, I guess what 
+2026-06-25 20:16:11,279 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: Your Woman_I could never be th
+2026-06-25 20:16:15,319 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: Your Woman_I could never be yo
+2026-06-25 20:16:15,909 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: Your Woman_I could never be yo
+2026-06-25 20:16:38,343 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: Your Woman_When I saw my best 
+2026-06-25 20:16:39,095 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: Your Woman_When I saw my best 
+2026-06-25 20:16:43,269 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: Your Woman_She said she never 
+2026-06-25 20:16:43,297 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: Your Woman_She said she never 
+2026-06-25 20:16:47,737 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: Your Woman_Well me, I wish tha
+2026-06-25 20:16:48,264 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: Your Woman_Well me, I wish tha
+2026-06-25 20:16:52,262 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: Your Woman_But you always knew
+2026-06-25 20:16:52,761 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: Your Woman_But you always knew
+2026-06-25 20:16:56,250 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: Your Woman_And you're such a c
+2026-06-25 20:16:56,746 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: Your Woman_And you're such a c
+2026-06-25 20:17:02,257 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: Your Woman_Now I think I final
+2026-06-25 20:17:02,746 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: Your Woman_Now I think I final
+2026-06-25 20:17:06,755 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: Your Woman_Is it in your genes
+2026-06-25 20:17:07,284 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: Your Woman_Is it in your genes
+2026-06-25 20:17:12,202 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: Your Woman_But I'll soon find 
+2026-06-25 20:17:13,167 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: Your Woman_But I'll soon find 
+2026-06-25 20:17:16,259 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: Your Woman_Why did you play me
+2026-06-25 20:17:50,095 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: Your Woman_Oh, I could never b
+2026-06-25 20:17:53,238 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: Your Woman_Well, I guess what 
+2026-06-25 20:17:58,162 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: Your Woman_I could never spend
+2026-06-25 20:18:15,736 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: Your Woman_Oh, I could never b
+2026-06-25 20:18:15,751 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: Your Woman_I could never spend
+2026-06-25 20:18:15,754 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: Your Woman_Well, I guess what 
+2026-06-25 20:20:48,295 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: Dark Necessities_Comin' out to
+2026-06-25 20:20:48,318 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: Dark Necessities_Many moons th
+2026-06-25 20:20:48,333 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: Dark Necessities_Keep an eye o
+2026-06-25 20:20:48,497 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: Dark Necessities_You and I bot
+2026-06-25 20:20:48,592 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: Dark Necessities_Everything mu
+2026-06-25 20:20:48,622 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: Dark Necessities_A-what do you
+2026-06-25 20:20:50,592 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: Dark Necessities_Spinning off,
+2026-06-25 20:20:53,303 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: Dark Necessities_It's like a b
+2026-06-25 20:20:58,755 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: Dark Necessities_Sneak attacke
+2026-06-25 20:21:01,286 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: Dark Necessities_Keep the bree
+2026-06-25 20:21:04,290 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: Dark Necessities_Blow by blow 
+2026-06-25 20:21:11,290 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: Dark Necessities_Yeah, you don
+2026-06-25 20:21:13,961 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: Dark Necessities_Keep an eye o
+2026-06-25 20:21:13,968 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: Dark Necessities_You and I bot
+2026-06-25 20:21:13,973 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: Dark Necessities_Everything mu
+2026-06-25 20:21:14,001 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: Dark Necessities_A-what do you
+2026-06-25 20:21:14,008 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: Dark Necessities_Spinning off,
+2026-06-25 20:21:14,077 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: Dark Necessities_It's like a b
+2026-06-25 20:21:14,118 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: Dark Necessities_Sneak attacke
+2026-06-25 20:21:14,120 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: Dark Necessities_Keep the bree
+2026-06-25 20:21:14,157 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: Dark Necessities_Blow by blow 
+2026-06-25 20:21:14,211 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: Dark Necessities_Yeah, you don
+2026-06-25 20:21:14,280 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: Dark Necessities_Dark necessit
+2026-06-25 20:21:20,201 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: Dark Necessities_Tell the worl
+2026-06-25 20:21:21,284 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: Dark Necessities_Dark necessit
+2026-06-25 20:21:25,281 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: Dark Necessities_Stumble down 
+2026-06-25 20:21:29,294 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: Dark Necessities_No time for t
+2026-06-25 20:21:34,274 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: Dark Necessities_Ice cream for
+2026-06-25 20:21:39,274 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: Dark Necessities_Turn the corn
+2026-06-25 20:21:46,218 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: Dark Necessities_Find the worl
+2026-06-25 20:22:01,306 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: Dark Necessities_Playing the h
+2026-06-25 20:22:12,242 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: Dark Necessities_Dark necessit
+2026-06-25 20:22:14,250 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: Dark Necessities_Tell the worl
+2026-06-25 20:22:14,262 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: Dark Necessities_Dark necessit
+2026-06-25 20:22:14,270 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: Dark Necessities_Stumble down 
+2026-06-25 20:22:14,351 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: Dark Necessities_No time for t
+2026-06-25 20:22:14,923 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: Dark Necessities_Ice cream for
+2026-06-25 20:22:14,928 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: Dark Necessities_Turn the corn
+2026-06-25 20:22:14,947 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: Dark Necessities_Find the worl
+2026-06-25 20:22:15,027 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: Dark Necessities_Playing the h
+2026-06-25 20:22:18,238 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: Dark Necessities_Do you want t
+2026-06-25 20:22:20,260 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: Dark Necessities_Darkness help
+2026-06-25 20:22:28,282 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: Dark Necessities_Do you want i
+2026-06-25 20:22:32,245 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: Dark Necessities_Do you want i
+2026-06-25 20:22:38,235 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: Dark Necessities_But darkness 
+2026-06-25 20:22:55,241 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: Dark Necessities_Pick you up l
+2026-06-25 20:22:58,186 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: Dark Necessities_Track record 
+2026-06-25 20:23:03,251 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: Dark Necessities_Moving in and
+2026-06-25 20:23:06,186 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: Dark Necessities_Honey, where 
+2026-06-25 20:23:12,081 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: Dark Necessities_Do you want t
+2026-06-25 20:23:12,099 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: Dark Necessities_Darkness help
+2026-06-25 20:23:12,220 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: Dark Necessities_Do you want i
+2026-06-25 20:23:12,419 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: Dark Necessities_Do you want i
+2026-06-25 20:23:12,617 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: Dark Necessities_But darkness 
+2026-06-25 20:23:12,628 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: Dark Necessities_Pick you up l
+2026-06-25 20:23:12,726 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: Dark Necessities_Track record 
+2026-06-25 20:23:12,799 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: Dark Necessities_Moving in and
+2026-06-25 20:23:12,832 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: Dark Necessities_Honey, where 
+2026-06-25 20:24:10,884 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: Dark Necessities_Everything mu
+2026-06-25 20:24:10,969 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: Dark Necessities_Yeah, you don
+2026-06-25 20:24:11,010 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: Dark Necessities_A-what do you
+2026-06-25 20:24:11,132 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: Dark Necessities_Dark necessit
+2026-06-25 20:24:11,169 [INFO] root: [Translation] Provider: Cache | Latency: 0ms | Hit: Dark Necessities_Tell the worl
+2026-06-25 20:24:26,268 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/audio/transcriptions "HTTP/1.1 200 OK"
+2026-06-25 20:24:26,360 [INFO] backend.core.providers.groq_whisper_provider: [Groq Whisper] transcribe_audio | Latency: 1.08s
+2026-06-25 20:24:28,537 [INFO] httpx: HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-25 20:24:33,752 [INFO] backend.core.providers.openrouter_provider: [OpenRouter] generate | Model: deepseek/deepseek-chat-v3 | Latency: 7.10s | Tokens: 1190 in, 211 out | Attempt: 1
+2026-06-25 20:24:34,549 [INFO] httpx: HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-25 20:24:40,871 [INFO] backend.core.providers.openrouter_provider: [OpenRouter] generate_json | Model: deepseek/deepseek-chat-v3 | Latency: 7.02s | Tokens: 1785 in, 251 out | Attempt: 1
+2026-06-25 20:25:29,983 [WARNING] backend.core.services.lrclib_service: LRCLIB GET ERROR on attempt 1: ReadTimeout(ReadTimeoutError("HTTPSConnectionPool(host='lrclib.net', port=443): Read timed out. (read timeout=15)"))
+2026-06-25 20:25:51,517 [WARNING] backend.core.services.lrclib_service: LRCLIB SEARCH ERROR on attempt 1: ReadTimeout(ReadTimeoutError("HTTPSConnectionPool(host='lrclib.net', port=443): Read timed out. (read timeout=15)"))
+2026-06-25 20:25:52,583 [WARNING] backend.core.services.lrclib_service: LRCLIB GET ERROR on attempt 1: ReadTimeout(ReadTimeoutError("HTTPSConnectionPool(host='lrclib.net', port=443): Read timed out. (read timeout=15)"))
+2026-06-25 20:26:03,268 [INFO] httpx: HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-25 20:26:11,448 [WARNING] backend.core.services.lrclib_service: LRCLIB GET ERROR on attempt 1: ReadTimeout(ReadTimeoutError("HTTPSConnectionPool(host='lrclib.net', port=443): Read timed out. (read timeout=15)"))
+2026-06-25 20:26:34,200 [WARNING] backend.core.services.lrclib_service: LRCLIB GET ERROR on attempt 1: ReadTimeout(ReadTimeoutError("HTTPSConnectionPool(host='lrclib.net', port=443): Read timed out. (read timeout=15)"))
+2026-06-25 20:26:39,364 [WARNING] backend.core.services.lrclib_service: LRCLIB GET ERROR on attempt 2: ReadTimeout(ReadTimeoutError("HTTPSConnectionPool(host='lrclib.net', port=443): Read timed out. (read timeout=15)"))
+2026-06-25 20:26:54,390 [WARNING] backend.core.services.lrclib_service: LRCLIB GET ERROR on attempt 1: ReadTimeout(ReadTimeoutError("HTTPSConnectionPool(host='lrclib.net', port=443): Read timed out. (read timeout=15)"))
+2026-06-25 20:27:11,245 [WARNING] backend.core.services.lrclib_service: LRCLIB GET ERROR on attempt 1: ReadTimeout(ReadTimeoutError("HTTPSConnectionPool(host='lrclib.net', port=443): Read timed out. (read timeout=15)"))
+2026-06-25 20:27:24,059 [WARNING] backend.core.services.lrclib_service: LRCLIB SEARCH ERROR on attempt 1: ReadTimeout(ReadTimeoutError("HTTPSConnectionPool(host='lrclib.net', port=443): Read timed out. (read timeout=15)"))
+2026-06-25 20:27:34,572 [WARNING] backend.core.services.lrclib_service: LRCLIB SEARCH ERROR on attempt 1: ReadTimeout(ReadTimeoutError("HTTPSConnectionPool(host='lrclib.net', port=443): Read timed out. (read timeout=15)"))

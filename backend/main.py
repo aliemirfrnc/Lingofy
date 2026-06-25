@@ -1,11 +1,30 @@
 import threading
 import time
 
+from contextlib import asynccontextmanager
+import logging
+import sys
+from pathlib import Path
+
 from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse
 from fastapi.exceptions import RequestValidationError
 from starlette.exceptions import HTTPException as StarletteHTTPException
 from fastapi.middleware.cors import CORSMiddleware
+
+# Configure Standard Logger
+LOG_DIR = Path(__file__).resolve().parent.parent / "logs"
+LOG_DIR.mkdir(parents=True, exist_ok=True)
+
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s [%(levelname)s] %(name)s: %(message)s",
+    handlers=[
+        logging.StreamHandler(sys.stdout),
+        logging.FileHandler(LOG_DIR / "lingofy.log", encoding="utf-8")
+    ]
+)
+logger = logging.getLogger("lingofy.main")
 
 from backend.core.auth import cleanup_expired
 from backend.core.config import CORS_ORIGINS, JWT_SECRET
@@ -20,9 +39,37 @@ from backend.routes.pronunciation import router as pronunciation_router
 from backend.routes.progress import router as progress_router
 from backend.routes.subscriptions import router as subscriptions_router
 
-app = FastAPI()
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    if not JWT_SECRET:
+        raise RuntimeError("JWT_SECRET ortam değişkeni tanımlı değil.")
+    init_db()
+    threading.Thread(target=lyrics_warmup, daemon=True).start()
+    threading.Thread(target=_cleanup_loop, daemon=True).start()
+    
+    import asyncio
+    from backend.core.services.ai_service import get_ai_service
+    asyncio.create_task(get_ai_service().health_check())
+    
+    yield
+
+app = FastAPI(lifespan=lifespan)
 
 # Global Exception Handlers
+@app.exception_handler(RequestValidationError)
+async def validation_exception_handler(request: Request, exc: RequestValidationError):
+    return JSONResponse(
+        status_code=422,
+        content={
+            "success": False,
+            "error": {
+                "code": "VALIDATION_ERROR",
+                "message": "Geçersiz istek parametreleri.",
+                "details": exc.errors()
+            }
+        }
+    )
+
 @app.exception_handler(StarletteHTTPException)
 async def http_exception_handler(request: Request, exc: StarletteHTTPException):
     return JSONResponse(
@@ -38,9 +85,7 @@ async def http_exception_handler(request: Request, exc: StarletteHTTPException):
 
 @app.exception_handler(Exception)
 async def global_exception_handler(request: Request, exc: Exception):
-    # Log the exception stack trace to console
-    import traceback
-    traceback.print_exc()
+    logger.exception(f"Unhandled Server Error: {exc}")
     
     return JSONResponse(
         status_code=500,
@@ -77,19 +122,13 @@ def _cleanup_loop():
         try:
             removed = cleanup_expired()
             if removed:
-                print(f"AUTH CLEANUP: {removed} eski kayıt silindi.")
+                logger.info(f"AUTH CLEANUP: {removed} eski kayıt silindi.")
         except Exception as e:
-            print("AUTH CLEANUP ERROR:", repr(e))
+            logger.error(f"AUTH CLEANUP ERROR: {repr(e)}")
         time.sleep(6 * 60 * 60)  # 6 saatte bir
 
 
-@app.on_event("startup")
-def on_startup():
-    if not JWT_SECRET:
-        raise RuntimeError("JWT_SECRET ortam değişkeni tanımlı değil.")
-    init_db()
-    threading.Thread(target=lyrics_warmup, daemon=True).start()
-    threading.Thread(target=_cleanup_loop, daemon=True).start()
+
 
 
 @app.get("/health")

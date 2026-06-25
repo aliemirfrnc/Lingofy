@@ -27,11 +27,11 @@ def auto_migrate_table(conn: sqlite3.Connection, table_name: str, desired_column
     
     for col_name, col_def in desired_columns.items():
         if col_name not in existing_cols:
-            print(f"Migration: Adding column {col_name} to {table_name}...")
+            logger.info(f"Migration: Adding column {col_name} to {table_name}...")
             try:
                 cursor.execute(f"ALTER TABLE {table_name} ADD COLUMN {col_name} {col_def}")
             except Exception as e:
-                print(f"Error migrating {col_name} on {table_name}: {e}")
+                logger.error(f"Error migrating {col_name} on {table_name}: {e}")
 
 def init_db() -> None:
     with _LOCK:
@@ -112,6 +112,23 @@ def init_db() -> None:
                 word TEXT NOT NULL,
                 correct_count INTEGER DEFAULT 0,
                 wrong_count INTEGER DEFAULT 0,
+                UNIQUE(user_id, word)
+            );
+
+            CREATE TABLE IF NOT EXISTS user_words (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+                word TEXT NOT NULL,
+                times_seen INTEGER DEFAULT 1,
+                learning_percentage INTEGER DEFAULT 0,
+                last_seen REAL NOT NULL,
+                first_seen REAL NOT NULL,
+                is_favorite BOOLEAN DEFAULT 0,
+                is_memorized BOOLEAN DEFAULT 0,
+                mastery_level TEXT DEFAULT 'New',
+                review_count INTEGER DEFAULT 0,
+                created_at REAL NOT NULL,
+                updated_at REAL NOT NULL,
                 UNIQUE(user_id, word)
             );
 
@@ -197,6 +214,10 @@ def init_db() -> None:
 
             INSERT OR IGNORE INTO plans (name, price, songs_limit, words_limit, ai_messages_limit, shadowing_limit, pronunciation_limit, has_pdf_report, has_ai_mentor, has_speaking_sim) 
             VALUES ('MASTER', 19.99, 999999, 999999, 999999, 999999, 999999, 1, 1, 1);
+            
+            CREATE INDEX IF NOT EXISTS idx_pronunciation_sessions_user_id ON pronunciation_sessions(user_id);
+            CREATE INDEX IF NOT EXISTS idx_pronunciation_coach_memory_user_id ON pronunciation_coach_memory(user_id);
+            CREATE INDEX IF NOT EXISTS idx_pronunciation_goals_user_id_completed ON pronunciation_goals(user_id, completed);
             """
         )
         

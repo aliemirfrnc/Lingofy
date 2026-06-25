@@ -9,6 +9,7 @@ function Badge({ className, variant = "default", ...props }) {
     secondary: "border-transparent bg-white/10 text-white/80",
     outline: "text-white/80 border-white/20",
     premium: "border-transparent bg-purple-500/20 text-purple-400 border border-purple-500/30",
+    warning: "border-transparent bg-yellow-500/20 text-yellow-500 border border-yellow-500/30",
   }
 
   return (

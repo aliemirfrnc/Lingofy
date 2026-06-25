@@ -39,19 +39,28 @@ _refresh_locks_guard = threading.Lock()
 
 
 def _spotify_request(method: str, url: str, **kwargs) -> requests.Response:
-    try:
-        return requests.request(
-            method,
-            url,
-            timeout=SPOTIFY_TIMEOUT_SECONDS,
-            **kwargs,
-        )
-    except requests.RequestException as exc:
-        print("SPOTIFY NETWORK ERROR:", repr(exc))
-        raise HTTPException(
-            status_code=502,
-            detail="Spotify servisine şu anda ulaşılamıyor. Lütfen tekrar dene.",
-        ) from exc
+    max_retries = 2
+    for attempt in range(max_retries):
+        try:
+            resp = requests.request(
+                method,
+                url,
+                timeout=SPOTIFY_TIMEOUT_SECONDS,
+                **kwargs,
+            )
+            if resp.status_code == 429 and attempt < max_retries - 1:
+                time.sleep(1)
+                continue
+            return resp
+        except requests.RequestException as exc:
+            if attempt < max_retries - 1:
+                time.sleep(1)
+                continue
+            logger.error(f"SPOTIFY NETWORK ERROR: {repr(exc)}")
+            raise HTTPException(
+                status_code=502,
+                detail="Spotify servisine şu anda ulaşılamıyor. Lütfen tekrar dene.",
+            ) from exc
 
 
 def _get_refresh_lock(user_id: int) -> threading.Lock:
@@ -200,8 +209,8 @@ def spotify_callback(code: str = Query(...), state: str = Query(...)):
     )
 
     if resp.status_code != 200:
-        print("SPOTIFY TOKEN ERROR:", resp.status_code, resp.text)
-        raise HTTPException(status_code=400, detail="Spotify yetkilendirme başarısız.")
+        logger.error(f"SPOTIFY TOKEN ERROR: {resp.status_code} {resp.text}")
+        raise HTTPException(status_code=400, detail="Token alınamadı.")
 
     data = resp.json()
     _save_spotify_tokens(user_id, data["access_token"], data["refresh_token"], data["expires_in"])
@@ -232,8 +241,8 @@ def _get_valid_token(user_id: int) -> str:
             },
         )
         if resp.status_code != 200:
-            print("SPOTIFY REFRESH ERROR:", resp.status_code, resp.text)
-            raise HTTPException(status_code=401, detail="Spotify oturumu yenilenemedi, tekrar bağlan.")
+            logger.error(f"SPOTIFY REFRESH ERROR: {resp.status_code} {resp.text}")
+            raise HTTPException(status_code=400, detail="Token yenilenemedi.")
 
         data = resp.json()
         new_refresh = data.get("refresh_token", refresh_token)
@@ -414,17 +423,10 @@ def get_playlist_tracks(playlist_id: str, user_id: int = Depends(require_user_id
     while url:
         resp = _spotify_request("GET", url, params={"limit": 50} if "?" not in url else None, headers=headers)
         if resp.status_code != 200:
-            print(f"SPOTIFY TRACKS ERR: {resp.status_code} - {resp.text}")
             break
             
         data = resp.json()
-        print("RAW RESPONSE:", list(data.keys()))
-        
         items = data.get("items", [])
-        print("ITEMS COUNT:", len(items))
-        
-        null_tracks = sum(1 for obj in items if not obj.get("track") and not obj.get("item"))
-        print("NULL TRACKS:", null_tracks)
         
         for obj in items:
             track = obj.get("track") or obj.get("item")
