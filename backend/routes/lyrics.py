@@ -3,7 +3,7 @@ import threading
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
 import requests
-from fastapi import APIRouter, HTTPException, Query
+from fastapi import APIRouter, HTTPException, Query, BackgroundTasks
 from pydantic import BaseModel
 
 from backend.core.cache_store import load, save
@@ -29,7 +29,7 @@ _thread_local = threading.local()
 _executor = ThreadPoolExecutor(max_workers=4)
 
 HEADERS = {"User-Agent": "Lingofy/1.0"}
-TIMEOUT = 10
+TIMEOUT = 5
 WARMUP_WORKERS = 2
 
 _LRC_TIME_RE = re.compile(r"\[(\d+):(\d+(?:\.\d+)?)\]")
@@ -150,6 +150,7 @@ def warmup() -> None:
 
 @router.get("/lyrics", response_model=LyricsResponse)
 def get_lyrics(
+    background_tasks: BackgroundTasks,
     track: str = Query(...),
     artist: str = Query(""),
 ):
@@ -172,6 +173,7 @@ def get_lyrics(
 
     with _cache_lock:
         _cache[cache_key] = data
-        save("lyrics", _cache)
+
+    background_tasks.add_task(save, "lyrics", _cache)
 
     return {**data, "source": "LRCLIB"}

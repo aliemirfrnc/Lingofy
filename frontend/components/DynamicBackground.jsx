@@ -54,8 +54,15 @@ export default function DynamicBackground({ albumImage, onColorExtracted }) {
       onColorExtracted?.(FALLBACK_COLOR);
     };
 
+    const applyColorToDOM = (r, g, b) => {
+      document.documentElement.style.setProperty("--theme-r", r);
+      document.documentElement.style.setProperty("--theme-g", g);
+      document.documentElement.style.setProperty("--theme-b", b);
+    };
+
     if (!albumImage) {
       applyFallback();
+      applyColorToDOM(FALLBACK_COLOR.r, FALLBACK_COLOR.g, FALLBACK_COLOR.b);
       return () => {
         cancelled = true;
       };
@@ -70,12 +77,17 @@ export default function DynamicBackground({ albumImage, onColorExtracted }) {
         const boosted = saturate(raw, 1.6);
         setDisplayImage(albumImage);
         setColor(boosted);
+        applyColorToDOM(boosted.r, boosted.g, boosted.b);
         onColorExtracted?.(boosted);
       } catch {
         applyFallback();
+        applyColorToDOM(FALLBACK_COLOR.r, FALLBACK_COLOR.g, FALLBACK_COLOR.b);
       }
     };
-    img.onerror = applyFallback;
+    img.onerror = () => {
+      applyFallback();
+      applyColorToDOM(FALLBACK_COLOR.r, FALLBACK_COLOR.g, FALLBACK_COLOR.b);
+    };
     img.src = albumImage;
 
     return () => {
@@ -91,40 +103,24 @@ export default function DynamicBackground({ albumImage, onColorExtracted }) {
     <>
       <div
         aria-hidden="true"
-        style={{
-          position: "fixed",
-          inset: 0,
-          zIndex: 0,
-          overflow: "hidden",
-          background: "#0a0a0a",
-        }}
+        className="fixed inset-0 z-0 overflow-hidden bg-background"
       >
         {displayImage && (
           // eslint-disable-next-line @next/next/no-img-element
           <img
             src={displayImage}
             alt=""
-            style={{
-              position: "absolute",
-              inset: 0,
-              width: "100%",
-              height: "100%",
-              objectFit: "cover",
-              filter: "blur(48px) saturate(1.4)",
-              opacity: 0.18,
-              transform: "scale(1.08)",
-            }}
+            className="absolute inset-0 w-full h-full object-cover opacity-[0.18] scale-[1.08] blur-[48px] saturate-[1.4] transition-all duration-1000 ease-in-out animate-fade-in"
             crossOrigin="anonymous"
           />
         )}
         <div
+          className="absolute inset-0 transition-colors duration-1000 ease-in-out"
           style={{
-            position: "absolute",
-            inset: 0,
             background: `linear-gradient(
               160deg,
-              rgba(${r},${g},${b},0.28) 0%,
-              rgba(${r},${g},${b},0.10) 30%,
+              rgba(var(--theme-r),var(--theme-g),var(--theme-b),0.28) 0%,
+              rgba(var(--theme-r),var(--theme-g),var(--theme-b),0.10) 30%,
               rgba(10,10,10,0.85) 65%,
               #0a0a0a 100%
             )`,

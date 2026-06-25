@@ -1,7 +1,10 @@
 import threading
 import time
 
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
+from fastapi.responses import JSONResponse
+from fastapi.exceptions import RequestValidationError
+from starlette.exceptions import HTTPException as StarletteHTTPException
 from fastapi.middleware.cors import CORSMiddleware
 
 from backend.core.auth import cleanup_expired
@@ -13,8 +16,42 @@ from backend.routes.lyrics import router as lyrics_router, warmup as lyrics_warm
 from backend.routes.translate import router as translate_router
 from backend.routes.spotify import router as spotify_router
 from backend.routes.word_info import router as word_info_router
+from backend.routes.pronunciation import router as pronunciation_router
+from backend.routes.progress import router as progress_router
+from backend.routes.subscriptions import router as subscriptions_router
 
 app = FastAPI()
+
+# Global Exception Handlers
+@app.exception_handler(StarletteHTTPException)
+async def http_exception_handler(request: Request, exc: StarletteHTTPException):
+    return JSONResponse(
+        status_code=exc.status_code,
+        content={
+            "success": False,
+            "error": {
+                "code": "HTTP_ERROR",
+                "message": exc.detail
+            }
+        }
+    )
+
+@app.exception_handler(Exception)
+async def global_exception_handler(request: Request, exc: Exception):
+    # Log the exception stack trace to console
+    import traceback
+    traceback.print_exc()
+    
+    return JSONResponse(
+        status_code=500,
+        content={
+            "success": False,
+            "error": {
+                "code": "INTERNAL_SERVER_ERROR",
+                "message": "Sunucuda beklenmeyen bir hata oluştu."
+            }
+        }
+    )
 
 app.add_middleware(
     CORSMiddleware,
@@ -30,6 +67,9 @@ app.include_router(lyrics_router)
 app.include_router(translate_router)
 app.include_router(spotify_router)
 app.include_router(word_info_router)
+app.include_router(pronunciation_router)
+app.include_router(progress_router)
+app.include_router(subscriptions_router)
 
 
 def _cleanup_loop():

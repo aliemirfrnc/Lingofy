@@ -358,29 +358,25 @@ class TrackItem(BaseModel):
     id: str
     name: str
     artist: str
-    album: str
     album_image: str | None = None
     duration_ms: int
 
 
 class PlaylistTracksResponse(BaseModel):
-    playlist_name: str
     tracks: list[TrackItem]
 
 
 @router.get("/playlists", response_model=PlaylistsResponse)
 def get_playlists(user_id: int = Depends(require_user_id)):
     token = _get_valid_token(user_id)
+    headers = {"Authorization": f"Bearer {token}"}
     items = []
-    url = "https://api.spotify.com/v1/me/playlists"
+
+    # limit'i başlangıç URL'ine göm — next URL'leri zaten parametreleri taşıyor
+    url = "https://api.spotify.com/v1/me/playlists?limit=50"
 
     while url:
-        resp = _spotify_request(
-            "GET",
-            url,
-            params={"limit": 50},
-            headers={"Authorization": f"Bearer {token}"},
-        )
+        resp = _spotify_request("GET", url, headers=headers)
         if resp.status_code != 200:
             raise HTTPException(status_code=resp.status_code, detail="Playlist listesi alınamadı.")
 
@@ -389,13 +385,19 @@ def get_playlists(user_id: int = Depends(require_user_id)):
             if not pl:
                 continue
             images = pl.get("images") or []
+            
+            # Spotify API bazen "tracks" yerine "items" objesinde total dönebiliyor
+            tracks_data = pl.get("tracks") or pl.get("items") or {}
+            track_count = tracks_data.get("total", 0)
+
             items.append({
                 "id": pl["id"],
                 "name": pl["name"],
                 "image": images[0]["url"] if images else None,
-                "track_count": pl.get("tracks", {}).get("total", 0),
+                "track_count": track_count,
             })
-        url = data.get("next")
+
+        url = data.get("next")  # None ise döngü biter
 
     return {"playlists": items}
 
@@ -403,63 +405,69 @@ def get_playlists(user_id: int = Depends(require_user_id)):
 @router.get("/playlist/{playlist_id}", response_model=PlaylistTracksResponse)
 def get_playlist_tracks(playlist_id: str, user_id: int = Depends(require_user_id)):
     token = _get_valid_token(user_id)
+    headers = {"Authorization": f"Bearer {token}"}
 
-    # Playlist meta
-    pl_resp = _spotify_request(
-        "GET",
-        f"https://api.spotify.com/v1/playlists/{playlist_id}",
-        params={"fields": "name"},
-        headers={"Authorization": f"Bearer {token}"},
-    )
-    if pl_resp.status_code != 200:
-        raise HTTPException(status_code=pl_resp.status_code, detail="Playlist bulunamadı.")
-
-    playlist_name = pl_resp.json().get("name", "Playlist")
+    url = f"https://api.spotify.com/v1/playlists/{playlist_id}/items"
+    
     tracks = []
-    url = f"https://api.spotify.com/v1/playlists/{playlist_id}/tracks"
-
+    
     while url:
-        resp = _spotify_request(
-            "GET",
-            url,
-            params={"limit": 50, "fields": "next,items(track(id,name,duration_ms,artists,album(name,images)))"},
-            headers={"Authorization": f"Bearer {token}"},
-        )
+        resp = _spotify_request("GET", url, params={"limit": 50} if "?" not in url else None, headers=headers)
         if resp.status_code != 200:
-            raise HTTPException(status_code=resp.status_code, detail="Şarkılar alınamadı.")
-
+            print(f"SPOTIFY TRACKS ERR: {resp.status_code} - {resp.text}")
+            break
+            
         data = resp.json()
-        for item in data.get("items", []):
-            track = item.get("track")
-            if not track or not track.get("id"):
+        print("RAW RESPONSE:", list(data.keys()))
+        
+        items = data.get("items", [])
+        print("ITEMS COUNT:", len(items))
+        
+        null_tracks = sum(1 for obj in items if not obj.get("track") and not obj.get("item"))
+        print("NULL TRACKS:", null_tracks)
+        
+        for obj in items:
+            track = obj.get("track") or obj.get("item")
+            if not track:
                 continue
-            images = track.get("album", {}).get("images") or []
+                
+            track_id = track.get("id")
+            if not track_id:
+                track_id = track.get("uri") or secrets.token_hex(8)
+                
+            artists_str = ", ".join(a.get("name", "") for a in track.get("artists", []) if a.get("name"))
+            album_images = track.get("album", {}).get("images", [])
+            album_image = album_images[0].get("url") if album_images else None
+            
             tracks.append({
-                "id": track["id"],
-                "name": track["name"],
-                "artist": ", ".join(a["name"] for a in track.get("artists", [])),
-                "album": track.get("album", {}).get("name", ""),
-                "album_image": images[0]["url"] if images else None,
-                "duration_ms": track.get("duration_ms", 0),
+                "id": track_id,
+                "name": track.get("name", "Unknown Track"),
+                "artist": artists_str,
+                "album_image": album_image,
+                "duration_ms": track.get("duration_ms", 0)
             })
+            
         url = data.get("next")
+        
+    return {"tracks": tracks}
 
-    return {"playlist_name": playlist_name, "tracks": tracks}
+class PlayTrackRequest(BaseModel):
+    uri: str
 
 
 @router.put("/play-track")
-def play_track(body: dict, user_id: int = Depends(require_user_id)):
+def play_track(body: PlayTrackRequest, user_id: int = Depends(require_user_id)):
     """Belirli bir şarkıyı çalmaya başlar (Spotify Premium gerektirir)."""
     token = _get_valid_token(user_id)
-    uri = body.get("uri")
-    if not uri:
+
+    if not body.uri:
         raise HTTPException(status_code=400, detail="Şarkı URI'si gerekli.")
 
     resp = _spotify_request(
         "PUT",
         "https://api.spotify.com/v1/me/player/play",
         headers={"Authorization": f"Bearer {token}", "Content-Type": "application/json"},
-        json={"uris": [uri]},
+        json={"uris": [body.uri]},
     )
 
     if resp.status_code in (200, 204):

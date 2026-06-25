@@ -1,20 +1,21 @@
 "use client";
-import { useEffect, useRef, useState } from "react";
+import { memo, useEffect, useRef, useState } from "react";
 import { api } from "../lib/api";
+import { Home, Library, TrendingUp, Mic, Lock, Music } from "lucide-react";
+import { Button } from "./ui/Button";
 
-export default function Sidebar({
-  accentColor,
+export default memo(function Sidebar({
   selectedPlaylistId,
   onPlaylistSelect,
   onHomeClick,
+  onProgressClick,
+  planName,
 }) {
   const [playlists, setPlaylists] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [view, setView] = useState("library"); // "home" | "library"
+  const [view, setView] = useState("library"); // "home" | "library" | "progress"
   const fetchedRef = useRef(false);
-
-  const { r = 120, g = 80, b = 200 } = accentColor || {};
 
   useEffect(() => {
     if (fetchedRef.current) return;
@@ -23,78 +24,91 @@ export default function Sidebar({
 
     api
       .getPlaylists()
-      .then((data) => setPlaylists(data.playlists || []))
+      .then((data) => setPlaylists(Array.isArray(data?.playlists) ? data.playlists : []))
       .catch((err) => setError(err.message || "Playlistler yüklenemedi."))
       .finally(() => setLoading(false));
   }, []);
 
-  function msToMin(ms) {
-    const m = Math.floor(ms / 60000);
-    const s = Math.floor((ms % 60000) / 1000);
-    return `${m}:${s.toString().padStart(2, "0")}`;
-  }
-
   return (
-    <aside style={styles.sidebar}>
+    <aside className="w-60 flex-shrink-0 h-screen bg-black/40 backdrop-blur-2xl border-r border-white/5 flex flex-col overflow-hidden transition-all">
       {/* Logo */}
-      <div style={styles.logoArea}>
-        <span style={{ ...styles.logo, color: `rgb(${r},${g},${b})` }}>
+      <div className="pt-6 pb-2 px-5 shrink-0">
+        <span className="text-xl font-extrabold tracking-tight text-theme">
           Lingofy
         </span>
       </div>
 
       {/* Nav */}
-      <nav style={styles.nav}>
+      <nav className="p-3 flex flex-col gap-1 shrink-0">
         <button
-          style={{
-            ...styles.navBtn,
-            color: view === "home" ? "#fff" : "rgba(255,255,255,0.55)",
-            background: view === "home" ? "rgba(255,255,255,0.08)" : "none",
-          }}
+          className={`flex items-center gap-3 px-3 py-2.5 rounded-xl text-[13px] font-semibold transition-all duration-200
+            ${view === "home" ? "bg-white/10 text-white" : "text-white/55 hover:text-white hover:bg-white/5"}`}
           onClick={() => {
             setView("home");
             onHomeClick?.();
           }}
         >
-          <span style={styles.navIcon}>⌂</span>
+          <Home size={18} />
           Ana Sayfa
         </button>
         <button
-          style={{
-            ...styles.navBtn,
-            color: view === "library" ? "#fff" : "rgba(255,255,255,0.55)",
-            background: view === "library" ? "rgba(255,255,255,0.08)" : "none",
-          }}
+          className={`flex items-center gap-3 px-3 py-2.5 rounded-xl text-[13px] font-semibold transition-all duration-200
+            ${view === "library" ? "bg-white/10 text-white" : "text-white/55 hover:text-white hover:bg-white/5"}`}
           onClick={() => setView("library")}
         >
-          <span style={styles.navIcon}>▤</span>
+          <Library size={18} />
           Kütüphane
+        </button>
+
+        <button
+          className={`flex items-center gap-3 px-3 py-2.5 rounded-xl text-[13px] font-semibold transition-all duration-200
+            ${view === "progress" ? "bg-white/10 text-white" : "text-white/55 hover:text-white hover:bg-white/5"}`}
+          onClick={() => {
+            setView("progress");
+            onProgressClick?.();
+          }}
+        >
+          <TrendingUp size={18} />
+          Telaffuz Gelişimi
+        </button>
+
+        {/* Shadowing Mode - Premium Lock Example */}
+        <button
+          className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-[13px] font-semibold text-white/55 hover:text-white hover:bg-white/5 transition-all duration-200"
+          onClick={() => {
+            if (planName === "FREE") {
+              window.location.href = "/pricing";
+            } else {
+              // Shadowing mode trigger if exists
+            }
+          }}
+        >
+          <Mic size={18} />
+          <div className="flex items-center justify-between w-full">
+            <span>Shadowing Mode</span>
+            {planName === "FREE" && <Lock size={12} className="text-white/30" />}
+          </div>
         </button>
       </nav>
 
-      <div style={styles.divider} />
+      <div className="h-px bg-white/5 mx-4 my-2 shrink-0" />
 
       {/* Playlists */}
-      <div style={styles.playlistsHeader}>
-        <span style={styles.playlistsTitle}>Playlistler</span>
+      <div className="px-5 py-2 shrink-0">
+        <span className="text-[10px] font-bold text-white/30 uppercase tracking-[0.1em]">Playlistler</span>
       </div>
 
-      <div style={styles.playlistsList}>
+      <div className="flex-1 overflow-y-auto px-3 pb-4 custom-scrollbar">
         {loading && (
-          <div style={styles.statusRow}>
-            <div
-              style={{
-                ...styles.spinner,
-                borderTopColor: `rgb(${r},${g},${b})`,
-              }}
-            />
+          <div className="flex justify-center py-6">
+            <div className="w-5 h-5 border-2 border-white/10 border-t-theme rounded-full animate-spin" />
           </div>
         )}
 
-        {error && !loading && <p style={styles.errorText}>{error}</p>}
+        {error && !loading && <p className="text-xs text-red-400/80 px-2 m-0">{error}</p>}
 
         {!loading && !error && playlists.length === 0 && (
-          <p style={styles.emptyText}>Playlist bulunamadı.</p>
+          <p className="text-xs text-white/30 px-2 m-0">Playlist bulunamadı.</p>
         )}
 
         {playlists.map((pl) => {
@@ -103,177 +117,59 @@ export default function Sidebar({
             <button
               key={pl.id}
               onClick={() => onPlaylistSelect?.(pl)}
-              style={{
-                ...styles.playlistBtn,
-                background: isActive ? `rgba(${r},${g},${b},0.15)` : "none",
-                borderLeft: isActive
-                  ? `3px solid rgb(${r},${g},${b})`
-                  : "3px solid transparent",
-              }}
+              className={`flex items-center gap-3 w-full p-2 rounded-xl text-left transition-all duration-200 border-l-[3px]
+                ${isActive 
+                  ? "bg-theme-100/10 border-theme text-white" 
+                  : "border-transparent text-white/70 hover:bg-white/5 hover:text-white"
+                }`}
             >
-              <div style={styles.plCover}>
+              <div className="w-9 h-9 rounded-lg bg-white/10 flex items-center justify-center shrink-0 overflow-hidden shadow-sm">
                 {pl.image ? (
                   // eslint-disable-next-line @next/next/no-img-element
                   <img
                     src={pl.image}
                     alt=""
-                    style={{
-                      width: "100%",
-                      height: "100%",
-                      objectFit: "cover",
-                      borderRadius: 4,
-                    }}
+                    className="w-full h-full object-cover"
                   />
                 ) : (
-                  <span
-                    style={{ fontSize: 16, color: "rgba(255,255,255,0.25)" }}
-                  >
-                    ♪
-                  </span>
+                  <Music size={16} className="text-white/30" />
                 )}
               </div>
-              <div style={styles.plInfo}>
-                <p
-                  style={{
-                    ...styles.plName,
-                    color: isActive ? "#fff" : "rgba(255,255,255,0.75)",
-                  }}
-                >
+              <div className="min-w-0">
+                <p className="m-0 text-[13px] font-medium truncate">
                   {pl.name}
                 </p>
-                <p style={styles.plCount}>{pl.track_count} şarkı</p>
+                <p className="m-0 mt-0.5 text-[11px] text-white/40">
+                  {pl.track_count} şarkı
+                </p>
               </div>
             </button>
           );
         })}
       </div>
+
+      {/* PREMIUM CTA */}
+      {(!planName || planName === "FREE") && (
+        <div className="p-4 mt-auto shrink-0">
+          <div 
+            className="group relative bg-gradient-to-br from-theme-500/10 to-purple-500/10 border border-theme-500/20 rounded-2xl p-4 cursor-pointer hover:border-theme-500/40 transition-all duration-300 overflow-hidden"
+            onClick={() => window.location.href = "/pricing"}
+          >
+            <div className="absolute inset-0 bg-theme-500/5 group-hover:bg-theme-500/10 transition-colors" />
+            <div className="relative z-10">
+              <div className="text-theme font-bold text-sm mb-1 flex items-center gap-1.5">
+                Lingofy Premium
+              </div>
+              <div className="text-white/50 text-xs mb-3 leading-relaxed">
+                Sınırsız öğrenme deneyimi için planını yükselt.
+              </div>
+              <Button variant="premium" size="sm" className="w-full font-bold shadow-glow">
+                Yükselt
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
     </aside>
   );
-}
-
-const styles = {
-  sidebar: {
-    width: 240,
-    flexShrink: 0,
-    height: "100vh",
-    background: "rgba(0,0,0,0.45)",
-    backdropFilter: "blur(20px)",
-    borderRight: "1px solid rgba(255,255,255,0.05)",
-    display: "flex",
-    flexDirection: "column",
-    overflow: "hidden",
-  },
-  logoArea: {
-    padding: "20px 16px 8px",
-    flexShrink: 0,
-  },
-  logo: {
-    fontSize: 18,
-    fontWeight: 800,
-    letterSpacing: "-0.03em",
-  },
-  nav: {
-    padding: "8px 8px",
-    display: "flex",
-    flexDirection: "column",
-    gap: 2,
-    flexShrink: 0,
-  },
-  navBtn: {
-    display: "flex",
-    alignItems: "center",
-    gap: 10,
-    padding: "9px 12px",
-    border: "none",
-    borderRadius: 8,
-    fontSize: 13,
-    fontWeight: 500,
-    cursor: "pointer",
-    textAlign: "left",
-    transition: "all 150ms",
-  },
-  navIcon: { fontSize: 15, lineHeight: 1 },
-  divider: {
-    height: 1,
-    background: "rgba(255,255,255,0.06)",
-    margin: "8px 16px",
-    flexShrink: 0,
-  },
-  playlistsHeader: {
-    padding: "8px 16px 6px",
-    flexShrink: 0,
-  },
-  playlistsTitle: {
-    fontSize: 11,
-    fontWeight: 600,
-    color: "rgba(255,255,255,0.3)",
-    textTransform: "uppercase",
-    letterSpacing: "0.08em",
-  },
-  playlistsList: {
-    flex: 1,
-    overflowY: "auto",
-    padding: "0 8px 16px",
-  },
-  statusRow: {
-    display: "flex",
-    justifyContent: "center",
-    padding: "20px 0",
-  },
-  spinner: {
-    width: 20,
-    height: 20,
-    border: "2px solid rgba(255,255,255,0.08)",
-    borderRadius: "50%",
-    animation: "spin 0.8s linear infinite",
-  },
-  errorText: {
-    fontSize: 12,
-    color: "rgba(255,80,80,0.7)",
-    padding: "8px 8px",
-    margin: 0,
-  },
-  emptyText: {
-    fontSize: 12,
-    color: "rgba(255,255,255,0.25)",
-    padding: "8px 8px",
-    margin: 0,
-  },
-  playlistBtn: {
-    display: "flex",
-    alignItems: "center",
-    gap: 10,
-    width: "100%",
-    padding: "8px 10px",
-    border: "none",
-    borderRadius: 8,
-    cursor: "pointer",
-    textAlign: "left",
-    transition: "all 120ms",
-  },
-  plCover: {
-    width: 36,
-    height: 36,
-    borderRadius: 5,
-    background: "rgba(255,255,255,0.08)",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    flexShrink: 0,
-    overflow: "hidden",
-  },
-  plInfo: { minWidth: 0 },
-  plName: {
-    margin: 0,
-    fontSize: 13,
-    fontWeight: 500,
-    whiteSpace: "nowrap",
-    overflow: "hidden",
-    textOverflow: "ellipsis",
-  },
-  plCount: {
-    margin: "2px 0 0",
-    fontSize: 11,
-    color: "rgba(255,255,255,0.3)",
-  },
-};
+});

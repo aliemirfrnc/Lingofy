@@ -1,36 +1,9 @@
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL?.replace(/\/$/, "");
 
-const ACCESS_KEY = "lingofy_access_token";
-const REFRESH_KEY = "lingofy_refresh_token";
-const LEGACY_KEY = "lingofy_token";
-
-function getAccessToken() {
-  if (typeof window === "undefined") return null;
-  return localStorage.getItem(ACCESS_KEY);
-}
-
-function getRefreshToken() {
-  if (typeof window === "undefined") return null;
-  return localStorage.getItem(REFRESH_KEY);
-}
-
-export function setTokens(accessToken, refreshToken) {
-  if (typeof window === "undefined") return;
-  localStorage.setItem(ACCESS_KEY, accessToken);
-  localStorage.setItem(REFRESH_KEY, refreshToken);
-  localStorage.removeItem(LEGACY_KEY);
-}
-
-export function clearTokens() {
-  if (typeof window === "undefined") return;
-  localStorage.removeItem(ACCESS_KEY);
-  localStorage.removeItem(REFRESH_KEY);
-  localStorage.removeItem(LEGACY_KEY);
-}
+// We no longer use localStorage for tokens. Tokens are HttpOnly cookies.
 
 function authHeaders() {
-  const token = getAccessToken();
-  return token ? { Authorization: `Bearer ${token}` } : {};
+  return {}; // Handled by cookies
 }
 
 async function handleResponse(res) {
@@ -39,14 +12,32 @@ async function handleResponse(res) {
     try {
       const data = await res.json();
       detail = data.detail || "";
+      if (data.detail && typeof data.detail === "object") {
+         detail = data.detail.message || JSON.stringify(data.detail);
+      }
     } catch {
       // yanıt JSON değilse sessizce geç
     }
     const err = new Error(detail || `İstek başarısız oldu (${res.status}).`);
     err.status = res.status;
+    err.data = detail;
     throw err;
   }
+  if (res.status === 204) return null;
   return res.json();
+}
+
+const lyricsCache = new Map();
+
+function fetchWithTimeout(url, options, timeout = 10000) {
+  return Promise.race([
+    fetch(url, options),
+    new Promise((_, reject) => {
+      const err = new Error("İstek zaman aşımına uğradı.");
+      err.name = "TimeoutError";
+      setTimeout(() => reject(err), timeout);
+    }),
+  ]);
 }
 
 async function request(path, options = {}) {
@@ -55,16 +46,15 @@ async function request(path, options = {}) {
       "API adresi yapılandırılmamış. NEXT_PUBLIC_API_URL değerini kontrol et.",
     );
   }
-
+  options.credentials = options.credentials || "include";
   try {
-    return await fetch(`${BASE_URL}${path}`, options);
+    return await fetchWithTimeout(`${BASE_URL}${path}`, options, options.timeout || 10000);
   } catch (error) {
     if (error?.name === "AbortError") throw error;
+    if (error?.name === "TimeoutError") throw error;
     throw new Error(
       "Sunucuya ulaşılamadı. Bağlantını ve API adresini kontrol et.",
-      {
-        cause: error,
-      },
+      { cause: error },
     );
   }
 }
@@ -72,62 +62,42 @@ async function request(path, options = {}) {
 let refreshPromise = null;
 
 async function refreshAccessToken() {
-  const refreshToken = getRefreshToken();
-  if (!refreshToken) {
-    throw new Error("Oturum süresi dolmuş, tekrar giriş yap.");
-  }
-
   if (!refreshPromise) {
     refreshPromise = request("/auth/refresh", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ refresh_token: refreshToken }),
     })
       .then(handleResponse)
-      .then((data) => {
-        setTokens(data.access_token, data.refresh_token);
-        return data.access_token;
-      })
       .finally(() => {
         refreshPromise = null;
       });
   }
-
   return refreshPromise;
 }
 
 async function authFetch(path, options = {}, retried = false) {
-  const res = await request(path, {
-    ...options,
-    headers: {
-      ...options.headers,
-      ...authHeaders(),
-    },
-  });
-
+  const res = await request(path, options);
+  
   if (res.status === 401 && !retried) {
     try {
       await refreshAccessToken();
     } catch {
-      clearTokens();
       throw new Error("Oturum süresi dolmuş, tekrar giriş yap.");
     }
     return authFetch(path, options, true);
   }
-
   return handleResponse(res);
 }
 
 export const api = {
+  // ── Auth ──────────────────────────────────────────────────────────────────
   async register(email, password) {
     const res = await request("/auth/register", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email, password }),
     });
-    const data = await handleResponse(res);
-    setTokens(data.access_token, data.refresh_token);
-    return data;
+    return handleResponse(res);
   },
 
   async login(email, password) {
@@ -136,9 +106,7 @@ export const api = {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email, password }),
     });
-    const data = await handleResponse(res);
-    setTokens(data.access_token, data.refresh_token);
-    return data;
+    return handleResponse(res);
   },
 
   async me() {
@@ -146,23 +114,62 @@ export const api = {
   },
 
   async logout() {
-    const refreshToken = getRefreshToken();
-    if (!refreshToken) {
-      clearTokens();
-      return { status: "ok" };
-    }
     try {
       await authFetch("/auth/logout", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ refresh_token: refreshToken }),
+        headers: { "Content-Type": "application/json" }
       });
     } catch {
       // oturum zaten geçersiz olabilir
-    } finally {
-      clearTokens();
     }
     return { status: "ok" };
+  },
+  
+  async logoutAll() {
+    try {
+      await authFetch("/auth/logout-all", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" }
+      });
+    } catch {}
+    return { status: "ok" };
+  },
+
+  // ── Subscriptions ──────────────────────────────────────────────────────────
+  async getMyPlan() {
+    return authFetch("/api/subscriptions/my-plan");
+  },
+  
+  async upgradePlan(planName) {
+    return authFetch("/api/subscriptions/upgrade", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ plan_name: planName }),
+    });
+  },
+
+  async getLyrics(track, artist = "", options = {}) {
+    const key = `${track}::${artist}`.toLowerCase();
+    if (lyricsCache.has(key)) {
+      return lyricsCache.get(key);
+    }
+    
+    const params = new URLSearchParams({ track, artist });
+    
+    const fetchAttempt = async (retries = 1) => {
+      try {
+        const res = await request(`/lyrics?${params}`, { ...options, timeout: 8000 });
+        const data = await handleResponse(res);
+        lyricsCache.set(key, data);
+        return data;
+      } catch (err) {
+        if (err?.name === "AbortError" || retries === 0) throw err;
+        await new Promise((r) => setTimeout(r, 600));
+        return fetchAttempt(retries - 1);
+      }
+    };
+    
+    return fetchAttempt();
   },
 
   async translateLine(text) {
@@ -181,18 +188,14 @@ export const api = {
     });
   },
 
+  // ── Chat & Word Info ──────────────────────────────────────────────────────
   async chat(message) {
     return authFetch("/chat", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ message }),
+      timeout: 30000,
     });
-  },
-
-  async getLyrics(track, artist = "", options = {}) {
-    const params = new URLSearchParams({ track, artist });
-    const res = await request(`/lyrics?${params}`, options);
-    return handleResponse(res);
   },
 
   async getWordInfo(word, contextLine = "") {
@@ -200,9 +203,11 @@ export const api = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ word, context_line: contextLine }),
+      timeout: 30000,
     });
   },
 
+  // ── Spotify ───────────────────────────────────────────────────────────────
   async spotifyConnectUrl() {
     const data = await authFetch("/spotify/connect-token");
     return `${BASE_URL}/spotify/login?token=${encodeURIComponent(data.connect_token)}`;
@@ -234,5 +239,43 @@ export const api = {
 
   async spotifyPrevious() {
     return authFetch("/spotify/previous", { method: "POST" });
+  },
+
+  // ── Playlists ─────────────────────────────────────────────────────────────
+  async getPlaylists() {
+    return authFetch("/spotify/playlists");
+  },
+
+  async getPlaylistTracks(playlistId) {
+    return authFetch(`/spotify/playlist/${playlistId}`);
+  },
+
+  async playTrack(trackUri) {
+    return authFetch("/spotify/play-track", {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ uri: trackUri }),
+    });
+  },
+
+  // ── Pronunciation & Progress ──────────────────────────────────────────────
+  async analyzePronunciation(audioBlob, expectedText) {
+    const formData = new FormData();
+    formData.append("audio", audioBlob, "recording.webm");
+    formData.append("expected_text", expectedText);
+
+    // Using base fetch because authFetch assumes JSON body by default
+    // We also might not have auth headers strictly required for this mock, but let's include them
+    const res = await request("/api/pronunciation/analyze", {
+      method: "POST",
+      headers: authHeaders(), // don't set Content-Type so browser sets boundary
+      body: formData,
+      timeout: 60000, // Gemini operations can take up to 30-40s including STT
+    });
+    return handleResponse(res);
+  },
+
+  async getProgressStats() {
+    return authFetch("/api/progress/stats");
   },
 };

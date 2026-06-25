@@ -1,20 +1,19 @@
 "use client";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { api } from "../lib/api";
+import { Play, Pause, SkipBack, SkipForward, Music } from "lucide-react";
+import { Button } from "./ui/Button";
 
 export default function NowPlaying({
   onTrackChange,
   onProgress,
   onTrackData,
-  accentColor,
 }) {
   const [connected, setConnected] = useState(null);
   const [track, setTrack] = useState(null);
   const [error, setError] = useState(null);
   const lastTrackKey = useRef(null);
   const fetchInFlightRef = useRef(false);
-
-  const { r = 120, g = 80, b = 200 } = accentColor || {};
 
   const checkStatus = useCallback(() => {
     api
@@ -50,7 +49,7 @@ export default function NowPlaying({
         setTrack(data);
         setError(null);
         onTrackData?.(data);
-        if (data.track_name) {
+        if (data?.track_name) {
           const key = `${data.track_name}::${data.artist}`;
           if (key !== lastTrackKey.current) {
             lastTrackKey.current = key;
@@ -58,7 +57,7 @@ export default function NowPlaying({
             prefetchNext();
           }
         }
-        onProgress?.(data.progress_ms, data.duration_ms, data.is_playing);
+        onProgress?.(data?.progress_ms, data?.duration_ms, data?.is_playing);
       })
       .catch((err) => {
         if (err.status === 401 || err.status === 404) {
@@ -111,19 +110,16 @@ export default function NowPlaying({
       .catch((err) => setError(err.message || "Önceki şarkıya geçilemedi."));
   };
 
-  if (connected === null) return <div style={{ height: 80 }} />;
+  if (connected === null) return <div className="h-20 shrink-0" />;
 
   if (!connected) {
     return (
-      <div style={styles.connectCard}>
-        <p style={styles.connectText}>Spotify ile bağlan</p>
-        <button
-          onClick={handleConnect}
-          style={{ ...styles.connectBtn, background: `rgb(${r},${g},${b})` }}
-        >
+      <div className="bg-white/5 border border-white/10 rounded-2xl p-5 text-center mb-4 shrink-0 animate-fade-in shadow-sm">
+        <p className="text-white/60 text-[13px] mb-3">Spotify ile bağlan</p>
+        <Button onClick={handleConnect} variant="primary" className="rounded-full shadow-glow">
           Bağlan
-        </button>
-        {error && <p style={styles.errorText}>{error}</p>}
+        </Button>
+        {error && <p className="text-red-400 text-[11px] text-center mt-2">{error}</p>}
       </div>
     );
   }
@@ -134,170 +130,54 @@ export default function NowPlaying({
       : 0;
 
   return (
-    <div style={styles.card}>
-      <div style={styles.trackRow}>
-        <div style={styles.cover}>
+    <div className="glass-panel p-3 mb-4 shrink-0 animate-fade-in overflow-hidden">
+      <div className="flex items-center gap-3 mb-3">
+        <div className="w-11 h-11 rounded-lg bg-white/10 flex items-center justify-center shrink-0 overflow-hidden shadow-sm">
           {track?.album_image ? (
             // eslint-disable-next-line @next/next/no-img-element
             <img
               src={track.album_image}
               alt=""
-              style={{
-                width: "100%",
-                height: "100%",
-                objectFit: "cover",
-                borderRadius: 6,
-              }}
+              className="w-full h-full object-cover"
               crossOrigin="anonymous"
             />
           ) : (
-            <span style={{ fontSize: 20, color: "rgba(255,255,255,0.3)" }}>
-              ♪
-            </span>
+            <Music className="text-white/30" size={20} />
           )}
         </div>
-        <div style={styles.trackInfo}>
-          <p style={styles.trackName}>{track?.track_name || "—"}</p>
-          <p style={styles.artistName}>{track?.artist || "—"}</p>
+        <div className="min-w-0 flex-1">
+          <p className="text-[14px] font-semibold text-white m-0 truncate">
+            {track?.track_name || "—"}
+          </p>
+          <p className="text-[12px] text-white/50 m-0 mt-0.5 truncate">
+            {track?.artist || "—"}
+          </p>
         </div>
       </div>
 
-      <div style={styles.progressBg}>
+      <div className="h-1 bg-white/10 rounded-full mb-3 overflow-hidden">
         <div
-          style={{
-            ...styles.progressFill,
-            width: `${progressPct}%`,
-            background: `rgb(${r},${g},${b})`,
-          }}
+          className="h-full rounded-full bg-theme transition-all duration-1000 ease-linear shadow-glow"
+          style={{ width: `${progressPct}%` }}
         />
       </div>
 
-      <div style={styles.controls}>
-        <button onClick={handlePrevious} style={styles.ctrlBtn}>
-          ⏮
+      <div className="flex items-center justify-center gap-5">
+        <button onClick={handlePrevious} className="text-white/60 hover:text-white transition-colors">
+          <SkipBack size={20} className="fill-current" />
         </button>
         <button
           onClick={handlePlayPause}
-          style={{ ...styles.playBtn, background: `rgb(${r},${g},${b})` }}
+          className="w-9 h-9 rounded-full bg-white text-black flex items-center justify-center hover:scale-105 transition-transform shadow-lg"
         >
-          {track?.is_playing ? "⏸" : "▶"}
+          {track?.is_playing ? <Pause size={18} className="fill-current" /> : <Play size={18} className="fill-current ml-1" />}
         </button>
-        <button onClick={handleNext} style={styles.ctrlBtn}>
-          ⏭
+        <button onClick={handleNext} className="text-white/60 hover:text-white transition-colors">
+          <SkipForward size={20} className="fill-current" />
         </button>
       </div>
 
-      {error && <p style={styles.errorText}>{error}</p>}
+      {error && <p className="text-red-400/80 text-[11px] text-center mt-2 m-0">{error}</p>}
     </div>
   );
 }
-
-const styles = {
-  connectCard: {
-    background: "rgba(255,255,255,0.04)",
-    border: "1px solid rgba(255,255,255,0.08)",
-    borderRadius: 14,
-    padding: "20px",
-    textAlign: "center",
-    marginBottom: 16,
-  },
-  connectText: {
-    color: "rgba(255,255,255,0.6)",
-    fontSize: 13,
-    margin: "0 0 12px",
-  },
-  connectBtn: {
-    border: "none",
-    color: "#fff",
-    borderRadius: 999,
-    padding: "9px 22px",
-    fontSize: 13,
-    fontWeight: 600,
-    cursor: "pointer",
-  },
-  card: {
-    background: "rgba(255,255,255,0.05)",
-    border: "1px solid rgba(255,255,255,0.08)",
-    backdropFilter: "blur(16px)",
-    borderRadius: 14,
-    padding: "14px",
-    marginBottom: 16,
-  },
-  trackRow: {
-    display: "flex",
-    alignItems: "center",
-    gap: 10,
-    marginBottom: 10,
-  },
-  cover: {
-    width: 42,
-    height: 42,
-    borderRadius: 7,
-    background: "rgba(255,255,255,0.08)",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    flexShrink: 0,
-    overflow: "hidden",
-  },
-  trackInfo: { minWidth: 0 },
-  trackName: {
-    color: "#fff",
-    fontSize: 13,
-    fontWeight: 600,
-    margin: 0,
-    whiteSpace: "nowrap",
-    overflow: "hidden",
-    textOverflow: "ellipsis",
-  },
-  artistName: {
-    color: "rgba(255,255,255,0.5)",
-    fontSize: 11,
-    margin: "2px 0 0",
-    whiteSpace: "nowrap",
-    overflow: "hidden",
-    textOverflow: "ellipsis",
-  },
-  progressBg: {
-    height: 2,
-    background: "rgba(255,255,255,0.1)",
-    borderRadius: 1,
-    marginBottom: 10,
-  },
-  progressFill: {
-    height: "100%",
-    borderRadius: 1,
-    transition: "width 1s linear",
-  },
-  controls: {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    gap: 16,
-  },
-  ctrlBtn: {
-    background: "none",
-    border: "none",
-    color: "rgba(255,255,255,0.6)",
-    fontSize: 15,
-    cursor: "pointer",
-  },
-  playBtn: {
-    width: 32,
-    height: 32,
-    borderRadius: "50%",
-    border: "none",
-    color: "#fff",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    cursor: "pointer",
-    fontSize: 12,
-  },
-  errorText: {
-    color: "rgba(255,80,80,0.8)",
-    fontSize: 11,
-    textAlign: "center",
-    marginTop: 6,
-  },
-};

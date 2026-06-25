@@ -1,15 +1,23 @@
 "use client";
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import { api } from "../lib/api";
+import { Card, CardContent, CardFooter } from "./ui/Card";
+import { Input } from "./ui/Input";
+import { Button } from "./ui/Button";
+import { Send, Loader2 } from "lucide-react";
 
-export default function Chat({ accentColor }) {
+export default function Chat() {
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const listRef = useRef(null);
 
-  const { r = 120, g = 80, b = 200 } = accentColor || {};
+  const scrollToBottom = () => {
+    setTimeout(() => {
+      listRef.current?.scrollTo({ top: 9999, behavior: "smooth" });
+    }, 50);
+  };
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -21,21 +29,18 @@ export default function Chat({ accentColor }) {
     setError(null);
 
     setMessages((prev) => [...prev, { type: "user", text: userMessage }]);
-    setTimeout(
-      () => listRef.current?.scrollTo({ top: 9999, behavior: "smooth" }),
-      50,
-    );
+    scrollToBottom();
 
     try {
       const data = await api.chat(userMessage);
+      if (!data || !data.response) {
+        throw new Error("Sunucudan geçerli bir yanıt alınamadı.");
+      }
       setMessages((prev) => [
         ...prev,
         { type: "assistant", text: data.response },
       ]);
-      setTimeout(
-        () => listRef.current?.scrollTo({ top: 9999, behavior: "smooth" }),
-        50,
-      );
+      scrollToBottom();
     } catch (err) {
       setError(err.message || "Mesaj gönderilemedi.");
     } finally {
@@ -44,148 +49,59 @@ export default function Chat({ accentColor }) {
   }
 
   return (
-    <div style={styles.wrapper}>
-      <div ref={listRef} style={styles.messageList}>
+    <Card className="flex flex-col h-full border-white/5 animate-slide-up shadow-glass">
+      <CardContent 
+        className="flex-1 overflow-y-auto p-4 flex flex-col gap-3 custom-scrollbar" 
+        ref={listRef}
+      >
         {messages.length === 0 && (
-          <p style={styles.emptyText}>Şarkı sözleri hakkında bir şey sor</p>
+          <p className="text-center text-white/30 text-[13px] my-auto">Şarkı sözleri hakkında bir şey sor</p>
         )}
+        
         {messages.map((item, i) => (
           <div
             key={i}
-            style={{
-              ...styles.bubble,
-              alignSelf: item.type === "user" ? "flex-end" : "flex-start",
-              background:
-                item.type === "user"
-                  ? `rgba(${r},${g},${b},0.25)`
-                  : "rgba(255,255,255,0.06)",
-              border:
-                item.type === "user"
-                  ? `1px solid rgba(${r},${g},${b},0.3)`
-                  : "1px solid rgba(255,255,255,0.08)",
-            }}
+            className={`max-w-[88%] p-3 rounded-2xl text-[13px] leading-relaxed animate-fade-in
+              ${item.type === "user" 
+                ? "self-end bg-theme-200 border border-theme-300 text-white" 
+                : "self-start bg-white/5 border border-white/10 text-white/80"
+              }`}
           >
             {item.text}
           </div>
         ))}
+        
         {loading && (
-          <div
-            style={{
-              ...styles.bubble,
-              alignSelf: "flex-start",
-              background: "rgba(255,255,255,0.04)",
-            }}
-          >
-            <span style={styles.typingDot} />
-            <span style={styles.typingDot} />
-            <span style={styles.typingDot} />
+          <div className="max-w-[88%] p-3 rounded-2xl self-start bg-white/5 border border-white/10 text-white/80 animate-pulse flex gap-1">
+            <span className="w-1.5 h-1.5 rounded-full bg-white/40 animate-bounce" style={{ animationDelay: '0ms' }} />
+            <span className="w-1.5 h-1.5 rounded-full bg-white/40 animate-bounce" style={{ animationDelay: '150ms' }} />
+            <span className="w-1.5 h-1.5 rounded-full bg-white/40 animate-bounce" style={{ animationDelay: '300ms' }} />
           </div>
         )}
-      </div>
+      </CardContent>
 
-      {error && <p style={styles.errorText}>{error}</p>}
+      {error && <p className="text-red-400 text-xs px-4 pb-2">{error}</p>}
 
-      <form onSubmit={handleSubmit} style={styles.form}>
-        <input
-          value={message}
-          onChange={(e) => setMessage(e.target.value)}
-          disabled={loading}
-          placeholder="Sözler hakkında sor..."
-          style={styles.input}
-        />
-        <button
-          type="submit"
-          disabled={loading || !message.trim()}
-          style={{
-            ...styles.sendBtn,
-            background: `rgb(${r},${g},${b})`,
-            opacity: loading || !message.trim() ? 0.5 : 1,
-          }}
-        >
-          →
-        </button>
-      </form>
-    </div>
+      <CardFooter className="p-3 border-t border-white/5 bg-black/20">
+        <form onSubmit={handleSubmit} className="flex gap-2 w-full">
+          <Input
+            value={message}
+            onChange={(e) => setMessage(e.target.value)}
+            disabled={loading}
+            placeholder="Sözler hakkında sor..."
+            className="h-10 text-sm bg-white/5 border-white/10 placeholder:text-white/30"
+          />
+          <Button
+            type="submit"
+            disabled={loading || !message.trim()}
+            variant="primary"
+            size="icon"
+            className="h-10 w-10 shrink-0 rounded-xl"
+          >
+            {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : <Send className="w-4 h-4" />}
+          </Button>
+        </form>
+      </CardFooter>
+    </Card>
   );
 }
-
-const styles = {
-  wrapper: {
-    display: "flex",
-    flexDirection: "column",
-    background: "rgba(18,18,18,0.85)",
-    backdropFilter: "blur(20px)",
-    border: "1px solid rgba(255,255,255,0.08)",
-    borderRadius: 14,
-    overflow: "hidden",
-    height: "100%",
-  },
-  messageList: {
-    flex: 1,
-    overflowY: "auto",
-    padding: "14px",
-    display: "flex",
-    flexDirection: "column",
-    gap: 8,
-    minHeight: 0,
-  },
-  emptyText: {
-    color: "rgba(255,255,255,0.2)",
-    fontSize: 13,
-    textAlign: "center",
-    margin: "auto",
-  },
-  bubble: {
-    maxWidth: "88%",
-    padding: "8px 12px",
-    borderRadius: 12,
-    fontSize: 13,
-    lineHeight: 1.5,
-    color: "rgba(255,255,255,0.85)",
-    display: "flex",
-    gap: 4,
-  },
-  typingDot: {
-    display: "inline-block",
-    width: 5,
-    height: 5,
-    borderRadius: "50%",
-    background: "rgba(255,255,255,0.4)",
-    animation: "typingBlink 1.2s infinite",
-  },
-  errorText: {
-    color: "rgba(255,80,80,0.8)",
-    fontSize: 11,
-    padding: "0 14px",
-    margin: 0,
-  },
-  form: {
-    display: "flex",
-    gap: 8,
-    padding: "10px 12px",
-    borderTop: "1px solid rgba(255,255,255,0.06)",
-    flexShrink: 0,
-  },
-  input: {
-    flex: 1,
-    background: "rgba(255,255,255,0.06)",
-    border: "1px solid rgba(255,255,255,0.1)",
-    borderRadius: 8,
-    padding: "9px 12px",
-    color: "#fff",
-    fontSize: 13,
-    outline: "none",
-  },
-  sendBtn: {
-    border: "none",
-    color: "#fff",
-    borderRadius: 8,
-    width: 36,
-    height: 36,
-    cursor: "pointer",
-    fontSize: 16,
-    fontWeight: 700,
-    flexShrink: 0,
-    transition: "opacity 150ms",
-  },
-};

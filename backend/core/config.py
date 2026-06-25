@@ -3,7 +3,9 @@ from dotenv import load_dotenv
 
 load_dotenv(override=True)
 
-GROQ_API_KEY = os.getenv("GROQ_API_KEY", "")
+AI_PROVIDER = os.getenv("AI_PROVIDER", "gemini")
+GEMINI_API_KEY = os.getenv("GEMINI_API_KEY", "")
+GEMINI_MODEL = os.getenv("GEMINI_MODEL", "gemini-2.5-flash")
 FREE_DAILY_LIMIT = int(os.getenv("FREE_DAILY_LIMIT", "5"))
 
 SPOTIFY_CLIENT_ID = os.getenv("SPOTIFY_CLIENT_ID", "")

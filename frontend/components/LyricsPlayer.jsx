@@ -1,9 +1,11 @@
 "use client";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { memo, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { api } from "../lib/api";
 import ErrorBanner from "./ErrorBanner";
+import PronunciationCoach from "./PronunciationCoach";
+import ShadowingMode from "./ShadowingMode";
 
-export default function LyricsPlayer({
+export default memo(function LyricsPlayer({
   accentColor,
   onWordClick,
   onTrackChange,
@@ -25,6 +27,8 @@ export default function LyricsPlayer({
   const [translatingAll, setTranslatingAll] = useState(false);
   const [translateAllError, setTranslateAllError] = useState(null);
   const [showFullTranslation, setShowFullTranslation] = useState(false);
+  const [coachLine, setCoachLine] = useState(null);
+  const [showShadowing, setShowShadowing] = useState(false);
 
   const lineRefs = useRef([]);
   const containerRef = useRef(null);
@@ -229,17 +233,27 @@ export default function LyricsPlayer({
 
   if (loading) {
     return (
-      <div style={styles.centered}>
-        <div
-          style={{ ...styles.spinner, borderTopColor: `rgb(${r},${g},${b})` }}
-        />
+      <div className="flex flex-col items-center justify-center h-full gap-3">
+        <div className="flex flex-col gap-4 items-center w-full max-w-lg">
+          {[...Array(6)].map((_, i) => (
+            <div
+              key={i}
+              className="h-[18px] rounded-lg bg-theme/30 animate-pulse"
+              style={{
+                width: `${Math.random() * 40 + 30}%`,
+                opacity: Math.max(0.1, 1 - i * 0.15),
+                animationDelay: `${i * 0.1}s`,
+              }}
+            />
+          ))}
+        </div>
       </div>
     );
   }
 
   if (error && !lyrics.length) {
     return (
-      <div style={styles.centered}>
+      <div className="flex flex-col items-center justify-center h-full gap-3">
         <ErrorBanner
           message={error}
           onRetry={
@@ -248,14 +262,8 @@ export default function LyricsPlayer({
               : undefined
           }
         />
-        <p
-          style={{
-            color: "rgba(255,255,255,0.4)",
-            fontSize: 13,
-            marginTop: 16,
-          }}
-        >
-          Spotify&apos;da bir şarkı çal — sözler otomatik yüklenecek
+        <p className="text-white/40 text-[13px] mt-4">
+          Spotify'da bir şarkı çal — sözler otomatik yüklenecek
         </p>
       </div>
     );
@@ -263,49 +271,51 @@ export default function LyricsPlayer({
 
   if (!lyrics.length) {
     return (
-      <div style={styles.centered}>
-        <p style={{ color: "rgba(255,255,255,0.3)", fontSize: 15 }}>
-          Spotify&apos;da bir şarkı çal
-        </p>
+      <div className="flex flex-col items-center justify-center h-full gap-3">
+        <p className="text-white/30 text-[15px]">Spotify'da bir şarkı çal</p>
       </div>
     );
   }
 
   return (
-    <div style={styles.wrapper}>
+    <div className="relative h-full flex flex-col">
       {/* Senkron kontrol + tümünü çevir */}
-      <div style={styles.topBar}>
+      <div className="flex items-center justify-between px-6 py-4 shrink-0">
         {synced && (
-          <div style={styles.offsetRow}>
-            <button style={styles.offsetBtn} onClick={() => adjustOffset(-500)}>
+          <div className="flex items-center gap-2">
+            <button className="bg-white/5 border border-white/10 text-white/70 rounded-md px-2.5 py-1 text-xs cursor-pointer hover:bg-white/10 transition-colors" onClick={() => adjustOffset(-500)}>
               −0.5s
             </button>
-            <span style={styles.offsetLabel}>
+            <span className="text-white/40 text-[11px] min-w-[52px] text-center">
               {syncOffsetMs > 0 ? "+" : ""}
               {(syncOffsetMs / 1000).toFixed(1)}s
             </span>
-            <button style={styles.offsetBtn} onClick={() => adjustOffset(500)}>
+            <button className="bg-white/5 border border-white/10 text-white/70 rounded-md px-2.5 py-1 text-xs cursor-pointer hover:bg-white/10 transition-colors" onClick={() => adjustOffset(500)}>
               +0.5s
             </button>
           </div>
         )}
         {lyrics.length > 0 && (
-          <button
-            style={{
-              ...styles.translateAllBtn,
-              background: `rgba(${r},${g},${b},0.18)`,
-              border: `1px solid rgba(${r},${g},${b},0.35)`,
-            }}
-            onClick={handleTranslateAll}
-            disabled={translatingAll}
-          >
-            {translatingAll ? "Çevriliyor..." : "Tümünü çevir"}
-          </button>
+          <div className="flex gap-2">
+            <button
+              className="bg-yellow-500/15 border border-yellow-500/35 text-yellow-500/90 rounded-full px-4 py-1.5 text-xs font-medium cursor-pointer hover:bg-yellow-500/25 transition-colors flex items-center gap-1.5"
+              onClick={() => setShowShadowing(true)}
+            >
+              <span className="text-sm">🎤</span> Shadowing Mode
+            </button>
+            <button
+              className="bg-theme-100 border border-theme-300 text-white/90 rounded-full px-4 py-1.5 text-xs font-medium cursor-pointer hover:bg-theme-200 transition-colors disabled:opacity-50"
+              onClick={handleTranslateAll}
+              disabled={translatingAll}
+            >
+              {translatingAll ? "Çevriliyor..." : "Tümünü çevir"}
+            </button>
+          </div>
         )}
       </div>
 
       {translateAllError && (
-        <div style={{ padding: "0 24px" }}>
+        <div className="px-6">
           <ErrorBanner
             message={translateAllError}
             onRetry={handleTranslateAll}
@@ -314,10 +324,10 @@ export default function LyricsPlayer({
       )}
 
       {/* Lyrics listesi */}
-      <div ref={containerRef} style={styles.lyricsScroll}>
-        <div style={styles.lyricsInner}>
-          {/* Üst dolgu — aktif satır ortaya gelsin */}
-          <div style={{ height: "35vh" }} />
+      <div ref={containerRef} className="flex-1 overflow-y-auto custom-scrollbar">
+        <div className="max-w-[640px] mx-auto px-8 text-center">
+          {/* Üst dolgu */}
+          <div className="h-[35vh]" />
 
           {lyrics.map((line, i) => {
             const isActive = i === activeLineIndex;
@@ -327,23 +337,22 @@ export default function LyricsPlayer({
             const lineTranslation = translation[line];
 
             return (
-              <div key={i} style={styles.lineGroup}>
+              <div key={i} className="mb-2">
                 <p
                   ref={(el) => (lineRefs.current[i] = el)}
                   onClick={() => {
                     pauseAutoFollow();
                     setSelectedLine(i);
                   }}
+                  className="m-0 py-1.5 font-semibold leading-relaxed tracking-tight transition-all duration-300 select-none cursor-pointer"
                   style={{
-                    ...styles.lyricLine,
                     opacity,
                     transform: `scale(${scale})`,
                     color: isActive ? "#ffffff" : "rgba(255,255,255,0.85)",
                     textShadow: isActive
-                      ? `0 0 40px rgba(${r},${g},${b},0.6), 0 2px 8px rgba(0,0,0,0.8)`
+                      ? `0 0 40px rgba(var(--theme-r),var(--theme-g),var(--theme-b),0.6), 0 2px 8px rgba(0,0,0,0.8)`
                       : "none",
                     fontSize: isActive ? 22 : 17,
-                    cursor: "pointer",
                   }}
                 >
                   {line.split(/(\s+)/).map((token, ti) =>
@@ -358,7 +367,7 @@ export default function LyricsPlayer({
                           setSelectedLine(i);
                           onWordClick?.(token, line);
                         }}
-                        style={styles.wordToken}
+                        className="cursor-pointer rounded-[3px] px-[1px] transition-colors hover:bg-white/10"
                       >
                         {token}
                       </span>
@@ -367,23 +376,28 @@ export default function LyricsPlayer({
                 </p>
 
                 {isActive && (
-                  <div style={styles.translationRow}>
+                  <div className="mt-1.5 mb-2.5 min-h-[20px] flex items-center justify-center animate-fade-in">
                     {lineTranslation === null ? (
-                      <span style={styles.translationFailed}>
+                      <span className="text-[13px] text-white/20">
                         Çeviri alınamadı
                       </span>
                     ) : lineTranslation ? (
-                      <span
-                        style={{
-                          ...styles.translationText,
-                          color: `rgba(${r},${g},${b},0.9)`,
-                        }}
-                      >
+                      <span className="text-[14px] italic font-normal text-theme-100">
                         {lineTranslation}
                       </span>
                     ) : (
-                      <span style={styles.translationFailed}>•••</span>
+                      <span className="text-[13px] text-white/20">•••</span>
                     )}
+                    
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setCoachLine(line);
+                      }}
+                      className="ml-4 bg-red-500/15 border border-red-500/30 text-red-400 rounded-full px-3 py-1 text-xs font-semibold cursor-pointer hover:scale-105 transition-transform flex items-center gap-1.5"
+                    >
+                      🎤 Telaffuzunu Test Et
+                    </button>
                   </div>
                 )}
               </div>
@@ -391,42 +405,34 @@ export default function LyricsPlayer({
           })}
 
           {/* Alt dolgu */}
-          <div style={{ height: "45vh" }} />
+          <div className="h-[45vh]" />
         </div>
       </div>
 
       {/* Tam çeviri paneli (overlay) */}
       {showFullTranslation && (
-        <div style={styles.fullTransOverlay}>
-          <div
-            style={{
-              ...styles.fullTransPanel,
-              borderColor: `rgba(${r},${g},${b},0.2)`,
-            }}
-          >
-            <div style={styles.fullTransHeader}>
-              <span style={{ color: "#fff", fontWeight: 600 }}>Tam çeviri</span>
+        <div className="absolute inset-0 bg-black/60 backdrop-blur-md flex items-center justify-center z-10 animate-fade-in">
+          <div className="bg-[#121212]/95 border border-white/10 rounded-2xl w-[90%] max-w-[500px] max-h-[78vh] flex flex-col overflow-hidden shadow-2xl">
+            <div className="flex justify-between items-center px-5 py-4 border-b border-white/5 shrink-0">
+              <span className="text-white font-semibold">Tam çeviri</span>
               <button
-                style={styles.closeBtn}
+                className="text-white/50 text-xl cursor-pointer hover:text-white transition-colors"
                 onClick={() => setShowFullTranslation(false)}
               >
                 ×
               </button>
             </div>
-            <div style={styles.fullTransList}>
+            <div className="overflow-y-auto px-5 py-3 custom-scrollbar">
               {lyrics.map((line, i) => {
                 if (!line.trim()) return null;
                 const t = translation[line];
                 return (
-                  <div key={i} style={styles.fullTransItem}>
-                    <p style={styles.fullOriginal}>{line}</p>
+                  <div key={i} className="pb-3 mb-3 border-b border-white/5 last:border-0">
+                    <p className="m-0 mb-1 text-[13px] text-white/45 leading-relaxed">{line}</p>
                     <p
-                      style={{
-                        ...styles.fullTranslated,
-                        color: t
-                          ? `rgba(${r},${g},${b},0.85)`
-                          : "rgba(255,255,255,0.25)",
-                      }}
+                      className={`m-0 text-[14px] italic leading-relaxed ${
+                        t ? "text-theme-100/85" : "text-white/25"
+                      }`}
                     >
                       {t === null ? "Çeviri alınamadı" : t || "•••"}
                     </p>
@@ -441,190 +447,26 @@ export default function LyricsPlayer({
       {/* Şimdiki satıra dön */}
       {synced && !autoFollow && (
         <button
-          style={{
-            ...styles.resumeBtn,
-            background: `rgba(${r},${g},${b},0.85)`,
-          }}
+          className="absolute bottom-6 left-1/2 -translate-x-1/2 bg-theme border-none text-white rounded-full px-5 py-2.5 text-[13px] font-medium cursor-pointer shadow-glow z-[5] hover:scale-105 transition-transform flex items-center gap-2 animate-slide-up"
           onClick={resumeAutoFollow}
         >
           ↓ Şimdiki satıra dön
         </button>
       )}
+
+      {coachLine && (
+        <PronunciationCoach
+          expectedText={coachLine}
+          onClose={() => setCoachLine(null)}
+        />
+      )}
+
+      {showShadowing && (
+        <ShadowingMode
+          lyrics={lyrics.join("\n")}
+          onClose={() => setShowShadowing(false)}
+        />
+      )}
     </div>
   );
-}
-
-const styles = {
-  wrapper: {
-    position: "relative",
-    height: "100%",
-    display: "flex",
-    flexDirection: "column",
-  },
-  centered: {
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    justifyContent: "center",
-    height: "100%",
-    gap: 12,
-  },
-  spinner: {
-    width: 32,
-    height: 32,
-    border: "3px solid rgba(255,255,255,0.1)",
-    borderRadius: "50%",
-    animation: "spin 0.8s linear infinite",
-  },
-  topBar: {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "space-between",
-    padding: "16px 24px 8px",
-    flexShrink: 0,
-  },
-  offsetRow: {
-    display: "flex",
-    alignItems: "center",
-    gap: 8,
-  },
-  offsetBtn: {
-    background: "rgba(255,255,255,0.08)",
-    border: "1px solid rgba(255,255,255,0.12)",
-    color: "rgba(255,255,255,0.7)",
-    borderRadius: 6,
-    padding: "4px 10px",
-    fontSize: 12,
-    cursor: "pointer",
-  },
-  offsetLabel: {
-    color: "rgba(255,255,255,0.4)",
-    fontSize: 11,
-    minWidth: 52,
-    textAlign: "center",
-  },
-  translateAllBtn: {
-    color: "rgba(255,255,255,0.8)",
-    borderRadius: 999,
-    padding: "6px 16px",
-    fontSize: 12,
-    fontWeight: 500,
-    cursor: "pointer",
-  },
-  lyricsScroll: {
-    flex: 1,
-    overflowY: "auto",
-  },
-  lyricsInner: {
-    maxWidth: 640,
-    margin: "0 auto",
-    padding: "0 32px",
-    textAlign: "center",
-  },
-  lineGroup: {
-    marginBottom: 8,
-  },
-  lyricLine: {
-    margin: 0,
-    padding: "6px 0",
-    lineHeight: 1.5,
-    fontWeight: 600,
-    letterSpacing: "-0.01em",
-    transition: "all 220ms cubic-bezier(0.4, 0, 0.2, 1)",
-    userSelect: "none",
-  },
-  wordToken: {
-    cursor: "pointer",
-    borderRadius: 3,
-    padding: "0 1px",
-    transition: "background 150ms",
-  },
-  translationRow: {
-    marginTop: 6,
-    marginBottom: 10,
-    minHeight: 20,
-  },
-  translationText: {
-    fontSize: 14,
-    fontStyle: "italic",
-    fontWeight: 400,
-  },
-  translationFailed: {
-    fontSize: 13,
-    color: "rgba(255,255,255,0.2)",
-  },
-  fullTransOverlay: {
-    position: "absolute",
-    inset: 0,
-    background: "rgba(0,0,0,0.6)",
-    backdropFilter: "blur(8px)",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    zIndex: 10,
-  },
-  fullTransPanel: {
-    background: "rgba(18,18,18,0.96)",
-    border: "1px solid",
-    borderRadius: 16,
-    width: "90%",
-    maxWidth: 500,
-    maxHeight: "78vh",
-    display: "flex",
-    flexDirection: "column",
-    overflow: "hidden",
-  },
-  fullTransHeader: {
-    display: "flex",
-    justifyContent: "space-between",
-    alignItems: "center",
-    padding: "16px 20px",
-    borderBottom: "1px solid rgba(255,255,255,0.08)",
-    flexShrink: 0,
-  },
-  closeBtn: {
-    background: "none",
-    border: "none",
-    color: "rgba(255,255,255,0.5)",
-    fontSize: 20,
-    cursor: "pointer",
-    lineHeight: 1,
-    padding: 0,
-  },
-  fullTransList: {
-    overflowY: "auto",
-    padding: "12px 20px 20px",
-  },
-  fullTransItem: {
-    paddingBottom: 14,
-    marginBottom: 14,
-    borderBottom: "1px solid rgba(255,255,255,0.05)",
-  },
-  fullOriginal: {
-    margin: "0 0 4px",
-    fontSize: 13,
-    color: "rgba(255,255,255,0.45)",
-    lineHeight: 1.4,
-  },
-  fullTranslated: {
-    margin: 0,
-    fontSize: 14,
-    fontStyle: "italic",
-    lineHeight: 1.4,
-  },
-  resumeBtn: {
-    position: "absolute",
-    bottom: 24,
-    left: "50%",
-    transform: "translateX(-50%)",
-    border: "none",
-    color: "#fff",
-    borderRadius: 999,
-    padding: "9px 20px",
-    fontSize: 13,
-    fontWeight: 500,
-    cursor: "pointer",
-    boxShadow: "0 4px 16px rgba(0,0,0,0.4)",
-    zIndex: 5,
-  },
-};
+});

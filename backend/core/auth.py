@@ -15,21 +15,16 @@ from backend.core.db import get_conn, get_lock
 JWT_ALGORITHM = "HS256"
 
 
-def hash_password(password: str) -> str:
-    salt = os.urandom(16)
-    digest = hashlib.pbkdf2_hmac("sha256", password.encode("utf-8"), salt, 200_000)
-    return f"{salt.hex()}${digest.hex()}"
+from passlib.hash import argon2
 
+def hash_password(password: str) -> str:
+    return argon2.using(type="ID").hash(password)
 
 def verify_password(password: str, stored: str) -> bool:
     try:
-        salt_hex, digest_hex = stored.split("$")
-    except ValueError:
+        return argon2.verify(password, stored)
+    except Exception:
         return False
-    salt = bytes.fromhex(salt_hex)
-    expected = bytes.fromhex(digest_hex)
-    actual = hashlib.pbkdf2_hmac("sha256", password.encode("utf-8"), salt, 200_000)
-    return secrets.compare_digest(actual, expected)
 
 
 def create_user(email: str, password: str) -> int:
