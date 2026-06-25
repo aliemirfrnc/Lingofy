@@ -3931,3 +3931,21 @@ NameError: name 'logger' is not defined
 2026-06-25 22:18:14,104 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
 2026-06-25 22:18:14,106 [INFO] backend.core.providers.groq_provider: [Groq] generate | Model: llama-3.3-70b-versatile | Latency: 0.56s | Tokens: 74 in, 13 out | Attempt: 1
 2026-06-25 22:18:14,107 [INFO] root: [Translation] Provider: Groq | Latency: 557ms | Cache: MISS | Fallback: False
+2026-06-25 22:19:13,360 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-25 22:19:13,362 [INFO] backend.core.providers.groq_provider: [Groq] generate | Model: llama-3.3-70b-versatile | Latency: 0.24s | Tokens: 73 in, 10 out | Attempt: 1
+2026-06-25 22:19:13,362 [INFO] root: [Translation] Provider: Groq | Latency: 243ms | Cache: MISS | Fallback: False
+2026-06-25 22:20:12,756 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-25 22:20:12,757 [INFO] backend.core.providers.groq_provider: [Groq] generate | Model: llama-3.3-70b-versatile | Latency: 0.19s | Tokens: 73 in, 6 out | Attempt: 1
+2026-06-25 22:20:12,758 [INFO] root: [Translation] Provider: Groq | Latency: 194ms | Cache: MISS | Fallback: False
+2026-06-25 22:20:12,770 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-25 22:20:12,772 [INFO] backend.core.providers.groq_provider: [Groq] generate | Model: llama-3.3-70b-versatile | Latency: 0.23s | Tokens: 75 in, 9 out | Attempt: 1
+2026-06-25 22:20:12,772 [INFO] root: [Translation] Provider: Groq | Latency: 228ms | Cache: MISS | Fallback: False
+2026-06-25 22:20:12,794 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-25 22:20:12,795 [INFO] backend.core.providers.groq_provider: [Groq] generate | Model: llama-3.3-70b-versatile | Latency: 0.23s | Tokens: 77 in, 11 out | Attempt: 1
+2026-06-25 22:20:12,795 [INFO] root: [Translation] Provider: Groq | Latency: 230ms | Cache: MISS | Fallback: False
+2026-06-25 22:20:13,108 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-25 22:20:13,109 [INFO] backend.core.providers.groq_provider: [Groq] generate | Model: llama-3.3-70b-versatile | Latency: 0.30s | Tokens: 81 in, 14 out | Attempt: 1
+2026-06-25 22:20:13,109 [INFO] root: [Translation] Provider: Groq | Latency: 302ms | Cache: MISS | Fallback: False
+2026-06-25 22:20:13,197 [INFO] httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-25 22:20:13,198 [INFO] backend.core.providers.groq_provider: [Groq] generate | Model: llama-3.3-70b-versatile | Latency: 0.36s | Tokens: 79 in, 16 out | Attempt: 1
+2026-06-25 22:20:13,199 [INFO] root: [Translation] Provider: Groq | Latency: 360ms | Cache: MISS | Fallback: False
