@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="https://via.placeholder.com/200x200.png?text=Lingofy+Logo" alt="Lingofy Logo" width="200" height="200" />
+  <img src="5e04ca37-fbd0-4923-808b-1a7e0e823ede.png" alt="Lingofy Logo" width="200" height="200" />
   <h1>Lingofy</h1>
   <p><strong>Next-Generation AI Language Learning, powered by the music you already love.</strong></p>
 
