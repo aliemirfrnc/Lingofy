@@ -8,6 +8,7 @@ export function useTranslationQueue() {
   const activeTranslatingRef = useRef(0);
   const translationAbortRef = useRef(null);
   const lastTrackRef = useRef(null);
+  const processQueueRef = useRef(null);
 
   const resetQueue = useCallback((trackName) => {
     translationAbortRef.current?.abort();
@@ -42,11 +43,14 @@ export function useTranslationQueue() {
       })
       .finally(() => {
         activeTranslatingRef.current--;
-        processTranslationQueue();
+        processQueueRef.current?.();
       });
       
-    processTranslationQueue();
+    processQueueRef.current?.();
   }, []);
+  useEffect(() => {
+    processQueueRef.current = processTranslationQueue;
+  }, [processTranslationQueue]);
 
   const translateLineQueue = useCallback((line) => {
     if (!line || translatingLinesRef.current.has(line)) return;

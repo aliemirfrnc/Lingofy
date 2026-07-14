@@ -18,6 +18,7 @@ from backend.core.config import (
     FRONTEND_URL,
 )
 from backend.core.db import get_conn, get_lock
+from backend.core.token_encryption import spotify_token_cipher
 from backend.routes.auth import require_user_id
 
 router = APIRouter(prefix="/spotify")
@@ -107,7 +108,7 @@ def _save_spotify_tokens(user_id: int, access_token: str, refresh_token: str, ex
                 expires_at = excluded.expires_at,
                 updated_at = excluded.updated_at
             """,
-            (user_id, access_token, refresh_token, now + expires_in, now),
+            (user_id, spotify_token_cipher.encrypt(access_token), spotify_token_cipher.encrypt(refresh_token), now + expires_in, now),
         )
         conn.commit()
 
@@ -119,7 +120,17 @@ def _get_spotify_row(user_id: int):
             "SELECT access_token, refresh_token, expires_at FROM spotify_accounts WHERE user_id = ?",
             (user_id,),
         )
-        return cur.fetchone()
+        row = cur.fetchone()
+        if not row:
+            return None
+        access_token, refresh_token, expires_at = row
+        access_token, migrate_access = spotify_token_cipher.decrypt(access_token)
+        refresh_token, migrate_refresh = spotify_token_cipher.decrypt(refresh_token)
+        # Legacy records are converted on their first successful read, atomically.
+        if migrate_access or migrate_refresh:
+            conn.execute("UPDATE spotify_accounts SET access_token = ?, refresh_token = ?, updated_at = ? WHERE user_id = ?", (spotify_token_cipher.encrypt(access_token), spotify_token_cipher.encrypt(refresh_token), time.time(), user_id))
+            conn.commit()
+        return access_token, refresh_token, expires_at
 
 
 @router.get("/status", response_model=StatusResponse)

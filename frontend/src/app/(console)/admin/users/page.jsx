@@ -1,15 +1,14 @@
 "use client";
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { DataGrid } from '@/components/admin/DataGrid';
 
 export default function UsersPage() {
     const [data, setData] = useState([]);
-    const [isLoading, setIsLoading] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
 
     // Mock data generation for TanStack Table demonstration
     useEffect(() => {
-        setIsLoading(true);
-        setTimeout(() => {
+        const timeout = setTimeout(() => {
             const mockUsers = Array.from({ length: 15 }).map((_, i) => ({
                 id: 1000 - i,
                 email: `user${1000 - i}@example.com`,
@@ -19,9 +18,10 @@ export default function UsersPage() {
             setData(mockUsers);
             setIsLoading(false);
         }, 500);
+        return () => clearTimeout(timeout);
     }, []);
 
-    const columns = [
+    const columns = useMemo(() => [
         { header: 'ID', accessorKey: 'id' },
         { header: 'Email', accessorKey: 'email' },
         { 
@@ -45,7 +45,7 @@ export default function UsersPage() {
                 </button>
             )
         }
-    ];
+    ], []);
 
     return (
         <div className="space-y-6">

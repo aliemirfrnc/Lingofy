@@ -14,3 +14,9 @@ class IyzipayProvider(PaymentProvider):
         
     def verify_payment(self, transaction_id: str) -> bool:
         raise NotImplementedError("İyzico henüz yapılandırılmadı.")
+
+    def verify_webhook(self, payload: bytes, signature: str | None) -> Dict[str, Any]:
+        raise NotImplementedError("İyzico webhook doğrulaması yapılandırılmadı.")
+
+    def refund(self, transaction_id: str, amount: float | None = None) -> Dict[str, Any]:
+        raise NotImplementedError("İyzico refund yapılandırılmadı.")

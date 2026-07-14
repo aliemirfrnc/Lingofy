@@ -114,7 +114,7 @@ export default memo(function LyricsPlayer({
       .finally(() => {
         if (requestId === lyricsRequestRef.current) setLoading(false);
       });
-  }, []);
+  }, [resetQueue]);
 
   useEffect(
     () => () => {
@@ -230,7 +230,7 @@ export default memo(function LyricsPlayer({
       .finally(() => {
         if (requestId === lyricsRequestRef.current) setTranslatingAll(false);
       });
-  }, [lyrics, translation]);
+  }, [lastTrackRef, lyrics, setTranslation, translation]);
 
   if (loading) {
     return (
@@ -264,7 +264,7 @@ export default memo(function LyricsPlayer({
           }
         />
         <p className="text-white/40 text-[13px] mt-4">
-          Spotify'da bir şarkı çal — sözler otomatik yüklenecek
+          Spotify&apos;da bir şarkı çal — sözler otomatik yüklenecek
         </p>
       </div>
     );
@@ -273,7 +273,7 @@ export default memo(function LyricsPlayer({
   if (!lyrics.length) {
     return (
       <div className="flex flex-col items-center justify-center h-full gap-3 relative z-10">
-        <p className="text-white/30 text-[15px]">Spotify'da bir şarkı çal</p>
+        <p className="text-white/30 text-[15px]">Spotify&apos;da bir şarkı çal</p>
       </div>
     );
   }

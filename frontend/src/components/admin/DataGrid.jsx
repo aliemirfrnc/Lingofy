@@ -1,16 +1,21 @@
 "use client";
 import React from 'react';
-import {
-  useReactTable,
-  getCoreRowModel,
-  flexRender,
-} from '@tanstack/react-table';
+import * as ReactTable from '@tanstack/react-table';
+
+function getTableHook() {
+    return ReactTable['useReactTable'];
+}
 
 export function DataGrid({ data, columns, onNextPage, hasMore, isLoading }) {
-    const table = useReactTable({
-        data,
-        columns,
-        getCoreRowModel: getCoreRowModel(),
+    "use no memo";
+    const memoizedData = React.useMemo(() => data, [data]);
+    const memoizedColumns = React.useMemo(() => columns, [columns]);
+
+    const useTable = getTableHook();
+    const table = useTable({
+        data: memoizedData,
+        columns: memoizedColumns,
+        getCoreRowModel: ReactTable.getCoreRowModel(),
     });
 
     return (
@@ -25,7 +30,7 @@ export function DataGrid({ data, columns, onNextPage, hasMore, isLoading }) {
                                         <th key={header.id} className="px-6 py-4 font-medium tracking-wider">
                                             {header.isPlaceholder
                                                 ? null
-                                                : flexRender(
+                                                : ReactTable.flexRender(
                                                     header.column.columnDef.header,
                                                     header.getContext()
                                                 )}
@@ -39,7 +44,7 @@ export function DataGrid({ data, columns, onNextPage, hasMore, isLoading }) {
                                 <tr key={row.id} className="border-b border-[#27272a] hover:bg-[#18181b]/50 transition-colors">
                                     {row.getVisibleCells().map(cell => (
                                         <td key={cell.id} className="px-6 py-4 whitespace-nowrap text-[#f4f4f5]">
-                                            {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                                            {ReactTable.flexRender(cell.column.columnDef.cell, cell.getContext())}
                                         </td>
                                     ))}
                                 </tr>

@@ -243,7 +243,7 @@ export default memo(function WordPanel({
                 <div className="flex flex-col gap-2">
                   {wordInfo.examples.map((ex, idx) => (
                     <div key={idx} className="bg-white/[0.03] border-l-2 border-theme-500/50 p-3 rounded-r-xl">
-                      <p className="text-[13px] italic text-white/80 m-0">"{ex}"</p>
+                      <p className="text-[13px] italic text-white/80 m-0">&quot;{ex}&quot;</p>
                     </div>
                   ))}
                 </div>

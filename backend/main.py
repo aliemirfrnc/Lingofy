@@ -17,7 +17,7 @@ from backend.core.logger import get_logger
 logger = get_logger("lingofy.main")
 
 from backend.core.auth import cleanup_expired
-from backend.core.config import CORS_ORIGINS, JWT_SECRET
+from backend.core.config import CORS_ORIGINS, JWT_SECRET, IS_PRODUCTION, validate_configuration
 from backend.core.db import init_db
 from backend.routes.auth import router as auth_router
 from backend.routes.chat import router as chat_router
@@ -31,6 +31,7 @@ from backend.routes.subscriptions import router as subscriptions_router
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
+    validate_configuration()
     if not JWT_SECRET:
         raise RuntimeError("JWT_SECRET ortam değişkeni tanımlı değil.")
     init_db()
@@ -99,6 +100,30 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+@app.middleware("http")
+async def csrf_and_rate_limit(request: Request, call_next):
+    if request.method not in {"GET", "HEAD", "OPTIONS"}:
+        # Cookie authentication is susceptible to browser CSRF. Bearer-token clients are not.
+        if IS_PRODUCTION and request.cookies.get("access_token"):
+            origin = request.headers.get("origin", "").rstrip("/")
+            if origin not in CORS_ORIGINS:
+                return JSONResponse(status_code=403, content={"success": False, "error": {"code": "CSRF_ORIGIN_DENIED", "message": "Geçersiz istek kaynağı."}})
+        from backend.core.services.rate_limit_service import check_rate_limit
+        path = request.url.path
+        limit = 300
+        if path.startswith("/auth/"):
+            limit = 100
+        elif path.startswith("/api/admin/"):
+            limit = 60
+        elif path.startswith(("/chat", "/translate", "/api/word", "/api/pronunciation")):
+            limit = 120
+        from fastapi import HTTPException
+        try:
+            check_rate_limit(request, limit=limit, scope=path.split("/")[1] or "root")
+        except HTTPException as exc:
+            return JSONResponse(status_code=exc.status_code, content={"success": False, "error": {"code": "RATE_LIMITED", "message": exc.detail}})
+    return await call_next(request)
 
 import uuid
 from backend.core.logger import request_id_ctx, correlation_id_ctx

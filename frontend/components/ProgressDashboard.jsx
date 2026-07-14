@@ -229,7 +229,7 @@ export default memo(function ProgressDashboard({ onClose }) {
                   </div>
                   <div>
                     <p className="text-theme-300 text-[10px] font-black uppercase tracking-widest mb-1.5 m-0">Yapay Zeka Koçu</p>
-                    <p className="text-[15px] text-white leading-relaxed font-medium">"{stats.motivation}"</p>
+                    <p className="text-[15px] text-white leading-relaxed font-medium">&quot;{stats.motivation}&quot;</p>
                   </div>
                 </div>
                 

@@ -123,7 +123,7 @@ export default function LandingPage({ onAuthenticated }) {
               </div>
               <h2 className="text-4xl font-black mb-6">Shadowing Mode</h2>
               <p className="text-lg text-zinc-400 leading-relaxed mb-6">
-                Native speaker'ı duyduğun anda taklit etmeye dayalı en etkili konuşma pratik metodu artık müzikle birleşti. Şarkı sözleri akarken mikrofonu aç ve eşlik et.
+                Native speaker&apos;ı duyduğun anda taklit etmeye dayalı en etkili konuşma pratik metodu artık müzikle birleşti. Şarkı sözleri akarken mikrofonu aç ve eşlik et.
               </p>
               <ul className="space-y-4">
                 <li className="flex items-center gap-3"><span className="text-blue-500">✓</span> Akıcı konuşma refleksini geliştirir</li>
@@ -220,7 +220,7 @@ export default function LandingPage({ onAuthenticated }) {
                 <li className="flex items-center gap-3"><span className="text-green-500">✓</span> Performans Geçmişi</li>
               </ul>
               <button onClick={() => setAuthMode("register")} className="w-full py-4 rounded-full font-black bg-green-500 hover:bg-green-400 text-black transition-colors shadow-lg shadow-green-500/25 hover:shadow-green-500/40 hover:scale-105 active:scale-95">
-                Pro'ya Geç
+                Pro&apos;ya Geç
               </button>
             </div>
 
@@ -230,7 +230,7 @@ export default function LandingPage({ onAuthenticated }) {
               <div className="text-zinc-400 mb-6 text-sm">Native speaker olmak isteyenlere.</div>
               <div className="text-4xl font-black mb-8">$19.99<span className="text-lg font-normal text-zinc-500">/ay</span></div>
               <ul className="space-y-4 mb-8 text-zinc-300">
-                <li className="flex items-center gap-3"><span className="text-purple-400">✓</span> Pro'daki Her Şey</li>
+                <li className="flex items-center gap-3"><span className="text-purple-400">✓</span> Pro&apos;daki Her Şey</li>
                 <li className="flex items-center gap-3"><span className="text-purple-400">✓</span> IELTS/TOEFL Simülasyonu</li>
                 <li className="flex items-center gap-3"><span className="text-purple-400">✓</span> Native IPA Analizi</li>
                 <li className="flex items-center gap-3"><span className="text-purple-400">✓</span> Birebir Mentörlük</li>
@@ -257,7 +257,7 @@ export default function LandingPage({ onAuthenticated }) {
             ].map((review, idx) => (
               <div key={idx} className="reveal opacity-0 translate-y-10 transition-all duration-1000 bg-zinc-900/50 p-6 rounded-2xl border border-white/5" style={{ transitionDelay: `${idx * 100}ms` }}>
                 <div className="flex text-green-400 mb-4">★★★★★</div>
-                <p className="text-zinc-300 italic mb-4 leading-relaxed">"{review.text}"</p>
+                <p className="text-zinc-300 italic mb-4 leading-relaxed">&quot;{review.text}&quot;</p>
                 <div className="font-bold text-zinc-400">— {review.name}</div>
               </div>
             ))}

@@ -2,7 +2,6 @@ from functools import wraps
 from fastapi import HTTPException, status, Depends
 from backend.admin.security.authentication import get_current_admin
 from backend.admin.security.permissions import has_permission
-from backend.admin.security.roles import DEFAULT_ROLE_PERMISSIONS
 from backend.core.db import get_conn
 
 def get_user_permissions(admin_id: int, role: str) -> list[str]:
@@ -24,15 +23,7 @@ def get_user_permissions(admin_id: int, role: str) -> list[str]:
     
     db_permissions = [row[0] for row in cursor.fetchall()]
     
-    # Fallback to hardcoded role
-    from backend.admin.security.roles import AdminRole
-    try:
-        role_enum = AdminRole(role)
-        hardcoded_permissions = DEFAULT_ROLE_PERMISSIONS.get(role_enum, [])
-    except ValueError:
-        hardcoded_permissions = []
-        
-    return list(set(db_permissions + hardcoded_permissions))
+    return list(set(db_permissions))
 
 def requires_permission(required_permission: str):
     """

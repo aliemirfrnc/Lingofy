@@ -6,6 +6,7 @@ from typing import Dict, Any
 from backend.core.db import get_conn, get_lock
 from backend.routes.auth import require_user_id
 from backend.core.providers.mock_provider import MockPaymentProvider
+from backend.core.config import IS_PRODUCTION
 
 router = APIRouter(prefix="/api/subscriptions", tags=["subscriptions"])
 
@@ -28,7 +29,11 @@ def upgrade_plan(payload: UpgradeRequest, request: Request, authorization: str |
         
     plan_id, price = plan
     
-    # Process Payment using Mock Provider
+    if IS_PRODUCTION:
+        # A production provider is intentionally required before money-changing actions.
+        raise HTTPException(status_code=503, detail="Ödeme sağlayıcısı henüz yapılandırılmadı.")
+
+    # Development/test only provider; production is explicitly denied above.
     provider = MockPaymentProvider()
     result = provider.create_subscription(user_id, plan_id, {"pm_id": payload.payment_method_id})
     

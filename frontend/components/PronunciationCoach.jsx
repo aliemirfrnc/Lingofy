@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useRef, useState } from "react";
 import AudioVisualizer from "./AudioVisualizer";
 import { api } from "../lib/api";
 import { AudioRecorder } from "../lib/audioRecorder";
@@ -51,20 +51,13 @@ const CircularProgress = ({ value, label, colorClass = "text-theme", strokeClass
 
 export default function PronunciationCoach({ expectedText, onClose }) {
   const [isRecording, setIsRecording] = useState(false);
-  const [recorder, setRecorder] = useState(null);
+  const recorderRef = useRef(new AudioRecorder());
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [result, setResult] = useState(null);
   const [error, setError] = useState(null);
 
-  useEffect(() => {
-    const r = new AudioRecorder();
-    setRecorder(r);
-    return () => {
-      r.stop();
-    };
-  }, []);
-
   const handleToggleRecord = async () => {
+    const recorder = recorderRef.current;
     if (isRecording) {
       setIsRecording(false);
       setIsAnalyzing(true);
@@ -146,7 +139,7 @@ export default function PronunciationCoach({ expectedText, onClose }) {
           <div className="flex flex-col items-center mb-12">
             <h3 className="text-theme-400 uppercase tracking-widest text-xs font-black mb-4">Hedef Cümle</h3>
             <p className="text-2xl md:text-4xl lg:text-5xl font-black text-white text-center leading-tight max-w-4xl drop-shadow-md tracking-tight m-0">
-              "{expectedText}"
+              &quot;{expectedText}&quot;
             </p>
 
             <div className="mt-12 flex flex-col items-center">

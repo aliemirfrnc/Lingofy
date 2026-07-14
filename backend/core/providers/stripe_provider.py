@@ -14,3 +14,9 @@ class StripeProvider(PaymentProvider):
         
     def verify_payment(self, transaction_id: str) -> bool:
         raise NotImplementedError("Stripe henüz yapılandırılmadı.")
+
+    def verify_webhook(self, payload: bytes, signature: str | None) -> Dict[str, Any]:
+        raise NotImplementedError("Stripe webhook doğrulaması yapılandırılmadı.")
+
+    def refund(self, transaction_id: str, amount: float | None = None) -> Dict[str, Any]:
+        raise NotImplementedError("Stripe refund yapılandırılmadı.")

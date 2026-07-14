@@ -125,7 +125,7 @@ export default memo(function Sidebar({
                   ? "bg-theme-100/10 border-theme text-white" 
                   : "border-transparent text-white/70 hover:bg-white/5 hover:text-white"
                 }`}
-              aria-selected={isActive}
+              aria-current={isActive ? "page" : undefined}
               aria-label={`${pl.name} listesini aç`}
             >
               <div className="w-9 h-9 rounded-lg bg-white/10 flex items-center justify-center shrink-0 overflow-hidden shadow-sm">

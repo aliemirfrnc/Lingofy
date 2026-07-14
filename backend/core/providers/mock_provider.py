@@ -20,3 +20,9 @@ class MockPaymentProvider(PaymentProvider):
         
     def verify_payment(self, transaction_id: str) -> bool:
         return True
+
+    def verify_webhook(self, payload: bytes, signature: str | None) -> Dict[str, Any]:
+        return {"verified": True, "payload": payload.decode("utf-8")}
+
+    def refund(self, transaction_id: str, amount: float | None = None) -> Dict[str, Any]:
+        return {"status": "refunded", "transaction_id": transaction_id, "amount": amount}

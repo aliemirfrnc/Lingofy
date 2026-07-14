@@ -125,7 +125,7 @@ export default function PricingPage() {
             </div>
             <ul className="space-y-4 mb-8 text-zinc-300">
               <li className="flex items-center gap-3">
-                <span className="text-purple-400 font-bold">✓</span> Pro'daki Her Şey
+                <span className="text-purple-400 font-bold">✓</span> Pro&apos;daki Her Şey
               </li>
               <li className="flex items-center gap-3">
                 <span className="text-purple-400 font-bold">✓</span> IELTS/TOEFL Simülasyonu
