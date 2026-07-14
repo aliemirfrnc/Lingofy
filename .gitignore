@@ -1,0 +1,28 @@
+# Environments
+.env
+.env.*
+!.env.example
+
+# Databases
+*.db
+*.db-shm
+*.db-wal
+
+# Folders
+logs/
+artifacts/
+node_modules/
+.next/
+dist/
+build/
+__pycache__/
+.pytest_cache/
+.venv/
+.venv_test/
+
+# Coverage
+.coverage
+htmlcov/
+
+# Logs
+*.log
