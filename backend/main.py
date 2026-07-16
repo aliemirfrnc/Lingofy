@@ -28,6 +28,8 @@ from backend.routes.word_info import router as word_info_router
 from backend.routes.pronunciation import router as pronunciation_router
 from backend.routes.progress import router as progress_router
 from backend.routes.subscriptions import router as subscriptions_router
+from backend.routes.events import router as events_router
+from backend.routes.me import router as me_router
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -160,6 +162,8 @@ app.include_router(word_info_router)
 app.include_router(pronunciation_router)
 app.include_router(progress_router)
 app.include_router(subscriptions_router)
+app.include_router(events_router)
+app.include_router(me_router)
 
 from backend.admin.routes.v1 import admin_v1_router
 app.include_router(admin_v1_router, prefix="/api/admin/v1", tags=["admin-v1"])

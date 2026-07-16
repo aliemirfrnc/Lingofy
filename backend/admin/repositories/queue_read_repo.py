@@ -1,43 +1,27 @@
-from typing import Dict, Any, List, Optional
 import sqlite3
-from backend.core.db import get_conn
+import time
+from typing import List, Dict, Any, Optional
+from .interfaces import IQueueReadRepository
 
-class QueueReadRepository:
-    def __init__(self, conn: sqlite3.Connection = None):
-        self.conn = conn or get_conn()
+class QueueReadRepository(IQueueReadRepository):
+    def __init__(self, conn: sqlite3.Connection):
+        self.conn = conn
 
-    def get_jobs_paginated(self, cursor_id: Optional[int], limit: int = 50, status_filter: str = None) -> List[Dict[str, Any]]:
-        query = "SELECT id, job_name, status, priority, retry_count, created_at, scheduled_at, completed_at FROM job_queue"
+    def get_queued_jobs(self, limit: int = 50) -> List[Dict[str, Any]]:
+        query = "SELECT * FROM job_queue WHERE status = 'QUEUED' AND scheduled_at <= ? ORDER BY priority DESC, scheduled_at ASC LIMIT ?"
+        self.conn.row_factory = sqlite3.Row
+        rows = self.conn.execute(query, (time.time(), limit)).fetchall()
+        return [dict(row) for row in rows]
+
+    def get_job_history(self, limit: int = 50, cursor: Optional[int] = None) -> List[Dict[str, Any]]:
+        query = "SELECT * FROM job_history"
         params = []
-        conditions = []
-
-        if status_filter:
-            conditions.append("status = ?")
-            params.append(status_filter)
-
-        if cursor_id is not None:
-            conditions.append("id < ?")
-            params.append(cursor_id)
-
-        if conditions:
-            query += " WHERE " + " AND ".join(conditions)
-
+        if cursor is not None:
+            query += " WHERE id < ?"
+            params.append(cursor)
         query += " ORDER BY id DESC LIMIT ?"
         params.append(limit)
 
-        cursor = self.conn.cursor()
-        cursor.execute(query, tuple(params))
-        
-        jobs = []
-        for row in cursor.fetchall():
-            jobs.append({
-                "id": row[0],
-                "job_name": row[1],
-                "status": row[2],
-                "priority": row[3],
-                "retry_count": row[4],
-                "created_at": row[5],
-                "scheduled_at": row[6],
-                "completed_at": row[7]
-            })
-        return jobs
+        self.conn.row_factory = sqlite3.Row
+        rows = self.conn.execute(query, params).fetchall()
+        return [dict(row) for row in rows]

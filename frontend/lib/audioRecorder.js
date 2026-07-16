@@ -19,8 +19,7 @@ export class AudioRecorder {
 
       this.mediaRecorder.start();
       return true;
-    } catch (err) {
-      console.error("Microphone access denied or error:", err);
+    } catch {
       return false;
     }
   }

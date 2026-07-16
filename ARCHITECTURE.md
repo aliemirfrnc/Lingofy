@@ -90,7 +90,16 @@ sequenceDiagram
     Frontend->>User: Displays UI
 ```
 
+## 5. Operations Backend (Sprint 4A+)
+
+The enterprise operations system introduces additional decoupled infrastructure:
+1. **Migrations**: Isolated `sqlite3` migration manager under `backend/admin/migrations/`.
+2. **CQRS Repositories**: Read and Write boundaries are explicitly defined for core models (Metrics, Telemetry, Queue) supporting Cursor Pagination.
+3. **Event Bus**: In-memory event dispatching system `MemoryEventBus` with an interface `IEventBus` to allow plugging in Kafka or Redis.
+4. **Dependency Injection**: No global Singletons. `Depends()` usage via `backend/admin/dependencies.py` exclusively.
+
 ---
 
 *See [AI.md](AI.md) for details on the AI Architecture.*
-*See [DATABASE.md](DATABASE.md) for data storage details.*
+*See [DATABASE.md](DATABASE.md) and [DATABASE_SCHEMA.md](DATABASE_SCHEMA.md) for data storage details.*
+*See [CQRS_GUIDE.md](CQRS_GUIDE.md), [EVENT_BUS.md](EVENT_BUS.md), and [DEPENDENCY_INJECTION.md](DEPENDENCY_INJECTION.md) for deeper operations layer standards.*

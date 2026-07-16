@@ -1,8 +1,5 @@
 import { memo } from "react";
 
-// React DevTools Profiler ölçümleri için render takibi yapılabilir
-// console.log("Rendering LyricLine:", lineIndex);
-
 export const LyricLine = memo(function LyricLine({
   line,
   lineIndex,

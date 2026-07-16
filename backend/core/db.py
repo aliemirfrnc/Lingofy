@@ -334,11 +334,28 @@ def init_db() -> None:
 
             CREATE TABLE IF NOT EXISTS notifications (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
+                user_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
                 title TEXT,
                 message TEXT,
                 type TEXT,
                 is_read BOOLEAN DEFAULT 0,
                 created_at REAL NOT NULL
+            );
+
+            CREATE TABLE IF NOT EXISTS user_preferences (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+                theme TEXT DEFAULT 'system',
+                interface_language TEXT DEFAULT 'en',
+                target_language TEXT DEFAULT 'en',
+                daily_goal_minutes INTEGER DEFAULT 15,
+                timezone TEXT DEFAULT 'UTC',
+                email_notifications BOOLEAN DEFAULT 1,
+                push_notifications BOOLEAN DEFAULT 0,
+                marketing_emails BOOLEAN DEFAULT 0,
+                created_at REAL NOT NULL,
+                updated_at REAL NOT NULL,
+                UNIQUE(user_id)
             );
 
             CREATE TABLE IF NOT EXISTS command_history (
@@ -381,7 +398,12 @@ def init_db() -> None:
         
         # Idempotent Migrations to ensure columns exist without dropping tables.
         auto_migrate_table(_conn, "users", {
-            "role": "TEXT DEFAULT 'USER'"
+            "role": "TEXT DEFAULT 'USER'",
+            "display_name": "TEXT DEFAULT ''",
+        })
+
+        auto_migrate_table(_conn, "refresh_tokens", {
+            "session_id": "TEXT",
         })
 
         auto_migrate_table(_conn, "pronunciation_profiles", {

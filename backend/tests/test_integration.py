@@ -1,4 +1,5 @@
 import pytest
+import httpx
 from unittest.mock import AsyncMock
 from backend.core.providers.groq_provider import GroqProvider
 from backend.core.providers.openrouter_provider import OpenRouterProvider
@@ -29,8 +30,25 @@ async def test_openrouter_provider_contract(mocker):
     assert "banana" in result.lower()
 
 @pytest.mark.asyncio
-async def test_dictionary_api_real_call():
+async def test_dictionary_api_contract(mocker):
+    response = httpx.Response(
+        200,
+        json=[{
+            "phonetic": "/ˈæp.əl/",
+            "meanings": [{
+                "partOfSpeech": "noun",
+                "definitions": [{"definition": "A fruit.", "example": "An apple."}],
+                "synonyms": ["fruit"],
+                "antonyms": [],
+            }],
+        }],
+        request=httpx.Request("GET", "https://api.dictionaryapi.dev/api/v2/entries/en/apple"),
+    )
+    get = mocker.patch("httpx.AsyncClient.get", new=AsyncMock(return_value=response))
+
     result = await DictionaryService.get_word_definition("apple")
+
+    get.assert_awaited_once()
     assert isinstance(result, dict)
     assert "part_of_speech" in result
     assert "definition" in result

@@ -1,0 +1,63 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.tabList {
+  display: flex;
+  border-bottom: 1px solid var(--color-border-default);
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.tabList::-webkit-scrollbar {
+  display: none;
+}
+
+.tab {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-3) var(--space-4);
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-secondary);
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid transparent;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all var(--transition-fast);
+  outline: none;
+}
+
+.tab:hover:not(.disabled) {
+  color: var(--color-text-primary);
+}
+
+.tab:focus-visible {
+  background-color: var(--color-info-bg);
+  border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+}
+
+.tab.selected {
+  color: var(--color-brand-primary);
+  border-bottom-color: var(--color-brand-primary);
+}
+
+.tab.disabled {
+  color: var(--color-text-tertiary);
+  cursor: not-allowed;
+}
+
+.tabPanel {
+  padding: var(--space-4) 0;
+  outline: none;
+}
+
+.tabPanel:focus-visible {
+  box-shadow: 0 0 0 2px var(--color-info-bg);
+  border-radius: var(--radius-sm);
+}
